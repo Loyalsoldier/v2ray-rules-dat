@@ -14,7 +14,6 @@ GEOIP_REPO="github.com/ilouiss/geoip"
 GEOSITE_REPO="github.com/v2ray/domain-list-community"
 getGFWLIST_SCRIPT="https://raw.githubusercontent.com/cokebar/gfwlist2dnsmasq/master/gfwlist2dnsmasq.sh"
 CHINA_DOMAINS_URL="https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf"
-ADBLOCK_DOMAINS_URL="https://raw.githubusercontent.com/h2y/Shadowrocket-ADBlock-Rules/master/factory/resultant/ad.list"
 
 echo -e "${GREEN}>>> downloading $GEOIP_REPO...${NC}"
 go get -insecure -v -u -d $GEOIP_REPO
