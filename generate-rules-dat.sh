@@ -53,4 +53,9 @@ go run main.go
 mv dlc.dat $V2RAY_FOLDER/geosite.dat
 echo -e "${GREEN}>>> Finished geosite.dat ${NC}"
 
+echo -e "\n"
+echo -e "${GREEN}>>> List $V2RAY_FOLDER files: ${NC}"
+ls -lah $V2RAY_FOLDER
+echo -e "\n"
+
 echo -e "${GREEN}完成啦！🌈${NC}"
