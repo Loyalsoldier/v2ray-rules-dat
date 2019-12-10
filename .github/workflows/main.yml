@@ -26,7 +26,19 @@ jobs:
         id: go
 
       - name: Check out code into the Go module directory
-        uses: actions/checkout@master
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+
+      - name: Debug
+        run: |
+          pwd
+          echo ${HOME}
+          echo ${GITHUB_WORKSPACE}
+          echo ${GOPATH}
+          echo ${GOROOT}
+        env:
+          GOPATH: /home/runner/work/v2ray-rules-dat/go
 
       # - name: Set GOPATH
       #   run: |
@@ -47,7 +59,7 @@ jobs:
       - name: Upload dat files to release
         uses: svenstaro/upload-release-action@v1-release
         with:
-          file: $GITHUB_WORKSPACE/v2ray/${{ matrix.artifact_name }}
+          file: $GOPATH/v2ray/${{ matrix.artifact_name }}
           asset_name: ${{ matrix.asset_name }}
           tag: latest
           overwrite: true
