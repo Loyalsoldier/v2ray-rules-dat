@@ -5,7 +5,7 @@ set -e
 GREEN='\033[0;32m'
 NC='\033[0m' # no color
 
-export GOPATH=$GOPATH
+export GOPATH=${GITHUB_WORKSPACE}
 V2RAY_FOLDER="$GOPATH/v2ray"
 
 mkdir -p $V2RAY_FOLDER
