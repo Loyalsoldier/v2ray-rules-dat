@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        rule: [geoip, geosite]
         include:
           - rule: geoip
             artifact_name: geoip.dat
