@@ -42,7 +42,7 @@ jobs:
       - name: Upload dat files to release
         uses: svenstaro/upload-release-action@v1-release
         env:
-          tagTime: ${{ true && date '+%y%m%d%H%M' }}
+          tagTime: ${{ hashFiles('v2ray/*.dat') }}
         with:
           file: /home/runner/work/v2ray-rules-dat/v2ray-rules-dat/v2ray/${{ matrix.artifact_name }}
           asset_name: ${{ matrix.asset_name }}
