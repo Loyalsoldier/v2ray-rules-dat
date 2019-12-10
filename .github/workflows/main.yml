@@ -5,7 +5,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         rule: [geoip, geosite]
