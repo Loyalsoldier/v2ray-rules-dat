@@ -2,6 +2,7 @@ name: Build V2Ray rules dat files
 on:
   schedule:
     - cron: "* * * * *"
+
 jobs:
   build:
     name: Build
@@ -16,6 +17,7 @@ jobs:
           - rule: geosite
             artifact_name: geosite.dat
             asset_name: geosite.dat
+
     steps:
       - name: Set up Go 1.13
         uses: actions/setup-go@v1
@@ -36,6 +38,7 @@ jobs:
         run: |
           chmod +x generate-rules-dat.sh
           ./generate-rules-dat.sh
+
       - name: Create Latest tag
         uses: EndBug/latest-tag@latest
         env:
