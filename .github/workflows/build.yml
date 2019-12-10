@@ -29,22 +29,6 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v1
 
-      # - name: Set GOPATH
-      #   run: |
-      #     echo "##[set-env name=GOPATH;]$GITHUB_WORKSPACE"
-      #     echo "##[add-path]$GITHUB_WORKSPACE/bin"
-      #   shell: bash
-
-      - name: Debug
-        run: |
-          pwd
-          echo ${HOME}
-          echo ${GITHUB_WORKSPACE}
-          echo ${GOPATH}
-          echo ${GOROOT}
-        env:
-          GOPATH: ${GITHUB_WORKSPACE}
-
       - name: Generate
         run: |
           chmod +x generate-rules-dat.sh

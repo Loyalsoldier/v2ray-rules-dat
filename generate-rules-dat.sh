@@ -52,17 +52,4 @@ go run main.go
 mv dlc.dat $V2RAY_FOLDER/geosite.dat
 echo -e "${GREEN}>>> Finished geosite.dat ${NC}"
 
-echo -e "${GREEN}>>> List $GITHUB_WORKSPACE files: ${NC}"
-ls -lah $GITHUB_WORKSPACE
-echo -e "\n"
-
-echo -e "${GREEN}>>> List $GOPATH files: ${NC}"
-ls -lah $GOPATH
-echo -e "\n"
-
-echo -e "\n"
-echo -e "${GREEN}>>> List $V2RAY_FOLDER files: ${NC}"
-ls -lah $V2RAY_FOLDER
-echo -e "\n"
-
 echo -e "${GREEN}完成啦！🌈${NC}"
