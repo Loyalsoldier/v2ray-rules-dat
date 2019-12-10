@@ -9,6 +9,8 @@ NC='\033[0m' # no color
 # export GOPATH=$GOPATH
 V2RAY_FOLDER="$GOPATH/v2ray"
 
+mkdir -p $V2RAY_FOLDER
+
 GEOIP_REPO="github.com/ilouiss/geoip"
 GEOSITE_REPO="github.com/v2ray/domain-list-community"
 getGFWLIST_SCRIPT="https://raw.githubusercontent.com/cokebar/gfwlist2dnsmasq/master/gfwlist2dnsmasq.sh"
