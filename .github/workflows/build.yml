@@ -58,7 +58,7 @@ jobs:
       - name: Upload dat files to release
         uses: svenstaro/upload-release-action@v1-release
         with:
-          file: ${GITHUB_WORKSPACE}/v2ray/${{ matrix.artifact_name }}
+          file: ${HOME}/v2ray-rules-dat/v2ray-rules-dat/v2ray/${{ matrix.artifact_name }}
           asset_name: ${{ matrix.asset_name }}
           tag: latest
           overwrite: true
