@@ -1,0 +1,50 @@
+name: Build V2Ray rules dat files
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - rule: geoip
+            artifact_name: geoip.dat
+            asset_name: geoip.dat
+          - rule: geosite
+            artifact_name: geosite.dat
+            asset_name: geosite.dat
+    steps:
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+        id: go
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@master
+
+      - name: Set GOPATH
+        run: |
+          echo "##[set-env name=GOPATH;]$(dirname $GITHUB_WORKSPACE)"
+          echo "##[add-path]$(dirname $GITHUB_WORKSPACE)/bin"
+        shell: bash
+
+      - name: Generate
+        run: |
+          chmod +x generate-rules-dat.sh
+          ./generate-rules-dat.sh
+      - name: Create Latest tag
+        uses: EndBug/latest-tag@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload dat files to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          file: $(dirname $GITHUB_WORKSPACE)/v2ray/${{ matrix.artifact_name }}
+          asset_name: ${{ matrix.asset_name }}
+          tag: latest
+          overwrite: true
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
