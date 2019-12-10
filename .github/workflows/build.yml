@@ -26,6 +26,15 @@ jobs:
           go-version: 1.13
         id: go
 
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v1
+
+      # - name: Set GOPATH
+      #   run: |
+      #     echo "##[set-env name=GOPATH;]$GITHUB_WORKSPACE"
+      #     echo "##[add-path]$GITHUB_WORKSPACE/bin"
+      #   shell: bash
+
       - name: Debug
         run: |
           pwd
@@ -35,15 +44,6 @@ jobs:
           echo ${GOROOT}
         env:
           GOPATH: ${GITHUB_WORKSPACE}
-
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v1
-
-      # - name: Set GOPATH
-      #   run: |
-      #     echo "##[set-env name=GOPATH;]$GITHUB_WORKSPACE"
-      #     echo "##[add-path]$GITHUB_WORKSPACE/bin"
-      #   shell: bash
 
       - name: Generate
         run: |
