@@ -28,11 +28,11 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@master
 
-      - name: Set GOPATH
-        run: |
-          echo "##[set-env name=GOPATH;]$GITHUB_WORKSPACE"
-          echo "##[add-path]$GITHUB_WORKSPACE/bin"
-        shell: bash
+      # - name: Set GOPATH
+      #   run: |
+      #     echo "##[set-env name=GOPATH;]$GITHUB_WORKSPACE"
+      #     echo "##[add-path]$GITHUB_WORKSPACE/bin"
+      #   shell: bash
 
       - name: Generate
         run: |
