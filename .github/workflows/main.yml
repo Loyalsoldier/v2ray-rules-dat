@@ -28,14 +28,13 @@ jobs:
 
       - name: Debug
         run: |
-          cd 
           pwd
           echo ${HOME}
           echo ${GITHUB_WORKSPACE}
           echo ${GOPATH}
           echo ${GOROOT}
-        env:
-          GOPATH: /home/runner/work/go
+        # env:
+        #   GOPATH: /home/runner/work/go
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v1
