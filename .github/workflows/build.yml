@@ -33,8 +33,8 @@ jobs:
           echo ${GITHUB_WORKSPACE}
           echo ${GOPATH}
           echo ${GOROOT}
-        # env:
-        #   GOPATH: /home/runner/work/go
+        env:
+          GOPATH: ${GITHUB_WORKSPACE}
 
       - name: Check out code into the Go module directory
         uses: actions/checkout@v1
