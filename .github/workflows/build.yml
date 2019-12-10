@@ -44,6 +44,29 @@ jobs:
         with:
           file: /home/runner/work/v2ray-rules-dat/v2ray-rules-dat/v2ray/${{ matrix.artifact_name }}
           asset_name: ${{ matrix.asset_name }}
-          tag: latest
+          tag: ${{ github.ref }}
           overwrite: true
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Create Release and Tag
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: ${{ github.ref }}
+      #     release_name: Release ${{ github.ref }}
+      #     body: Automatically released by GitHub Workflow.
+      #     draft: false
+      #     prerelease: false
+
+      # - name: Upload dat files to release
+      #   id: upload-release-asset 
+      #   uses: actions/upload-release-asset@v1.0.1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: /home/runner/work/v2ray-rules-dat/v2ray-rules-dat/v2ray/${{ matrix.artifact_name }}
+      #     asset_name: ${{ matrix.asset_name }}
+      #     asset_content_type: application/octet-stream
