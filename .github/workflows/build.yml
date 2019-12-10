@@ -41,13 +41,11 @@ jobs:
 
       - name: Upload dat files to release
         uses: svenstaro/upload-release-action@v1-release
-        env:
-          tagTime: ${{ hashFiles('v2ray/*.dat') }}
         with:
           file: /home/runner/work/v2ray-rules-dat/v2ray-rules-dat/v2ray/${{ matrix.artifact_name }}
           asset_name: ${{ matrix.asset_name }}
       #    tag: ${{ github.ref }}
-          tag: ${{ tagTime }}
+          tag: ${{ hashFiles('v2ray/*.dat') }}
           overwrite: true
           repo_token: ${{ secrets.GITHUB_TOKEN }}
 
