@@ -1,7 +1,7 @@
 name: Build V2Ray rules dat files
 on:
   schedule:
-    - cron: "* * * * *"
+    - cron: "0 0 */1 * *"
 
 jobs:
   build:
@@ -41,10 +41,13 @@ jobs:
 
       - name: Upload dat files to release
         uses: svenstaro/upload-release-action@v1-release
+        env:
+          tagTime: ${{ true && date '+%y%m%d%H%M' }}
         with:
           file: /home/runner/work/v2ray-rules-dat/v2ray-rules-dat/v2ray/${{ matrix.artifact_name }}
           asset_name: ${{ matrix.asset_name }}
-          tag: ${{ github.ref }}
+      #    tag: ${{ github.ref }}
+          tag: ${{ tagTime }}
           overwrite: true
           repo_token: ${{ secrets.GITHUB_TOKEN }}
 
