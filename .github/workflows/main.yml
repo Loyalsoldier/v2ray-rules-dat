@@ -7,6 +7,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         rule: [geoip, geosite]
@@ -25,20 +26,21 @@ jobs:
           go-version: 1.13
         id: go
 
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v1
-        with:
-          fetch-depth: 1
-
       - name: Debug
         run: |
+          cd 
           pwd
           echo ${HOME}
           echo ${GITHUB_WORKSPACE}
           echo ${GOPATH}
           echo ${GOROOT}
         env:
-          GOPATH: /home/runner/work/v2ray-rules-dat/go
+          GOPATH: /home/runner/work/go
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
 
       # - name: Set GOPATH
       #   run: |
