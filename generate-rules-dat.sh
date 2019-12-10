@@ -39,13 +39,14 @@ curl -sSL $CHINA_DOMAINS_URL \
   > $GOPATH/src/$GEOSITE_REPO/data/chinalist
 echo -e "${GREEN}>>> Finished Chinalist ${NC}"
 
-# echo -e "${GREEN}>>> generating AdBlock domains list...${NC}"
-# curl -sSL $ADBLOCK_DOMAINS_URL \
-#   | grep -eov '^(\d{1,3}\.){3}\d{1,3}' \
-#   | grep -eov '^[^.]$' \
-#   | grep -eo  '^(([a-zA-Z0-9]+[a-zA-Z0-9-]*)+\.)+[a-zA-Z0-9]{2,}$' \
-#   > $GOPATH/src/$GEOSITE_REPO/data/adblocklist
-# echo -e "${GREEN}>>> Finished AdBlocklist ${NC}"
+echo -e "${GREEN}>>> generating AdBlock domains list...${NC}"
+curl -sSL $ADBLOCK_DOMAINS_URL \
+  | grep -eov '^(\d{1,3}\.){3}\d{1,3}' \
+  | grep -eov '^[^.]$' \
+  > $GOPATH/src/$GEOSITE_REPO/data/adblocklist
+
+  # | grep -eo  '^(([a-zA-Z0-9]+[a-zA-Z0-9-]*)+\.)+[a-zA-Z0-9]{2,}$' \
+echo -e "${GREEN}>>> Finished AdBlocklist ${NC}"
 
 echo -e "${GREEN}>>> building geosite.dat file...${NC}"
 go run main.go
