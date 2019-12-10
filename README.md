@@ -31,7 +31,7 @@
 
 跟 v2ray 官方 `geoip.dat` 配置方式相同：
 
-```
+```json
 {
   "routing": {
     "rules": [
@@ -54,7 +54,7 @@
 
 路由 routing 配置方式：
 
-```
+```json
 {
   "routing": {
     "rules": [
@@ -88,7 +88,7 @@
 
 DNS 配置方式：
 
-```
+```json
 {
   "dns": {
     "servers": [
