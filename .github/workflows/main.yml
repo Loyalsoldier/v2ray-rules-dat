@@ -30,8 +30,8 @@ jobs:
 
       - name: Set GOPATH
         run: |
-          echo "##[set-env name=GOPATH;]$(dirname $GITHUB_WORKSPACE)"
-          echo "##[add-path]$(dirname $GITHUB_WORKSPACE)/bin"
+          echo "##[set-env name=GOPATH;]$GITHUB_WORKSPACE"
+          echo "##[add-path]$GITHUB_WORKSPACE/bin"
         shell: bash
 
       - name: Generate
