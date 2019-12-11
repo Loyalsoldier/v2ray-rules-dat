@@ -29,18 +29,24 @@ cd $GOPATH/src/$GEOSITE_REPO
 
 echo -e "${GREEN}>>> generating GFWList...${NC}"
 curl -sSL $getGFWLIST_SCRIPT \
-  | bash -s -- -l -o $GOPATH/src/$GEOSITE_REPO/data/gfwlist
+  | bash -s -- -l -o ./data/gfwlist
 echo -e "${GREEN}>>> Finished GFWList ${NC}"
 
 echo -e "${GREEN}>>> generating Chinese domains list...${NC}"
 curl -sSL $CHINA_DOMAINS_URL \
   | awk -F '/' '{print $2}' \
-  > $GOPATH/src/$GEOSITE_REPO/data/chinalist
+  > ./data/chinalist
 echo -e "${GREEN}>>> Finished Chinalist ${NC}"
 
 echo -e "${GREEN}>>> building geosite.dat file...${NC}"
 go run main.go
 mv dlc.dat $V2RAY_FOLDER/geosite.dat
 echo -e "${GREEN}>>> Finished geosite.dat ${NC}"
+
+echo ">>>>>>>>>>>>>>>>>>>>>>>>"
+ls -lah ./data
+echo ">>>>>>>>>>>>>>>>>>>>>>>>"
+ls -lah $V2RAY_FOLDER
+echo ">>>>>>>>>>>>>>>>>>>>>>>>"
 
 echo -e "${GREEN}完成啦！🌈${NC}"
