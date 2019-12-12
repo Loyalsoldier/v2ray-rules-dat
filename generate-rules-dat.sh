@@ -30,7 +30,7 @@ cd $GOPATH/src/$GEOSITE_REPO
 echo -e "${GREEN}>>> generating GFWList...${NC}"
 curl -sSL $getGFWLIST_SCRIPT \
   | bash -s -- -l -o ./data/gfwlist
-echo "include:gfwlist" >> ./data/geolocation-!cn
+echo "include:gfwlist" >> ./data/geolocation-\!cn
 echo -e "${GREEN}>>> Finished GFWList ${NC}"
 
 echo -e "${GREEN}>>> generating Chinese domains list...${NC}"
@@ -47,6 +47,10 @@ echo -e "${GREEN}>>> Finished geosite.dat ${NC}"
 
 echo ">>>>>>>>>>>>>>>>>>>>>>>>"
 ls -lah ./data
+echo ">>>>>>>>>>>>>>>>>>>>>>>>"
+tail -n 10 ./data/cn
+echo ">>>>>>>>>>>>>>>>>>>>>>>>"
+tail -n 10 ./data/geolocation-\!cn
 echo ">>>>>>>>>>>>>>>>>>>>>>>>"
 ls -lah $V2RAY_FOLDER
 echo ">>>>>>>>>>>>>>>>>>>>>>>>"
