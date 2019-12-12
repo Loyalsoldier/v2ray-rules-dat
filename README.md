@@ -31,7 +31,7 @@
 
 跟 v2ray 官方 `geoip.dat` 配置方式相同。
 
-routing 配置方式：
+Routing 配置方式：
 
 ```json
 {
@@ -54,7 +54,7 @@ routing 配置方式：
 
 跟 v2ray 官方 `geosite.dat` 配置方式相同。
 
-routing 配置方式：
+Routing 配置方式：
 
 ```json
 {
