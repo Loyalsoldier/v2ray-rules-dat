@@ -18,9 +18,9 @@
 ### geosite.dat
 
 - 通过仓库 [@v2ray/domain-list-community](https://github.com/v2ray/domain-list-community) 生成
-- **优点**：由于项目每天自动构建，所以更新速度比官方 `geosite.dat` 要快得多。新增了 `gfwlist` 和 `chinalist` 两个类别：
-  - **加入最新 GFWList**：通过仓库 [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq) 生成 `gfwlist` 类别
-  - **加入大量中国大陆域名**：通过仓库 [@felixonmars/dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list) 生成 `chinalist` 类别
+- **优点**：由于项目每天自动构建，所以更新速度比官方 `geosite.dat` 要快得多
+- **加入大量中国大陆域名**：通过仓库 [@felixonmars/dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list) 生成 `chinalist` 类别域名并加入到 `geosite:cn` 类别中
+- **加入最新 GFWList**：通过仓库 [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq) 生成 `gfwlist` 类别域名并加入到 `geosite:geolocation-!cn` 类别中
 
 ## 使用方式
 
@@ -29,7 +29,9 @@
 
 ### geoip.dat
 
-跟 v2ray 官方 `geoip.dat` 配置方式相同：
+跟 v2ray 官方 `geoip.dat` 配置方式相同。
+
+routing 配置方式：
 
 ```json
 {
@@ -50,9 +52,9 @@
 
 ### geosite.dat
 
-跟 v2ray 官方 `geosite.dat` 配置方式相同，不同点在于：新增了 `gfwlist` 和 `chinalist` 两个类别。
+跟 v2ray 官方 `geosite.dat` 配置方式相同。
 
-路由 routing 配置方式：
+routing 配置方式：
 
 ```json
 {
@@ -69,16 +71,14 @@
         "type": "field",
         "outboundTag": "Proxy",
         "domain": [
-          "geosite:geolocation-!cn",
-          "geosite:gfwlist"
+          "geosite:geolocation-!cn"
         ]
       },
       {
         "type": "field",
         "outboundTag": "Direct",
         "domain": [
-          "geosite:cn",
-          "geosite:chinalist"
+          "geosite:cn"
         ]
       }
     ]
@@ -93,19 +93,17 @@ DNS 配置方式：
   "dns": {
     "servers": [
       {
-        "address": "114.114.114.114",
-        "port": 53,
-        "domains": [
-          "geosite:cn",
-          "geosite:chinalist"
-        ]
-      },
-      {
         "address": "1.1.1.1",
         "port": 53,
         "domains": [
-          "geosite:geolocation-!cn",
-          "geosite:gfwlist"
+          "geosite:geolocation-!cn"
+        ]
+      },
+      {
+        "address": "114.114.114.114",
+        "port": 53,
+        "domains": [
+          "geosite:cn"
         ]
       },
       "8.8.8.8",
