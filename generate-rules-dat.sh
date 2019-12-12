@@ -30,12 +30,14 @@ cd $GOPATH/src/$GEOSITE_REPO
 echo -e "${GREEN}>>> generating GFWList...${NC}"
 curl -sSL $getGFWLIST_SCRIPT \
   | bash -s -- -l -o ./data/gfwlist
+echo "include:gfwlist" >> ./data/geolocation-!cn
 echo -e "${GREEN}>>> Finished GFWList ${NC}"
 
 echo -e "${GREEN}>>> generating Chinese domains list...${NC}"
 curl -sSL $CHINA_DOMAINS_URL \
   | awk -F '/' '{print $2}' \
   > ./data/chinalist
+echo "include:chinalist" >> ./data/cn
 echo -e "${GREEN}>>> Finished Chinalist ${NC}"
 
 echo -e "${GREEN}>>> building geosite.dat file...${NC}"
