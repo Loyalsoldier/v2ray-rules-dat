@@ -23,7 +23,6 @@ jobs:
           echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
           echo "::set-env name=GREEN::\033[0;32m"
           echo "::set-env name=NC::\033[0m"
-          echo "::set-env name=TIME::$(date +%Y%m%d%H%M)"
           echo "::set-env name=GEOIP_REPO::github.com/v2ray/geoip"
           echo "::set-env name=GEOSITE_REPO::github.com/v2ray/domain-list-community"
           echo "::set-env name=GFWLIST_URL::https://cokebar.github.io/gfwlist2dnsmasq/gfwlist_domain.txt"
@@ -92,10 +91,13 @@ jobs:
 
           echo -e "${GREEN}完成啦！🌈${NC}"
 
+      - name: Set release variables
+        run: |
+          echo "::set-env name=NAME::Released on $(date +%Y%m%d%H%M)"
+          echo "::set-env name=TAG_NAME::$(date +%Y%m%d%H%M)"
+
       - name: Release
         uses: Ricky-Hao/action-release@master
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          NAME: $TIME
-          TAG_NAME: $TIME
           ASSET_PATH: publish
