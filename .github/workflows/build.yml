@@ -52,7 +52,7 @@ jobs:
       - name: Get and add gfwlist into geolocation-!cn
         run: |
           cd $GOPATH/src/$GEOSITE_REPO/data
-          curl -sSL $GFWLIST_URL &1> gfwlist &2>/dev/null
+          curl -sSL $GFWLIST_URL > gfwlist
           echo "include:gfwlist" >> geolocation-\!cn
 
       - name: Get and add chinalist into cn
