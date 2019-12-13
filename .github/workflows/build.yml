@@ -127,8 +127,15 @@ jobs:
           echo "::set-env name=NAME::Released on $(date +%Y%m%d%H%M)"
           echo "::set-env name=TAG_NAME::$(date +%Y%m%d%H%M)"
 
-      - name: Release
+      - name: Release dat files
         uses: Ricky-Hao/action-release@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ASSET_PATH: publish
+
+      - name: Upload dat files
+        uses: actions/upload-artifact@master
+        if: success()
+        with:
+          name: dat_files
+          path: publish
