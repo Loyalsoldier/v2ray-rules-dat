@@ -1,23 +1,15 @@
-name: Build V2Ray rules dat files
+name: Build v2ray rules dat files
 on:
   schedule:
     - cron: "0 19 * * *"
+  push:
+    branches:
+     - master
 
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        rule: [geoip, geosite]
-        include:
-          - rule: geoip
-            artifact_name: geoip.dat
-            asset_name: geoip.dat
-          - rule: geosite
-            artifact_name: geosite.dat
-            asset_name: geosite.dat
 
     steps:
       - name: Set up Go 1.13
@@ -26,19 +18,85 @@ jobs:
           go-version: 1.13
         id: go
 
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v1
-
-      - name: Generate geoip.dat and geosite.dat file
+      - name: Set GOPATH
         run: |
-          chmod +x generate-rules-dat.sh
-          ./generate-rules-dat.sh
+          echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
+          echo "::set-env name=GREEN::\033[0;32m"
+          echo "::set-env name=NC::\033[0m"
+          echo "::set-env name=TIME::$(date +%Y%m%d%H%M)"
+          echo "::set-env name=GEOIP_REPO::github.com/v2ray/geoip"
+          echo "::set-env name=GEOSITE_REPO::github.com/v2ray/domain-list-community"
+          echo "::set-env name=GFWLIST_URL::https://cokebar.github.io/gfwlist2dnsmasq/gfwlist_domain.txt"
+          echo "::set-env name=CHINA_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf"
+          echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
+        shell: bash
 
-      - name: Upload dat files to release
-        uses: svenstaro/upload-release-action@v1-release
-        with:
-          file: /home/runner/work/v2ray-rules-dat/v2ray-rules-dat/v2ray/${{ matrix.artifact_name }}
-          asset_name: ${{ matrix.asset_name }}
-          tag: latest
-          overwrite: true
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get GeoLite2
+        run: |
+          curl -sSL -O https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
+          unzip GeoLite2-Country-CSV.zip
+          rm -f GeoLite2-Country-CSV.zip
+          mv GeoLite2* geoip
+
+      - name: Generate geoip.dat file
+        run: |
+          go get -u -v -insecure $GEOIP_REPO
+          geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv
+          mkdir -p ./publish
+          mv ./geoip.dat ./publish/
+
+      - name: Download geosite project
+        run: |
+          go get -d -v -insecure $GEOSITE_REPO
+
+      - name: Get and add gfwlist into geolocation-!cn
+        run: |
+          cd $GOPATH/src/$GEOSITE_REPO/data
+          curl -sSL $GFWLIST_URL &1> gfwlist &2>/dev/null
+          echo "include:gfwlist" >> geolocation-\!cn
+
+      - name: Get and add chinalist into cn
+        run: |
+          cd $GOPATH/src/$GEOSITE_REPO/data
+          curl -sSL $CHINA_DOMAINS_URL | awk -F '/' '{print $2}' > chinalist
+          echo "include:chinalist" >> cn
+
+      - name: Build geosite.dat file
+        run: |
+          cd $GOPATH/src/$GEOSITE_REPO
+          go run main.go
+          mv dlc.dat ./publish/geosite.dat
+
+      - name: List above process results
+        run: |
+          echo ">>>>>>>>>>>>>>>>>>>>>>>>"
+          
+          echo "list files in data folder"
+          ls -lah $GOPATH/src/$GEOSITE_REPO/data
+          
+          echo ">>>>>>>>>>>>>>>>>>>>>>>>"
+
+          echo "list last 10 lines of cn file"
+          tail -n 10 $GOPATH/src/$GEOSITE_REPO/data/cn
+          
+          echo ">>>>>>>>>>>>>>>>>>>>>>>>"
+
+          echo "list last 10 lines of geolocation-!cn file"
+          tail -n 10 $GOPATH/src/$GEOSITE_REPO/data/geolocation-\!cn
+
+          echo ">>>>>>>>>>>>>>>>>>>>>>>>"
+
+          echo "list files in publish folder"
+          ls -lah ./publish
+
+          echo ">>>>>>>>>>>>>>>>>>>>>>>>"
+
+          echo -e "${GREEN}完成啦！🌈${NC}"
+
+      - name: Release
+        uses: Ricky-Hao/action-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          NAME: $TIME
+          TAG_NAME: $TIME
+          ASSET_PATH: publish
