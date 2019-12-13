@@ -110,6 +110,11 @@ jobs:
 
           echo ">>>>>>>>>>>>>>>>>>>>>>>>"
 
+          echo "list last 10 lines of category-ads-all file"
+          tail -n 10 $GOPATH/src/$GEOSITE_REPO/data/category-ads-all
+
+          echo ">>>>>>>>>>>>>>>>>>>>>>>>"
+
           echo "list files in publish folder"
           ls -lah ./publish
 
