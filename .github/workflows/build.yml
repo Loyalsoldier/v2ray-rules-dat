@@ -47,7 +47,7 @@ jobs:
 
       - name: Download geosite project
         run: |
-          go get -d -v -insecure $GEOSITE_REPO
+          go get -u -v -insecure $GEOSITE_REPO
 
       - name: Get and add gfwlist into geolocation-!cn
         run: |
@@ -63,9 +63,8 @@ jobs:
 
       - name: Build geosite.dat file
         run: |
-          cd $GOPATH/src/$GEOSITE_REPO
-          go run main.go
-          mv dlc.dat ./publish/geosite.dat
+          domain-list-community
+          mv ./dlc.dat ./publish/geosite.dat
 
       - name: List above process results
         run: |
