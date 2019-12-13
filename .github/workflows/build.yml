@@ -1,7 +1,7 @@
 name: Build V2Ray rules dat files
-on: [push]
-#   schedule:
-#     - cron: "0 19 * * *"
+on:
+  schedule:
+    - cron: "0 19 * * *"
 
 jobs:
   build:
