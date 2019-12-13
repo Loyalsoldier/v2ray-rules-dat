@@ -83,7 +83,7 @@ jobs:
       - name: Get and add reject domains from @h2y/Shadowrocket-ADBlock-Rules into category-ads-all
         run: |
           cd $GOPATH/src/$GEOSITE_REPO/data
-          curl -sSL $ADBLOCK_URL | grep -ev '#' | grep -ev '^\d{1,3}(\.\d{1,3}){3}' > adblockreject
+          curl -sSL $ADBLOCK_URL | grep --no-buffer -Eev '#' | grep --no-buffer -Eev '^\d{1,3}(\.\d{1,3}){3}' > adblockreject
           echo "include:adblockreject" >> category-ads-all
 
       - name: Build geosite.dat file
