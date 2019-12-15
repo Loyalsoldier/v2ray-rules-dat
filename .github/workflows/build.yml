@@ -60,12 +60,12 @@ jobs:
       - name: Get and add google domains into temp-proxy.txt file
         run: |
           cd $GOPATH/src/$GEOSITE_REPO
-          curl -sSL $GOOGLE_URL >> temp-proxy.txt
+          curl -sSL $GOOGLE_URL | awk -F '/' '{print $2}' >> temp-proxy.txt
 
       - name: Get and add apple domains into temp-proxy.txt file
         run: |
           cd $GOPATH/src/$GEOSITE_REPO
-          curl -sSL $APPLE_URL >> temp-proxy.txt
+          curl -sSL $APPLE_URL | awk -F '/' '{print $2}' >> temp-proxy.txt
 
       - name: Get and add proxy domains from @ConnersHua/Profiles into temp-proxy.txt file
         run: |
