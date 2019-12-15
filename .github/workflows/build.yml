@@ -111,37 +111,37 @@ jobs:
 
       - name: List above process results
         run: |
-          echo "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
+          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
 
           echo "list files in geosite folder"
           ls -lah $GOPATH/src/$GEOSITE_REPO
 
-          echo "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
+          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
           
           echo "list files in data folder"
           ls -lah $GOPATH/src/$GEOSITE_REPO/data
           
-          echo "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
+          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
 
           echo "list last 10 lines of cn file"
           tail -n 10 $GOPATH/src/$GEOSITE_REPO/data/cn
           
-          echo "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
+          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
 
           echo "list last 10 lines of geolocation-!cn file"
           tail -n 10 $GOPATH/src/$GEOSITE_REPO/data/geolocation-\!cn
 
-          echo "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
+          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
 
           echo "list last 10 lines of category-ads-all file"
           tail -n 10 $GOPATH/src/$GEOSITE_REPO/data/category-ads-all
 
-          echo "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
+          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
 
           echo "list files in publish folder"
           ls -lah ./publish
 
-          echo "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
+          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
 
           echo -e "${GREEN}完成啦！🌈${NC}"
 
