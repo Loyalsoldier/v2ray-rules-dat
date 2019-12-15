@@ -101,6 +101,7 @@ jobs:
 
       - name: Add lists into appropriate category
         run: |
+          cd $GOPATH/src/$GEOSITE_REPO/data
           echo "include:proxylist" >> geolocation-\!cn
           echo "include:directlist" >> cn
 
