@@ -16,6 +16,7 @@
 - **优点**：由于项目每天自动构建，所以更新速度比官方 `geosite.dat` 要快得多
 - **加入大量中国大陆域名**：通过仓库 [@felixonmars/dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list) 生成 `chinalist` 类别域名并加入到 `geosite:cn` 类别中
 - **加入最新 GFWList**：通过仓库 [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq) 生成 `gfwlist` 类别域名并加入到 `geosite:geolocation-!cn` 类别中
+- **加入 Greatfire.org 检测到的屏蔽域名**：通过仓库 [@wongsyrone/domain-block-list](https://github.com/wongsyrone/domain-block-list) 获取 greatfire.org 检测到的屏蔽域名，生成 `blockedlist` 类别，并加入到 `geosite:geolocation-!cn` 类别中
 - **加入更多直连、代理、广告域名**：通过仓库 [@ConnersHua/Profiles](https://github.com/ConnersHua/Profiles/tree/master) 获取更多直连、代理、广告域名，并分别加入到 `geosite:cn`、`geosite:geolocation-!cn` 和 `geosite:category-ads-all` 类别中
 
 ## 使用方式
