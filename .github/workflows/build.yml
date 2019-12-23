@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+      - hidden
 
 jobs:
   build:
@@ -12,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up Go 1.13
+      - name: Setup Go 1.13
         uses: actions/setup-go@v1
         with:
           go-version: 1.13
@@ -21,8 +22,6 @@ jobs:
       - name: Set $GOPATH and more variables
         run: |
           echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
-          echo "::set-env name=GREEN::\033[0;32m"
-          echo "::set-env name=NC::\033[0m"
           echo "::set-env name=NAME::Released on $(date +%Y%m%d%H%M)"
           echo "::set-env name=TAG_NAME::$(date +%Y%m%d%H%M)"
           echo "::set-env name=GEOIP_REPO::github.com/v2ray/geoip"
@@ -30,9 +29,9 @@ jobs:
           echo "::set-env name=GOOGLE_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/google.china.conf"
           echo "::set-env name=APPLE_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf"
           echo "::set-env name=GFWLIST_URL::https://cokebar.github.io/gfwlist2dnsmasq/gfwlist_domain.txt"
-          echo "::set-env name=Profiles_URL::https://raw.githubusercontent.com/ConnersHua/Profiles/master/Shadow/Pro.conf"
           echo "::set-env name=Blocked_DOMAINS_URL::https://raw.githubusercontent.com/wongsyrone/domain-block-list/master/domains.txt"
           echo "::set-env name=CHINA_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf"
+          echo "::set-env name=Profiles_URL::https://raw.githubusercontent.com/ConnersHua/Profiles/master/Shadow/Pro.conf"
           echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
         shell: bash
 
@@ -41,7 +40,7 @@ jobs:
         with:
           ref: hidden
 
-      - name: Get GeoLite2 IP file
+      - name: Get GeoLite2 file
         run: |
           curl -sSL -O https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
           unzip GeoLite2-Country-CSV.zip
@@ -98,7 +97,7 @@ jobs:
           cat proxy.txt >> temp-proxy.txt
           cat direct.txt >> temp-direct.txt
 
-      - name: Remove repeated domains and write domains to new lists
+      - name: Remove repeated domains and write domains to appropriate list
         run: |
           cat temp-proxy.txt | sort --ignore-case -u > $GOPATH/src/$GEOSITE_REPO/data/proxylist
           cat temp-direct.txt | sort --ignore-case -u > $GOPATH/src/$GEOSITE_REPO/data/directlist
@@ -113,47 +112,6 @@ jobs:
         run: |
           domain-list-community
           mv ./dlc.dat ./publish/geosite.dat
-
-      - name: List above process results
-        run: |
-          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
-
-          echo "list files in geosite folder"
-          ls -lah $GOPATH/src/$GEOSITE_REPO
-
-          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
-          
-          echo "list files in data folder"
-          ls -lah $GOPATH/src/$GEOSITE_REPO/data
-          
-          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
-
-          echo "list last 10 lines of cn file"
-          tail -n 10 $GOPATH/src/$GEOSITE_REPO/data/cn
-          
-          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
-
-          echo "list last 10 lines of geolocation-!cn file"
-          tail -n 10 $GOPATH/src/$GEOSITE_REPO/data/geolocation-\!cn
-
-          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
-
-          echo "list last 10 lines of category-ads-all file"
-          tail -n 10 $GOPATH/src/$GEOSITE_REPO/data/category-ads-all
-
-          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
-
-          echo "list files in the workspace"
-          ls -lah ./
-
-          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
-
-          echo "list files in publish folder"
-          ls -lah ./publish
-
-          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
-
-          echo -e "${GREEN}完成啦！🌈${NC}"
 
       - name: Release dat files
         uses: Ricky-Hao/action-release@master
