@@ -22,8 +22,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: hidden
-          fetch-depth: 0
-        run: |
+      - run: |
           pwd
           ls -lah
 
