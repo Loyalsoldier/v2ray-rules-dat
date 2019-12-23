@@ -1,0 +1,31 @@
+name: Test and show directory of each steps
+on:
+  schedule:
+    - cron: "0 22 * * *"
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+        id: go
+
+      - name: pwd
+        run: pwd
+
+      - name: make directory and go into it
+        run: |
+          mkdir -p secondary
+          cd secondary
+          pwd
+
+      - name: show last directory
+        run: pwd
