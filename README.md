@@ -22,22 +22,26 @@
   - 由于项目每天自动构建，所以更新速度比官方 `geosite.dat` 要快得多
   - 对从上述仓库和文件中获取的直连、代理域名进行简单去重，减小规则文件体积
 
-## 使用方式
+## 规则文件下载及使用方式
 
-### 下载地址
+**下载地址**：
 
 - **geoip.dat**：[https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat)
 - **geosite.dat**：[https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat)
 
+**使用方式**：
+
 1. 通过上面下载地址或[点击进入规则文件发布页面](https://github.com/Loyalsoldier/v2ray-rules-dat/releases)，下载 `geoip.dat` 和 `geosite.dat`
 2. 把下载下来的 `geoip.dat` 和 `geosite.dat` 文件放入到 v2ray 软件的规则文件目录，替换掉原来的 `geoip.dat` 和 `geosite.dat`
-3. 修改 v2ray 配置文件。配置参考下面👇
+3. 修改 v2ray 配置文件，配置参考下面 👇👇👇
+
+## 参考配置
 
 ### geoip.dat
 
 跟 v2ray 官方 `geoip.dat` 配置方式相同。
 
-Routing 配置方式：
+**Routing 配置方式**：
 
 ```json
 {
@@ -60,7 +64,7 @@ Routing 配置方式：
 
 跟 v2ray 官方 `geosite.dat` 配置方式相同。
 
-Routing 配置方式：
+**Routing 配置方式**：
 
 ```json
 {
@@ -92,7 +96,7 @@ Routing 配置方式：
 }
 ```
 
-DNS 配置方式：
+**DNS 配置方式**：
 
 ```json
 {
