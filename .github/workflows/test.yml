@@ -18,8 +18,18 @@ jobs:
           go-version: 1.13
         id: go
 
+      - name: git checkout repo and show all files
+        uses: actions/checkout@v2
+        with:
+          ref: hidden
+        run: |
+          pwd
+          ls -lah
+
       - name: pwd
-        run: pwd
+        run: |
+          pwd
+          ls -lah
 
       - name: make directory and go into it
         run: |
