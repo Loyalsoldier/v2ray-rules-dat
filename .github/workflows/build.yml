@@ -18,11 +18,13 @@ jobs:
           go-version: 1.13
         id: go
 
-      - name: Set GOPATH
+      - name: Set $GOPATH and more variables
         run: |
           echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
           echo "::set-env name=GREEN::\033[0;32m"
           echo "::set-env name=NC::\033[0m"
+          echo "::set-env name=NAME::Released on $(date +%Y%m%d%H%M)"
+          echo "::set-env name=TAG_NAME::$(date +%Y%m%d%H%M)"
           echo "::set-env name=GEOIP_REPO::github.com/v2ray/geoip"
           echo "::set-env name=GEOSITE_REPO::github.com/v2ray/domain-list-community"
           echo "::set-env name=GOOGLE_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/google.china.conf"
@@ -34,7 +36,12 @@ jobs:
           echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
         shell: bash
 
-      - name: Get GeoLite2
+      - name: Checkout branch named hidden of this repo
+        uses: actions/checkout@v2
+        with:
+          ref: hidden
+
+      - name: Get GeoLite2 IP file
         run: |
           curl -sSL -O https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
           unzip GeoLite2-Country-CSV.zip
@@ -52,52 +59,49 @@ jobs:
         run: |
           go get -u -v -insecure $GEOSITE_REPO
 
-      - name: Get and add gfwlist into temp-proxy.txt file
+      - name: Get and add gfwlist domains into temp-proxy.txt file
         run: |
-          cd $GOPATH/src/$GEOSITE_REPO
           curl -sSL $GFWLIST_URL > temp-proxy.txt
       
       - name: Get and add google domains into temp-proxy.txt file
         run: |
-          cd $GOPATH/src/$GEOSITE_REPO
           curl -sSL $GOOGLE_URL | awk -F '/' '{print $2}' >> temp-proxy.txt
 
       - name: Get and add apple domains into temp-proxy.txt file
         run: |
-          cd $GOPATH/src/$GEOSITE_REPO
           curl -sSL $APPLE_URL | awk -F '/' '{print $2}' >> temp-proxy.txt
 
       - name: Get and add proxy domains from @ConnersHua/Profiles into temp-proxy.txt file
         run: |
-          cd $GOPATH/src/$GEOSITE_REPO
-          curl -sSL $Profiles_URL | awk '/^DOMAIN.+PROXY/' | cut -d ',' -f 2 >> temp-proxy.txt
+          curl -sSL $Profiles_URL | awk -F ',' '/^DOMAIN.+PROXY/ {print $2}' >> temp-proxy.txt
           
       - name: Get and add blocked domains from @wongsyrone/domain-block-list into temp-proxy.txt file
         run: |
-          cd $GOPATH/src/$GEOSITE_REPO
           curl -sSL $Blocked_DOMAINS_URL >> temp-proxy.txt
 
       - name: Get and add direct domains from @ConnersHua/Profiles into temp-direct.txt file
         run: |
-          cd $GOPATH/src/$GEOSITE_REPO
-          curl -sSL $Profiles_URL | awk '/^DOMAIN.+DIRECT/' | cut -d ',' -f 2 > temp-direct.txt
+          curl -sSL $Profiles_URL | awk -F ',' '/^DOMAIN.+DIRECT/ {print $2}' > temp-direct.txt
 
-      - name: Get and add chinalist into temp-direct.txt file
+      - name: Get and add chinalist domains into temp-direct.txt file
         run: |
-          cd $GOPATH/src/$GEOSITE_REPO
           curl -sSL $CHINA_DOMAINS_URL | awk -F '/' '{print $2}' >> temp-direct.txt
 
-      - name: Get and add reject domains from @ConnersHua/Profiles into category-ads-all
+      - name: Get and add rejected domains from @ConnersHua/Profiles into category-ads-all
         run: |
           cd $GOPATH/src/$GEOSITE_REPO/data
-          curl -sSL $Profiles_URL | awk '/^DOMAIN.+REJECT/' | cut -d ',' -f 2 > profilereject
+          curl -sSL $Profiles_URL | awk -F ',' '/^DOMAIN.+REJECT/ {print $2}' > profilereject
           echo "include:profilereject" >> category-ads-all
+
+      - name: Add proxy and direct domains from the branch named hidden of this repo to appropriate temp files
+        run: |
+          cat proxy.txt >> temp-proxy.txt
+          cat direct.txt >> temp-direct.txt
 
       - name: Remove repeated domains and write domains to new lists
         run: |
-          cd $GOPATH/src/$GEOSITE_REPO
-          cat temp-proxy.txt | sort --ignore-case -u > ./data/proxylist
-          cat temp-direct.txt | sort --ignore-case -u > ./data/directlist
+          cat temp-proxy.txt | sort --ignore-case -u > $GOPATH/src/$GEOSITE_REPO/data/proxylist
+          cat temp-direct.txt | sort --ignore-case -u > $GOPATH/src/$GEOSITE_REPO/data/directlist
 
       - name: Add lists into appropriate category
         run: |
@@ -139,6 +143,11 @@ jobs:
 
           echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
 
+          echo "list files in the workspace"
+          ls -lah ./
+
+          echo -e "${GREEN}>>>>>>>>>>>>>>>>>>>>>>>>${NC}"
+
           echo "list files in publish folder"
           ls -lah ./publish
 
@@ -146,20 +155,8 @@ jobs:
 
           echo -e "${GREEN}完成啦！🌈${NC}"
 
-      - name: Set release variables
-        run: |
-          echo "::set-env name=NAME::Released on $(date +%Y%m%d%H%M)"
-          echo "::set-env name=TAG_NAME::$(date +%Y%m%d%H%M)"
-
       - name: Release dat files
         uses: Ricky-Hao/action-release@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ASSET_PATH: publish
-
-      - name: Upload dat files
-        uses: actions/upload-artifact@master
-        if: success()
-        with:
-          name: dat_files
-          path: publish
