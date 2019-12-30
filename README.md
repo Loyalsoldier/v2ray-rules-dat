@@ -122,3 +122,13 @@
   }
 }
 ```
+
+## 致谢
+
+- [@v2ray/geoip](https://github.com/v2ray/geoip)
+- [@v2ray/domain-list-community](https://github.com/v2ray/domain-list-community)
+- [@felixonmars/dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list)
+- [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq)
+- [@wongsyrone/domain-block-list](https://github.com/wongsyrone/domain-block-list)
+- [@ConnersHua/Profiles](https://github.com/ConnersHua/Profiles/tree/master)
+- [MaxMind 免费 IP](https://dev.maxmind.com/geoip/geoip2/geolite2/)
