@@ -18,9 +18,10 @@ jobs:
 
       - name: Get GeoLite2 file
         run: |
+          curl ip.sb
           pwd
           ls -lah ./
-          curl -L -o GeoLite2-Country-CSV.zip https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country-CSV&license_key=JvbzLLx7qBZT&suffix=zip
+          wget -O GeoLite2-Country-CSV.zip https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country-CSV&license_key=JvbzLLx7qBZT&suffix=zip
           ls -lah ./
           unzip GeoLite2-Country-CSV.zip
           rm -f GeoLite2-Country-CSV.zip
