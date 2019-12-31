@@ -39,23 +39,17 @@ jobs:
         with:
           ref: hidden
 
-#       - name: Get GeoLite2 file
-#         run: |
-#           curl -sSL -O https://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
-#           unzip GeoLite2-Country-CSV.zip
-#           rm -f GeoLite2-Country-CSV.zip
-#           mv GeoLite2* geoip
-
-#       - name: Generate geoip.dat file
-#         run: |
-#           go get -u -v -insecure $GEOIP_REPO
-#           geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv
-#           mkdir -p ./publish
-#           mv ./geoip.dat ./publish/
-
-      - name: Copy geoip.dat
+      - name: Get GeoLite2 file
         run: |
-          curl -sSL -O https://github.com/Loyalsoldier/v2ray-rules-dat/raw/master/geoip.dat
+          curl -sSL -o GeoLite2-Country-CSV.zip https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country-CSV&license_key=JvbzLLx7qBZT&suffix=zip
+          unzip GeoLite2-Country-CSV.zip
+          rm -f GeoLite2-Country-CSV.zip
+          mv GeoLite2* geoip
+
+      - name: Generate geoip.dat file
+        run: |
+          go get -u -v -insecure $GEOIP_REPO
+          geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv
           mkdir -p ./publish
           mv ./geoip.dat ./publish/
 
