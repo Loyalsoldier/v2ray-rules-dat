@@ -16,7 +16,6 @@
 - **加入最新 GFWList 域名**：通过仓库 [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq) 生成并加入到 `geosite:geolocation-!cn` 类别中
 - **加入 Greatfire.org 检测到的屏蔽域名**：通过仓库 [@wongsyrone/domain-block-list](https://github.com/wongsyrone/domain-block-list) 获取 greatfire.org 检测到的屏蔽域名，并加入到 `geosite:geolocation-!cn` 类别中
 - **加入更多直连、代理、广告域名**：通过仓库 [@ConnersHua/Profiles](https://github.com/ConnersHua/Profiles/tree/master) 获取更多直连、代理、广告域名，并分别加入到 `geosite:cn`、`geosite:geolocation-!cn` 和 `geosite:category-ads-all` 类别中
-- **加入广告软件 + 流氓软件 + 假新闻 + 菠菜域名**：通过仓库 [@StevenBlack/hosts](https://github.com/StevenBlack/hosts) 获取[广告软件 + 流氓软件 + 假新闻 + 菠菜](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts)域名，并加入到 `geosite:category-ads-all` 类别中
 - **加入自定义直连和代理域名**：由于上游域名列表更新缓慢或缺失某些被屏蔽的域名，所以引入自定义域名列表，主要为了解决在 DNS 解析 `A` 和 `AAAA` 记录时的 DNS 泄漏问题。[`hidden` 分支](https://github.com/Loyalsoldier/v2ray-rules-dat/tree/hidden)里有两个文件 `direct.txt` 和 `proxy.txt`，分别放置自定义的直连、代理域名，最终分别加入到 `geosite:cn` 和 `geosite:geolocation-!cn` 类别中
 
 ## 规则文件下载及使用方式
@@ -128,5 +127,4 @@
 - [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq)
 - [@wongsyrone/domain-block-list](https://github.com/wongsyrone/domain-block-list)
 - [@ConnersHua/Profiles](https://github.com/ConnersHua/Profiles/tree/master)
-- [@StevenBlack/hosts](https://github.com/StevenBlack/hosts)
 - [MaxMind 免费 IP](https://dev.maxmind.com/geoip/geoip2/geolite2/)
