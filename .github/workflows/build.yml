@@ -59,47 +59,24 @@ jobs:
         run: |
           go get -u -v -insecure $GEOSITE_REPO
 
-      - name: Get and add gfwlist domains into temp-proxy.txt file
+      - name: Get and add proxy domains into temp-proxy.txt file
         run: |
           curl -sSL $GFWLIST_DOMAINS_URL > temp-proxy.txt
-      
-      - name: Get and add google domains into temp-proxy.txt file
-        run: |
           curl -sSL $GOOGLE_DOMAINS_URL | awk -F '/' '{print $2}' >> temp-proxy.txt
-
-      - name: Get and add apple domains into temp-proxy.txt file
-        run: |
           curl -sSL $APPLE_DOMAINS_URL | awk -F '/' '{print $2}' >> temp-proxy.txt
-
-      - name: Get and add proxy domains from @ConnersHua/Profiles into temp-proxy.txt file
-        run: |
-          curl -sSL $PROFILES_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+PROXY/ {print $2}' >> temp-proxy.txt
-      
-      - name: Get and add proxy domains from @lhie1/Rules into temp-proxy.txt file
-        run: |
-          curl -sSL $LHIE1_Rules_PROXY_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+PROXY/ {print $2}' >> temp-proxy.txt
-          
-      - name: Get and add blocked domains from @wongsyrone/domain-block-list into temp-proxy.txt file
-        run: |
           curl -sSL $GREATFIRE_DOMAINS_URL >> temp-proxy.txt
 
-      - name: Get and add direct domains from @ConnersHua/Profiles into temp-direct.txt file
+      - name: Get and add direct domains into temp-direct.txt file
         run: |
           curl -sSL $PROFILES_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+DIRECT/ {print $2}' > temp-direct.txt
-
-      - name: Get and add chinalist domains into temp-direct.txt file
-        run: |
           curl -sSL $CHINA_DOMAINS_URL | awk -F '/' '{print $2}' >> temp-direct.txt
 
-      - name: Get and add rejected domains from @ConnersHua/Profiles into temp-reject.txt file
+      - name: Get and add reject domains into temp-reject.txt file
         run: |
           curl -sSL $PROFILES_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+REJECT/ {print $2}' > temp-reject.txt
-
-      - name: Get and add rejected domains from @lhie1/Rules into temp-reject.txt file
-        run: |
           curl -sSL $LHIE1_Rules_REJECT_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+REJECT/ {print $2}' >> temp-reject.txt
 
-      - name: Add proxy and direct domains from the branch named hidden of this repo to appropriate temp files
+      - name: Add proxy and direct domains from "hidden" branch to appropriate temp files
         run: |
           cat proxy.txt >> temp-proxy.txt
           cat direct.txt >> temp-direct.txt
@@ -110,7 +87,7 @@ jobs:
           cat temp-direct.txt | sort --ignore-case -u > $GOPATH/src/$GEOSITE_REPO/data/directlist
           cat temp-reject.txt | sort --ignore-case -u > $GOPATH/src/$GEOSITE_REPO/data/rejectlist
 
-      - name: Add lists into appropriate category
+      - name: Add list into appropriate category file
         run: |
           cd $GOPATH/src/$GEOSITE_REPO/data
           echo "include:proxylist" >> geolocation-\!cn
