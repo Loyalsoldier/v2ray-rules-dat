@@ -98,12 +98,12 @@ jobs:
 
       - name: Filter valid domains
         run: |
-          cat proxy-sort.txt | awk '/^([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+$/{print $0}' > $GOPATH/src/$GEOSITE_REPO/data/proxylist
-          cat proxy-sort.txt | awk '!/^([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+$/{print $0}' > proxy-filter.txt
-          cat direct-sort.txt | awk '/^([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+$/{print $0}' > $GOPATH/src/$GEOSITE_REPO/data/directlist
-          cat direct-sort.txt | awk '!/^([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+$/{print $0}' > direct-filter.txt
-          cat reject-sort.txt | awk '/^([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+$/{print $0}' > $GOPATH/src/$GEOSITE_REPO/data/rejectlist
-          cat reject-sort.txt | awk '!/^([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+$/{print $0}' > reject-filter.txt
+          cat proxy-sort.txt | awk '/^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-]+$/{print $0}' > $GOPATH/src/$GEOSITE_REPO/data/proxylist
+          cat proxy-sort.txt | awk '!/^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-]+$/{print $0}' > proxy-filter.txt
+          cat direct-sort.txt | awk '/^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-]+$/{print $0}' > $GOPATH/src/$GEOSITE_REPO/data/directlist
+          cat direct-sort.txt | awk '!/^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-]+$/{print $0}' > direct-filter.txt
+          cat reject-sort.txt | awk '/^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-]+$/{print $0}' > $GOPATH/src/$GEOSITE_REPO/data/rejectlist
+          cat reject-sort.txt | awk '!/^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-]+$/{print $0}' > reject-filter.txt
 
       - name: Add list into appropriate category file
         run: |
