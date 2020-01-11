@@ -117,6 +117,7 @@ jobs:
           domain-list-community
           mv ./dlc.dat ./publish/geosite.dat
           mv ./*-filter.txt ./publish/
+          cp -f $GOPATH/src/$GEOSITE_REPO/data/{proxy,direct,reject}list ./publish/
 
       - name: Release dat files
         uses: Ricky-Hao/action-release@master
