@@ -67,7 +67,7 @@ jobs:
       - name: Automatically generate ookla-speedtest sub-list from source
         run: |
           curl -L -o servers-source.xml "https://c.speedtest.net/speedtest-servers-static.php"
-          perl -ne '/host="((?=.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+):[0-9]+"/ && print "full:$1\n"' servers-source.xml | perl -ne 'print lc' | sort --ignore-case -u >> $GOPATH/src/$GEOSITE_REPO/data/ookla-speedtest
+          perl -ne '/host="(.+):[0-9]+"/ && print "full:$1\n"' servers-source.xml | perl -ne 'print if not /^(full:([0-9]{1,3}\.){3}[0-9]{1,3})$/' | perl -ne 'print lc' | sort --ignore-case -u >> $GOPATH/src/$GEOSITE_REPO/data/ookla-speedtest
 
       - name: Get and add direct domains into temp-direct.txt file
         run: |
