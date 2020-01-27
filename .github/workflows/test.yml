@@ -1,0 +1,16 @@
+name: Test if Perl
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Perl
+        run: |
+          perl --version
+          which perl
