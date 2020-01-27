@@ -99,11 +99,11 @@ jobs:
 
       - name: Sort and generate lists
         run: |
-          cat temp-proxy.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+)/ && print "$1\n"'' > $GOPATH/src/$GEOSITE_REPO/data/proxylist
+          cat temp-proxy.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/proxylist
           cat temp-proxy.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+)/' > proxy-excluse-list.txt
-          cat temp-direct.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+)/ && print "$1\n"'' > $GOPATH/src/$GEOSITE_REPO/data/directlist
+          cat temp-direct.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/directlist
           cat temp-direct.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+)/' > direct-excluse-list.txt
-          cat temp-reject.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+)/ && print "$1\n"'' > $GOPATH/src/$GEOSITE_REPO/data/rejectlist
+          cat temp-reject.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/rejectlist
           cat temp-reject.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+)/' > reject-excluse-list.txt
 
       - name: Add list into appropriate category file
