@@ -1,4 +1,4 @@
-name: Build v2ray rules dat files
+name: Build V2Ray rules dat files
 on:
   schedule:
     - cron: "0 22 * * *"
@@ -41,12 +41,12 @@ jobs:
           echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
         shell: bash
 
-      - name: Checkout branch named hidden of this repo
+      - name: Checkout the "hidden" branch
         uses: actions/checkout@v2
         with:
           ref: hidden
 
-      - name: Get GeoLite2 file
+      - name: Get GeoLite2 zip file
         run: |
           curl -L -o GeoLite2-Country-CSV.zip "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country-CSV&license_key=JvbzLLx7qBZT&suffix=zip"
           unzip GeoLite2-Country-CSV.zip
@@ -63,7 +63,7 @@ jobs:
       - name: Download geosite project
         run: |
           go get -u -v -insecure $GEOSITE_REPO
-          
+
       - name: Automatically generate ookla-speedtest sub-list from source
         run: |
           curl -L -o servers-source.xml "https://c.speedtest.net/speedtest-servers-static.php"
@@ -88,7 +88,7 @@ jobs:
           curl -sSL $GEQ1AN_RULES_MICROSOFT_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+Microsoft/ {print $2}' >> temp-proxy.txt
           curl -sSL $GEQ1AN_RULES_GLOBAL_MEDIA_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+GMedia/ {print $2}' >> temp-proxy.txt
           curl -sSL $GEQ1AN_RULES_OUTSIDE_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+Outside/ {print $2}' >> temp-proxy.txt
-          
+
       - name: Get and add reject domains into temp-reject.txt file
         run: |
           curl -sSL $PROFILES_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+REJECT/ {print $2}' > temp-reject.txt
