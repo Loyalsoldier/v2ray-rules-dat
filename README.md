@@ -44,19 +44,17 @@
 **Routing 配置方式**：
 
 ```json
-{
-  "routing": {
-    "rules": [
-      {
-        "type": "field",
-        "outboundTag": "Direct",
-        "ip": [
-          "geoip:cn",
-          "geoip:private"
-        ]
-      }
-    ]
-  }
+"routing": {
+  "rules": [
+    {
+      "type": "field",
+      "outboundTag": "Direct",
+      "ip": [
+        "geoip:cn",
+        "geoip:private"
+      ]
+    }
+  ]
 }
 ```
 
@@ -67,59 +65,55 @@
 **Routing 配置方式**：
 
 ```json
-{
-  "routing": {
-    "rules": [
-      {
-        "type": "field",
-        "outboundTag": "Reject",
-        "domain": [
-          "geosite:category-ads-all"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "Proxy",
-        "domain": [
-          "geosite:geolocation-!cn"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "Direct",
-        "domain": [
-          "geosite:cn"
-        ]
-      }
-    ]
-  }
+"routing": {
+  "rules": [
+    {
+      "type": "field",
+      "outboundTag": "Reject",
+      "domain": [
+        "geosite:category-ads-all"
+      ]
+    },
+    {
+      "type": "field",
+      "outboundTag": "Proxy",
+      "domain": [
+        "geosite:geolocation-!cn"
+      ]
+    },
+    {
+      "type": "field",
+      "outboundTag": "Direct",
+      "domain": [
+        "geosite:cn"
+      ]
+    }
+  ]
 }
 ```
 
 **DNS 配置方式**：
 
 ```json
-{
-  "dns": {
-    "servers": [
-      {
-        "address": "1.1.1.1",
-        "port": 53,
-        "domains": [
-          "geosite:geolocation-!cn"
-        ]
-      },
-      {
-        "address": "114.114.114.114",
-        "port": 53,
-        "domains": [
-          "geosite:cn"
-        ]
-      },
-      "8.8.8.8",
-      "223.5.5.5"
-    ]
-  }
+"dns": {
+  "servers": [
+    {
+      "address": "1.1.1.1",
+      "port": 53,
+      "domains": [
+        "geosite:geolocation-!cn"
+      ]
+    },
+    {
+      "address": "114.114.114.114",
+      "port": 53,
+      "domains": [
+        "geosite:cn"
+      ]
+    },
+    "8.8.8.8",
+    "223.5.5.5"
+  ]
 }
 ```
 
