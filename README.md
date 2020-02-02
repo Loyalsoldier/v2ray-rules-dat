@@ -117,6 +117,178 @@
 }
 ```
 
+### 自用 V2Ray 客户端完整配置（仅供参考，根据自身需求酌情修改）
+
+下面为自用 V2Ray 客户端完整配置，注意事项：
+
+- 由于下面客户端配置使用了 DoH DNS 功能，所以必须使用 v4.22.0 或更新版本的 [V2Ray](https://github.com/v2ray/v2ray-core/releases)
+- 下面客户端配置使 V2Ray 在本机开启 SOCKS 代理（监听 1080 端口）和 HTTP 代理（监听 2080 端口）
+- BT 流量统统直连（实测依然会有部分 BT 流量走代理，尚不清楚是不是 V2Ray 的 bug。如果服务商禁止 BT 下载的话，请不要为下载软件设置代理）
+- 最后，不命中任何路由规则的请求和流量，统统走代理
+- `outbounds` 里的第一个大括号内的配置，即为 V2Ray 代理服务的配置。请根据自身需求进行修改，并参照 V2Ray 官网配置说明中的 [配置文件 > 文件格式 > OutboundObject](https://v2ray.com/chapter_02/01_overview.html#outboundobject) 部分进行补全
+
+```
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "dns": {
+    "servers": [
+      {
+        "address": "https://1.1.1.1/dns-query",
+        "domains": [
+          "geosite:geolocation-!cn",
+          "geosite:speedtest"
+        ]
+      },
+      "https://1.1.1.1/dns-query",
+      "https://dns.google/dns-query",
+      {
+        "address": "114.114.114.114",
+        "port": 53,
+        "domains": [
+          "geosite:cn"
+        ]
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "protocol": "socks",
+      "listen": "127.0.0.1",
+      "port": 1080,
+      "tag": "Socks-In",
+      "settings": {
+        "ip": "127.0.0.1",
+        "udp": true,
+        "auth": "noauth"
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      }
+    },
+    {
+      "protocol": "http",
+      "listen": "127.0.0.1",
+      "port": 2080,
+      "tag": "Http-In",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "协议名称", // 协议名称为 socks、shadowsocks、vmess 等
+      "settings": {},
+      "tag": "Proxy", // 这里必须为 Proxy，对应 Routing 里的 outboundTag
+      "streamSettings": {},
+      "mux": {}
+    },
+    {
+      "protocol": "dns",
+      "tag": "Dns-Out"
+    },
+    {
+      "protocol": "freedom",
+      "tag": "Direct",
+      "settings": {
+        "domainStrategy": "UseIPv4"
+      }
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "Reject",
+      "settings": {
+        "response": {
+          "type": "http"
+        }
+      }
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "outboundTag": "Dns-Out",
+        "inboundTag": [
+          "Socks-In",
+          "Http-In"
+        ],
+        "network": "udp",
+        "port": 53
+      },
+      {
+        "type": "field",
+        "outboundTag": "Direct",
+        "protocol": ["bittorrent"]
+      },
+      {
+        "type": "field",
+        "outboundTag": "Reject",
+        "domain": [
+          "geosite:category-ads-all"
+        ]
+      },
+      {
+        "type": "field",
+        "outboundTag": "Proxy",
+        "domain": [
+          "geosite:geolocation-!cn",
+          "geosite:speedtest"
+        ]
+      },
+      {
+        "type": "field",
+        "outboundTag": "Direct",
+        "domain": [
+          "geosite:cn"
+        ]
+      },
+      {
+        "type": "field",
+        "outboundTag": "Direct",
+        "ip": [
+          "223.5.5.5/32",
+          "119.29.29.29/32",
+          "180.76.76.76/32",
+          "114.114.114.114/32"
+        ]
+      },
+      {
+        "type": "field",
+        "outboundTag": "Proxy",
+        "ip": [
+          "1.1.1.1/32",
+          "1.0.0.1/32",
+          "8.8.8.8/32",
+          "8.8.4.4/32"
+        ]
+      },
+      {
+        "type": "field",
+        "outboundTag": "Direct",
+        "ip": [
+          "geoip:cn",
+          "geoip:private"
+        ]
+      },
+      {
+        "type": "field",
+        "outboundTag": "Proxy",
+        "ip": [
+          "0.0.0.0/0",
+          "::/0"
+        ]
+      }
+    ]
+  }
+}
+```
+
 ## 致谢
 
 - [@v2ray/geoip](https://github.com/v2ray/geoip)
