@@ -127,7 +127,7 @@
 - 最后，不命中任何路由规则的请求和流量，统统走代理
 - `outbounds` 里的第一个大括号内的配置，即为 V2Ray 代理服务的配置。请根据自身需求进行修改，并参照 V2Ray 官网配置说明中的 [配置文件 > 文件格式 > OutboundObject](https://v2ray.com/chapter_02/01_overview.html#outboundobject) 部分进行补全
 
-```
+```json
 {
   "log": {
     "loglevel": "warning"
@@ -181,9 +181,11 @@
   ],
   "outbounds": [
     {
-      "protocol": "协议名称", // 协议名称为 socks、shadowsocks、vmess 等
+      // 下面这行，协议名称为 socks、shadowsocks 或 vmess 等（记得删除这行文字说明）
+      "protocol": "协议名称",
       "settings": {},
-      "tag": "Proxy", // 这里必须为 Proxy，对应 Routing 里的 outboundTag
+      // 下面这行，必须为 Proxy，对应 Routing 里的 outboundTag（记得删除这行文字说明）
+      "tag": "Proxy",
       "streamSettings": {},
       "mux": {}
     },
