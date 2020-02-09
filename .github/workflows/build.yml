@@ -64,11 +64,6 @@ jobs:
         run: |
           go get -u -v -insecure $GEOSITE_REPO
 
-      - name: Automatically generate ookla-speedtest sub-list from source
-        run: |
-          curl -L -o servers-source.xml "https://c.speedtest.net/speedtest-servers-static.php" -H "Accept-Encoding: gzip" --compressed
-          perl -ne '/host="(.+):[0-9]+"/ && print "full:$1\n"' servers-source.xml | perl -ne 'print if not /^(full:([0-9]{1,3}\.){3}[0-9]{1,3})$/' | perl -ne 'print lc' | sort --ignore-case -u >> $GOPATH/src/$GEOSITE_REPO/data/ookla-speedtest
-
       - name: Get and add direct domains into temp-direct.txt file
         run: |
           curl -sSL $CHINA_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > temp-direct.txt
