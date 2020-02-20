@@ -181,10 +181,10 @@
   ],
   "outbounds": [
     {
-      // 下面这行，协议名称为 socks、shadowsocks 或 vmess 等（记得删除这行文字说明）
+      //下面这行，协议名称为socks、shadowsocks或vmess等（记得删除这行文字说明）
       "protocol": "协议名称",
       "settings": {},
-      // 下面这行，必须为 Proxy，对应 Routing 里的 outboundTag（记得删除这行文字说明）
+      //下面这行，必须为Proxy，对应Routing里的outboundTag（记得删除这行文字说明）
       "tag": "Proxy",
       "streamSettings": {},
       "mux": {}
