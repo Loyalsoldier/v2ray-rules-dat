@@ -117,8 +117,9 @@ jobs:
 
       - name: Generate dat files sha256 hash
         run: |
-          sha256sum ./publish/geoip.dat > ./publish/geoip.dat.sha256
-          sha256sum ./publish/geosite.dat > ./publish/geosite.dat.sha256
+          cd ./publish
+          sha256sum geoip.dat > geoip.dat.sha256
+          sha256sum geosite.dat > geosite.dat.sha256
 
       - name: Release dat files
         uses: Ricky-Hao/action-release@master
