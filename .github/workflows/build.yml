@@ -115,6 +115,11 @@ jobs:
           mv ./*-excluse-list.txt ./publish/
           cp -f $GOPATH/src/$GEOSITE_REPO/data/{proxy,direct,reject}list ./publish/
 
+      - name: Generate dat files sha256 hash
+        run: |
+          sha256sum ./publish/geoip.dat > ./publish/geoip.dat.sha256
+          sha256sum ./publish/geosite.dat > ./publish/geosite.dat.sha256
+
       - name: Release dat files
         uses: Ricky-Hao/action-release@master
         env:
