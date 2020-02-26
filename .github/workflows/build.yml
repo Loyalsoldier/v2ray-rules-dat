@@ -122,7 +122,7 @@ jobs:
           sha256sum geosite.dat > geosite.dat.sha256
 
       - name: Release dat files
-        uses: Ricky-Hao/action-release@master
+        uses: opspresso/action-release@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ASSET_PATH: publish
