@@ -115,8 +115,8 @@ jobs:
       - name: Generate dat files sha256 hash
         run: |
           cd ./publish
-          sha256sum geoip.dat > geoip.dat.sha256
-          sha256sum geosite.dat > geosite.dat.sha256
+          sha256sum geoip.dat > geoip.dat.sha256sum
+          sha256sum geosite.dat > geosite.dat.sha256sum
 
       - name: Create a release
         id: create_release
