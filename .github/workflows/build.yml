@@ -33,7 +33,9 @@ jobs:
           echo "::set-env name=GEQ1AN_RULES_GLOBAL_MEDIA_URL::https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/GMedia.list"
           echo "::set-env name=GEQ1AN_RULES_OUTSIDE_URL::https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/Outside.list"
           echo "::set-env name=GEQ1AN_RULES_REJECT_URL::https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/AdBlock.list"
-          echo "::set-env name=LHIE1_RULES_REJECT_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Auto/REJECT.conf"
+          echo "::set-env name=LHIE1_RULES_GLOBALTV_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/GlobalTV.list"
+          echo "::set-env name=LHIE1_RULES_PROXY_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Proxy.list"
+          echo "::set-env name=LHIE1_RULES_REJECT_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Reject.list"
           echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
           echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
         shell: bash
@@ -77,12 +79,14 @@ jobs:
           curl -sSL $GEQ1AN_RULES_MICROSOFT_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+Microsoft/ {print $2}' >> temp-proxy.txt
           curl -sSL $GEQ1AN_RULES_GLOBAL_MEDIA_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+GMedia/ {print $2}' >> temp-proxy.txt
           curl -sSL $GEQ1AN_RULES_OUTSIDE_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+Outside/ {print $2}' >> temp-proxy.txt
+          curl -sSL $LHIE1_RULES_GLOBALTV_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+/ {print $2}' >> temp-proxy.txt
+          curl -sSL $LHIE1_RULES_PROXY_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+/ {print $2}' >> temp-proxy.txt
 
       - name: Get and add reject domains into temp-reject.txt file
         run: |
           curl -sSL $PROFILES_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+REJECT/ {print $2}' > temp-reject.txt
           curl -sSL $GEQ1AN_RULES_REJECT_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+AdBlock/ {print $2}' >> temp-reject.txt
-          curl -sSL $LHIE1_RULES_REJECT_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+REJECT/ {print $2}' >> temp-reject.txt
+          curl -sSL $LHIE1_RULES_REJECT_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+/ {print $2}' >> temp-reject.txt
 
       - name: Add proxy and direct domains from "hidden" branch to appropriate temp files
         run: |
