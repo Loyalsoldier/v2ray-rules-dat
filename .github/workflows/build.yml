@@ -122,28 +122,14 @@ jobs:
           sha256sum geoip.dat > geoip.dat.sha256sum
           sha256sum geosite.dat > geosite.dat.sha256sum
 
-      - name: Create a release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release and upload assets
+        uses: softprops/action-gh-release@v1
         with:
+          name: ${{ env.RELEASE_NAME }}
           tag_name: ${{ env.TAG_NAME }}
-          release_name: ${{ env.RELEASE_NAME }}
           draft: false
           prerelease: false
-
-      - name: Upload assets
+          files: |
+            ./publish/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          release_id: ${{ steps.create_release.outputs.id }}
-        run: |
-          files=$(ls ./publish)
-          for ASSET in ${files}; do
-            FILEPATH="./publish/${ASSET}"
-            FILETYPE=$(file -b --mime-type "${FILEPATH}")
-            CONTENT_TYPE_HEADER="Content-Type: ${FILETYPE}"
-            AUTH_HEADER="Authorization: token ${{ env.GITHUB_TOKEN }}"
-            URL="https://uploads.github.com/repos/${{ github.repository }}/releases/${{ env.release_id }}/assets?name=${ASSET}"
-            curl -sSL -X POST -H "${AUTH_HEADER}" -H "${CONTENT_TYPE_HEADER}" --data-binary @${FILEPATH} ${URL}
-          done
