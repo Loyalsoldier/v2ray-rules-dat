@@ -115,9 +115,15 @@ jobs:
           sort ./direct-list-deleted-unsort > ./direct-list-deleted-sort
           sort ./proxy-list-deleted-unsort > ./proxy-list-deleted-sort
           sort ./reject-list-deleted-unsort > ./reject-list-deleted-sort
-          diff ./direct-list-deleted-sort ./direct-list-with-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/direct-list
-          diff ./proxy-list-deleted-sort ./proxy-list-with-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/proxy-list
-          diff ./reject-list-deleted-sort ./reject-list-with-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/reject-list
+          diff ./direct-list-deleted-sort ./direct-list-with-redundant | awk '/^>/{print $2}' > ./direct-list-without-redundant
+          diff ./proxy-list-deleted-sort ./proxy-list-with-redundant | awk '/^>/{print $2}' > ./proxy-list-without-redundant
+          diff ./reject-list-deleted-sort ./reject-list-with-redundant | awk '/^>/{print $2}' > ./reject-list-without-redundant
+
+      - name: Remove domains from "need-to-remove" lists in "hidden" branch
+        run: |
+          diff ./direct-need-to-remove.txt ./direct-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/direct-list
+          diff ./proxy-need-to-remove.txt ./proxy-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/proxy-list
+          diff ./reject-need-to-remove.txt ./reject-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/reject-list
 
       - name: Add list into appropriate category file
         run: |
