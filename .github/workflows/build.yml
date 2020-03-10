@@ -88,10 +88,11 @@ jobs:
           curl -sSL $GEQ1AN_RULES_REJECT_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+AdBlock/ {print $2}' >> temp-reject.txt
           curl -sSL $LHIE1_RULES_REJECT_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+/ {print $2}' >> temp-reject.txt
 
-      - name: Add proxy and direct domains from "hidden" branch to appropriate temp files
+      - name: Add proxy, direct and reject domains from "hidden" branch to appropriate temp files
         run: |
           cat proxy.txt >> temp-proxy.txt
           cat direct.txt >> temp-direct.txt
+          cat reject.txt >> temp-reject.txt
 
       - name: Sort and generate redundant lists
         run: |
