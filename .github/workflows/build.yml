@@ -119,10 +119,10 @@ jobs:
           diff ./proxy-list-deleted-sort ./proxy-list-with-redundant | awk '/^>/{print $2}' > ./proxy-list-without-redundant
           diff ./reject-list-deleted-sort ./reject-list-with-redundant | awk '/^>/{print $2}' > ./reject-list-without-redundant
 
-      - name: Remove domains from "need-to-remove" lists in "hidden" branch
+      - name: Remove domains from "need-to-remove" lists in "hidden" branch and remove domains end with ".cn" in proxy-list
         run: |
           diff ./direct-need-to-remove.txt ./direct-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/direct-list
-          diff ./proxy-need-to-remove.txt ./proxy-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/proxy-list
+          diff ./proxy-need-to-remove.txt ./proxy-list-without-redundant | awk '/^>/{print $2}' | perl -ne 'print if not /\.cn$/' > $GOPATH/src/$GEOSITE_REPO/data/proxy-list
           diff ./reject-need-to-remove.txt ./reject-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/reject-list
 
       - name: Add list into appropriate category file
