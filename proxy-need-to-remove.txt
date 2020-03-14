@@ -1,1 +1,12 @@
+apple.com.cn
+apple.com
+apple.cn
+baidu.cn
+bjnews.com.cn
+businesstimes.com.cn
+google.cn
+googleapis.cn
+gstatic.cn
 ifanr.com
+qpic.cn
+www.chromes.cn
