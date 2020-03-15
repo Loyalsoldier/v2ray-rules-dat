@@ -285,10 +285,7 @@
       {
         "type": "field",
         "outboundTag": "Proxy",
-        "ip": [
-          "0.0.0.0/0",
-          "::/0"
-        ]
+        "network": "tcp,udp"
       }
     ]
   }
