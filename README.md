@@ -4,7 +4,7 @@
 
 ## 说明
 
-本项目支持命令行版本 V2Ray 客户端。第三方桌面图形界面版（GUI）V2Ray 客户端一般有自身图形化配置界面，但一般也都支持使用 V2Ray 自定义 JSON 配置和 dat 规则文件，请自行研究并修改配置。第三方移动端 V2Ray 客户端情况比较复杂，大概率不支持自定义 V2Ray JSON 配置和使用 dat 规则文件，请知悉。
+本项目适用于命令行版本 V2Ray 客户端。第三方桌面图形界面版（GUI）V2Ray 客户端一般都有路由规则图形化配置界面，但一般也都支持使用自定义 V2Ray JSON 配置和 dat 规则文件，请自行研究并修改配置。第三方移动设备版 V2Ray 客户端情况比较复杂，大概率不支持使用自定义 V2Ray JSON 配置和 dat 规则文件，请知悉。
 
 ## 规则文件生成方式
 
@@ -303,4 +303,4 @@
 - [@ConnersHua/Profiles](https://github.com/ConnersHua/Profiles/tree/master)
 - [@GeQ1an/Rules](https://github.com/GeQ1an/Rules/tree/master/QuantumultX)
 - [@lhie1/Rules](https://github.com/lhie1/Rules/tree/master)
-- [MaxMind 免费 IP](https://dev.maxmind.com/geoip/geoip2/geolite2/)
+- [MaxMind GeoLite2 Free IP Database](https://dev.maxmind.com/geoip/geoip2/geolite2/)
