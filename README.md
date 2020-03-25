@@ -219,6 +219,11 @@
     "rules": [
       {
         "type": "field",
+        "outboundTag": "Direct",
+        "protocol": ["bittorrent"]
+      },
+      {
+        "type": "field",
         "outboundTag": "Dns-Out",
         "inboundTag": [
           "Socks-In",
@@ -226,11 +231,6 @@
         ],
         "network": "udp",
         "port": 53
-      },
-      {
-        "type": "field",
-        "outboundTag": "Direct",
-        "protocol": ["bittorrent"]
       },
       {
         "type": "field",
