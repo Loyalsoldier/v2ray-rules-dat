@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - master
+  label:
+    types: [created, deleted]
 jobs:
   build:
     name: Build
