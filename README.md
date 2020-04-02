@@ -10,8 +10,8 @@
 
 ### geoip.dat
 
-- 通过仓库 [@v2ray/geoip](https://github.com/v2ray/geoip) 生成
-- 其中 IP 地址来源于 [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/)
+- 通过仓库 [@Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip) 生成
+- 其中 IP 地址来源于 [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/)，`CN` 类别下的 IPv4 地址来源于 [@17mon/china_ip_list](https://github.com/17mon/china_ip_list/blob/master/china_ip_list.txt)
 
 ### geosite.dat
 
@@ -295,6 +295,7 @@
 
 - [@v2ray/geoip](https://github.com/v2ray/geoip)
 - [@v2ray/domain-list-community](https://github.com/v2ray/domain-list-community)
+- [@17mon/china_ip_list](https://github.com/17mon/china_ip_list/blob/master/china_ip_list.txt)
 - [@felixonmars/dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list)
 - [@gfwlist/gfwlist](https://github.com/gfwlist/gfwlist)
 - [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq)
