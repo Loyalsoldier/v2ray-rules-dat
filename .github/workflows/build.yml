@@ -53,7 +53,7 @@ jobs:
       - name: Generate geoip.dat file
         run: |
           go get -u -v -insecure $GEOIP_REPO
-          geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv
+          geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv --cnipv4url=https://raw.githubusercontent.com/17mon/china_ip_list/master/china_ip_list.txt
           mkdir -p ./publish
           mv ./geoip.dat ./publish/
 
