@@ -85,8 +85,8 @@ jobs:
           curl -sSL $PROFILES_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+REJECT/ {print $2}' > temp-reject.txt
           curl -sSL $GEQ1AN_RULES_REJECT_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+AdBlock/ {print $2}' >> temp-reject.txt
           curl -sSL $LHIE1_RULES_REJECT_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+/ {print $2}' >> temp-reject.txt
-          curl -sSL $EASYLIST_and_CHINA | perl -ne '/^\|\|((?=.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)\^($|\$third-party$)/ && print "$1\n"' | perl -ne 'print if not /^(\d+\.){3}\d+$/' >> temp-reject.txt
-          curl -sSL $EASYLIST_PRIVACY | perl -ne '/^\|\|((?=.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)\^($|\$third-party$)/ && print "$1\n"' | perl -ne 'print if not /^(\d+\.){3}\d+$/' >> temp-reject.txt
+          curl -sSL $EASYLIST_and_CHINA | perl -ne '/^\|\|((?=.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)\^$/ && print "$1\n"' | perl -ne 'print if not /^(\d+\.){3}\d+$/' >> temp-reject.txt
+          curl -sSL $EASYLIST_PRIVACY | perl -ne '/^\|\|((?=.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)\^$/ && print "$1\n"' | perl -ne 'print if not /^(\d+\.){3}\d+$/' >> temp-reject.txt
 
       - name: Add proxy, direct and reject domains from "hidden" branch to appropriate temp files
         run: |
