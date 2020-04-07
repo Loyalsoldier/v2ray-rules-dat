@@ -22,9 +22,6 @@
   - [@felixonmars/dnsmasq-china-list/google.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/google.china.conf) 加入到 `geosite:geolocation-!cn` 类别中
 - **加入最新 GFWList 域名**：通过仓库 [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq) 生成并加入到 `geosite:geolocation-!cn` 类别中
 - **加入 Greatfire Analyzer 检测到的屏蔽域名**：通过仓库 [@wongsyrone/domain-block-list](https://github.com/wongsyrone/domain-block-list) 获取 [Greatfire Analyzer](https://zh.greatfire.org/analyzer) 检测到的屏蔽域名，并加入到 `geosite:geolocation-!cn` 类别中
-- **加入 Easylist、Easylist China 和 Easylist Privacy 域名**：
-  - [EasylistChina + Easylist 列表域名](https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt)加入到 `geosite:category-ads-all` 类别中
-  - [Easylist Privacy 列表域名](https://easylist-downloads.adblockplus.org/easyprivacy.txt)加入到 `geosite:category-ads-all` 类别中
 - **加入更多代理域名和广告域名**：通过仓库 [@ConnersHua/Profiles](https://github.com/ConnersHua/Profiles/tree/master)、[@GeQ1an/Rules](https://github.com/GeQ1an/Rules/tree/master/QuantumultX) 和 [@lhie1/Rules](https://github.com/lhie1/Rules/tree/master) 获取更多代理域名、广告域名，并分别加入到 `geosite:geolocation-!cn` 和 `geosite:category-ads-all` 类别中
 - **加入自定义直连和代理域名**：由于上游域名列表更新缓慢或缺失某些被屏蔽的域名，所以引入自定义域名列表，主要为了解决在 DNS 解析 `A` 和 `AAAA` 记录时的 DNS 泄漏问题。[`hidden 分支`](https://github.com/Loyalsoldier/v2ray-rules-dat/tree/hidden)里的三个文件 `direct.txt`、`proxy.txt` 和 `reject.txt`，分别存放自定义的直连、代理、广告域名，最终分别加入到 `geosite:cn`、`geosite:geolocation-!cn` 和 `geosite:category-ads-all` 类别中
 
@@ -310,6 +307,4 @@
 - [@ConnersHua/Profiles](https://github.com/ConnersHua/Profiles/tree/master)
 - [@GeQ1an/Rules](https://github.com/GeQ1an/Rules/tree/master/QuantumultX)
 - [@lhie1/Rules](https://github.com/lhie1/Rules/tree/master)
-- [EasylistChina + Easylist](https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt)
-- [Easylist Privacy](https://easylist-downloads.adblockplus.org/easyprivacy.txt)
 - [MaxMind GeoLite2 Free IP Database](https://dev.maxmind.com/geoip/geoip2/geolite2/)
