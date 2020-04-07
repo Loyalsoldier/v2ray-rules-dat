@@ -35,7 +35,6 @@ jobs:
           echo "::set-env name=LHIE1_RULES_PROXY_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Proxy.list"
           echo "::set-env name=LHIE1_RULES_REJECT_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Reject.list"
           echo "::set-env name=EASYLIST_and_CHINA::https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt"
-          echo "::set-env name=EASYLIST_PRIVACY::https://easylist-downloads.adblockplus.org/easyprivacy.txt"
           echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
           echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
         shell: bash
@@ -86,7 +85,6 @@ jobs:
           curl -sSL $GEQ1AN_RULES_REJECT_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+AdBlock/ {print $2}' >> temp-reject.txt
           curl -sSL $LHIE1_RULES_REJECT_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+/ {print $2}' >> temp-reject.txt
           curl -sSL $EASYLIST_and_CHINA | perl -ne '/^\|\|((?=.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)\^$/ && print "$1\n"' | perl -ne 'print if not /^(\d+\.){3}\d+$/' >> temp-reject.txt
-          curl -sSL $EASYLIST_PRIVACY | perl -ne '/^\|\|((?=.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)\^$/ && print "$1\n"' | perl -ne 'print if not /^(\d+\.){3}\d+$/' >> temp-reject.txt
 
       - name: Add proxy, direct and reject domains from "hidden" branch to appropriate temp files
         run: |
