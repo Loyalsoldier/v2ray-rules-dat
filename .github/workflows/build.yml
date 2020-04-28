@@ -1,20 +1,22 @@
 name: Build V2Ray rules dat files
 on:
   schedule:
-    - cron: "0 22 * * *"
+    - cron: "30 3 * * *"
   push:
     branches:
       - master
       - hidden
+  label:
+    types: [created, deleted]
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Go 1.14
+      - name: Setup Go 1.14.1
         uses: actions/setup-go@v1
         with:
-          go-version: 1.14
+          go-version: 1.14.1
 
       - name: Set $GOPATH and more variables
         run: |
@@ -54,7 +56,7 @@ jobs:
       - name: Generate geoip.dat file
         run: |
           go get -u -v -insecure $GEOIP_REPO
-          geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv --cnipv4url=https://raw.githubusercontent.com/17mon/china_ip_list/master/china_ip_list.txt
+          geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv --cnipv4url=https://raw.githubusercontent.com/IceCodeNew/4Share/master/geoip_china/china_ip_list.txt
           mkdir -p ./publish
           mv ./geoip.dat ./publish/
 
