@@ -1,4 +1,4 @@
-# 简介
+# 简介 ![GitHub All Releases](https://img.shields.io/github/downloads/IceCodeNew/v2ray-rules-dat/total)
 
 **V2Ray** 规则文件加强版，可代替 V2Ray 官方 `geoip.dat` 和 `geosite.dat` 规则文件。利用 GitHub Actions 北京时间每天早上 6 点自动构建，保证规则最新。
 
@@ -310,3 +310,7 @@
 - [@GeQ1an/Rules](https://github.com/GeQ1an/Rules/tree/master/QuantumultX)
 - [@lhie1/Rules](https://github.com/lhie1/Rules/tree/master)
 - [MaxMind GeoLite2 Free IP Database](https://dev.maxmind.com/geoip/geoip2/geolite2/)
+
+## 项目 Star 数增长趋势
+
+[![Stargazers over time](https://starchart.cc/IceCodeNew/v2ray-rules-dat.svg)](https://starchart.cc/IceCodeNew/v2ray-rules-dat)
