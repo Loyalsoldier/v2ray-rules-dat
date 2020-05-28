@@ -38,7 +38,7 @@ jobs:
           echo "::set-env name=GEQ1AN_RULES_REJECT_URL::https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/AdBlock.list"
           echo "::set-env name=LHIE1_RULES_PROXY_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Proxy.list"
           echo "::set-env name=LHIE1_RULES_REJECT_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Reject.list"
-          echo "::set-env name=ICN_RULES_REJECT_URL::https://raw.githubusercontent.com/IceCodeNew/4Share/master/DNSCrypt/domain-based-blacklist.txt"
+          echo "::set-env name=ICN_RULES_REJECT_URL::https://raw.githubusercontent.com/IceCodeNew/4Share/master/DNSCrypt/mybase.txt"
           echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
           echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
         shell: bash
