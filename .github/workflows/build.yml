@@ -107,18 +107,15 @@ jobs:
       - name: Remove redundant domains
         run: |
           chmod +x findRedundantDomain.py
-          ./findRedundantDomain.py ./direct-list-with-redundant ./direct-list-deleted-unsort
-          ./findRedundantDomain.py ./proxy-list-with-redundant ./proxy-list-deleted-unsort
-          ./findRedundantDomain.py ./reject-list-with-redundant ./reject-list-deleted-unsort
-          [ ! -f "direct-list-deleted-unsort" ] && touch direct-list-deleted-unsort
-          [ ! -f "proxy-list-deleted-unsort" ] && touch proxy-list-deleted-unsort
-          [ ! -f "reject-list-deleted-unsort" ] && touch reject-list-deleted-unsort
-          sort ./direct-list-deleted-unsort > ./direct-list-deleted-sort
-          sort ./proxy-list-deleted-unsort > ./proxy-list-deleted-sort
-          sort ./reject-list-deleted-unsort > ./reject-list-deleted-sort
-          diff ./direct-list-deleted-sort ./direct-list-with-redundant | awk '/^>/{print $2}' > ./direct-list-without-redundant
-          diff ./proxy-list-deleted-sort ./proxy-list-with-redundant | awk '/^>/{print $2}' > ./proxy-list-without-redundant
-          diff ./reject-list-deleted-sort ./reject-list-with-redundant | awk '/^>/{print $2}' > ./reject-list-without-redundant
+          ./findRedundantDomain.py ./direct-list-with-redundant ./direct-list-deleted
+          ./findRedundantDomain.py ./proxy-list-with-redundant ./proxy-list-deleted
+          ./findRedundantDomain.py ./reject-list-with-redundant ./reject-list-deleted
+          [ ! -f "direct-list-deleted" ] && touch direct-list-deleted
+          [ ! -f "proxy-list-deleted" ] && touch proxy-list-deleted
+          [ ! -f "reject-list-deleted" ] && touch reject-list-deleted
+          diff ./direct-list-deleted ./direct-list-with-redundant | awk '/^>/{print $2}' > ./direct-list-without-redundant
+          diff ./proxy-list-deleted ./proxy-list-with-redundant | awk '/^>/{print $2}' > ./proxy-list-without-redundant
+          diff ./reject-list-deleted ./reject-list-with-redundant | awk '/^>/{print $2}' > ./reject-list-without-redundant
 
       - name: Remove domains from "need-to-remove" lists in "hidden" branch and remove domains end with ".cn" in proxy-list
         run: |
