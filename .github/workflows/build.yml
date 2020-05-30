@@ -26,6 +26,7 @@ jobs:
           echo "::set-env name=GOOGLE_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/google.china.conf"
           echo "::set-env name=APPLE_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf"
           echo "::set-env name=GFWLIST_DOMAINS_URL::https://cokebar.github.io/gfwlist2dnsmasq/gfwlist_domain.txt"
+          echo "::set-env name=GFWLIST_EXTRAS_DOMAINS_URL::https://raw.githubusercontent.com/pexcn/gfwlist-extras/master/gfwlist-extras.txt"
           echo "::set-env name=GREATFIRE_DOMAINS_URL::https://raw.githubusercontent.com/wongsyrone/domain-block-list/master/domains.txt"
           echo "::set-env name=GREATFIRE_DOMAINS_MINE_URL::https://raw.githubusercontent.com/Loyalsoldier/cn-blocked-domain/release/domains.txt"
           echo "::set-env name=PROFILES_URL::https://raw.githubusercontent.com/ConnersHua/Profiles/master/Shadow/Pro.conf"
@@ -70,6 +71,7 @@ jobs:
       - name: Get and add proxy domains into temp-proxy.txt file
         run: |
           curl -sSL $GFWLIST_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > temp-proxy.txt
+          curl -sSL $GFWLIST_EXTRAS_DOMAINS_URL | perl -ne 'print if not /^(#|\s)/' >> temp-proxy.txt
           curl -sSL $GREATFIRE_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> temp-proxy.txt
           curl -sSL $GREATFIRE_DOMAINS_MINE_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> temp-proxy.txt
           curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> temp-proxy.txt
