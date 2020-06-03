@@ -139,7 +139,7 @@ jobs:
 
       - name: Build geosite.dat file
         run: |
-          domain-list-community
+          domain-list-community --datapath=${{ env.GOPATH }}/src/${{ env.GEOSITE_REPO }}/data
           mv ./dlc.dat ./publish/geosite.dat
           mv ./*-excluse-list ./publish/
           cp -f $GOPATH/src/$GEOSITE_REPO/data/{proxy,direct,reject}-list ./publish/
