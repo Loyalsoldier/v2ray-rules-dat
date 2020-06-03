@@ -1,13 +1,15 @@
 name: Build V2Ray rules dat files
 on:
   schedule:
-    - cron: "0 22 * * *"
+    - cron: "30 3 * * *"
   push:
     branches:
       - master
       - hidden
     paths-ignore:
       - "**/README.md"
+  label:
+    types: [created, deleted]
 jobs:
   build:
     name: Build
@@ -59,7 +61,7 @@ jobs:
       - name: Generate geoip.dat file
         run: |
           go get -u -v -insecure $GEOIP_REPO
-          geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv --cnipv4url=https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt
+          geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv --cnipv4url=https://raw.githubusercontent.com/IceCodeNew/4Share/master/geoip_china/china_ip_list.txt
           mkdir -p ./publish
           mv ./geoip.dat ./publish/
 
