@@ -127,7 +127,7 @@
 
 下面为自用 V2Ray 客户端完整配置，注意事项：
 
-- 由于下面客户端配置使用了 DoH DNS 功能，所以必须使用 v4.22.0 或更新版本的 [V2Ray](https://github.com/v2ray/v2ray-core/releases)
+- 由于下面客户端配置使用了 DoH DNS 功能，所以必须使用 v4.22.0 或更新版本的 [V2Ray](https://github.com/v2fly/v2ray-core/releases)
 - 下面客户端配置使 V2Ray 在本机开启 SOCKS 代理（监听 1080 端口）和 HTTP 代理（监听 2080 端口）
 - BT 流量统统直连（实测依然会有部分 BT 流量走代理，尚不清楚是不是 V2Ray 的 bug。如果服务商禁止 BT 下载的话，请不要为下载软件设置代理）
 - 最后，不命中任何路由规则的请求和流量，统统走代理
