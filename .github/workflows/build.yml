@@ -3,11 +3,11 @@ on:
   schedule:
     - cron: "0 22 * * *"
   push:
+    paths-ignore: 
+      - "README.md"
     branches:
       - master
       - hidden
-    paths-ignore:
-      - "**/README.md"
 jobs:
   build:
     name: Build
