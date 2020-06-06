@@ -37,6 +37,15 @@
 
 **使用方式**：
 
+Windows 用户可通过 [Scoop](https://scoop.sh) 来安装：
+
+```shell
+scoop bucket add v2ray https://github.com/kidonng/scoop-v2ray
+scoop install v2ray-rules-dat
+```
+
+非 Windows 用户：
+
 1. 点击上面下载地址，下载 `geoip.dat` 和 `geosite.dat`
 2. 把下载下来的 `geoip.dat` 和 `geosite.dat` 文件放入到 V2Ray 的规则文件目录，替换掉原来的 `geoip.dat` 和 `geosite.dat`
 3. 修改 V2Ray 配置文件，配置参考下面 👇👇👇
@@ -300,6 +309,7 @@
 
 ## 致谢
 
+- [@kidonng/scoop-v2ray](https://github.com/kidonng/scoop-v2ray)
 - [@v2ray/geoip](https://github.com/v2ray/geoip)
 - [@v2ray/domain-list-community](https://github.com/v2ray/domain-list-community)
 - [@felixonmars/dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list)
