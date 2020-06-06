@@ -40,6 +40,11 @@
 1. 点击上面下载地址，下载 `geoip.dat` 和 `geosite.dat`
 2. 把下载下来的 `geoip.dat` 和 `geosite.dat` 文件放入到 V2Ray 的规则文件目录，替换掉原来的 `geoip.dat` 和 `geosite.dat`
 3. 修改 V2Ray 配置文件，配置参考下面 👇👇👇
+4. 如果您使用 [Scoop](https://scoop.sh/)，还可以通过以下方式安装：
+  ```powershell
+  scoop bucket add v2ray https://github.com/kidonng/scoop-v2ray
+  scoop install v2ray-rules-dat
+  ```
 
 ## 参考配置
 
