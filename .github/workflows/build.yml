@@ -3,8 +3,6 @@ on:
   schedule:
     - cron: "0 22 * * *"
   push:
-    paths-ignore: 
-      - "README.md"
     branches:
       - master
       - hidden
@@ -14,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Go 1.14
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v2
         with:
           go-version: 1.14
 
@@ -60,8 +58,6 @@ jobs:
         run: |
           go get -u -v -insecure $GEOIP_REPO
           geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv --cnipv4url=https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt
-          mkdir -p ./publish
-          mv ./geoip.dat ./publish/
 
       - name: Download geosite project
         run: |
@@ -102,11 +98,11 @@ jobs:
       - name: Sort and generate redundant lists
         run: |
           cat temp-proxy.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > proxy-list-with-redundant
-          cat temp-proxy.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > proxy-excluse-list
+          cat temp-proxy.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > proxy-excluse-list.txt
           cat temp-direct.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > direct-list-with-redundant
-          cat temp-direct.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > direct-excluse-list
+          cat temp-direct.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > direct-excluse-list.txt
           cat temp-reject.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > reject-list-with-redundant
-          cat temp-reject.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > reject-excluse-list
+          cat temp-reject.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > reject-excluse-list.txt
 
       - name: Remove redundant domains
         run: |
@@ -126,31 +122,30 @@ jobs:
 
       - name: Remove domains from "need-to-remove" lists in "hidden" branch and remove domains end with ".cn" in proxy-list
         run: |
-          diff ./direct-need-to-remove.txt ./direct-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/direct-list
-          diff ./proxy-need-to-remove.txt ./proxy-list-without-redundant | awk '/^>/{print $2}' | perl -ne 'print if not /\.cn$/' > $GOPATH/src/$GEOSITE_REPO/data/proxy-list
-          diff ./reject-need-to-remove.txt ./reject-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/reject-list
+          diff ./direct-need-to-remove.txt ./direct-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/direct-list.txt
+          diff ./proxy-need-to-remove.txt ./proxy-list-without-redundant | awk '/^>/{print $2}' | perl -ne 'print if not /\.cn$/' > $GOPATH/src/$GEOSITE_REPO/data/proxy-list.txt
+          diff ./reject-need-to-remove.txt ./reject-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/reject-list.txt
 
       - name: Add list into appropriate category file
         run: |
           cd $GOPATH/src/$GEOSITE_REPO/data
-          echo "include:proxy-list" >> geolocation-\!cn
-          echo "include:direct-list" >> cn
-          echo "include:reject-list" >> category-ads-all
+          echo "include:proxy-list.txt" >> geolocation-\!cn
+          echo "include:direct-list.txt" >> cn
+          echo "include:reject-list.txt" >> category-ads-all
 
       - name: Build geosite.dat file
         run: |
           domain-list-community --datapath=${{ env.GOPATH }}/src/${{ env.GEOSITE_REPO }}/data
-          mv ./dlc.dat ./publish/geosite.dat
-          mv ./*-excluse-list ./publish/
-          cp -f $GOPATH/src/$GEOSITE_REPO/data/{proxy,direct,reject}-list ./publish/
 
-      - name: Zip files and generate sha256 hash
+      - name: Move and zip files and generate sha256 hash
         run: |
+          install -Dp geoip.dat ./publish/geoip.dat
+          install -Dp dlc.dat ./publish/geosite.dat
+          install -p {proxy,direct,reject}-excluse-list.txt ./publish/
+          install -p $GOPATH/src/$GEOSITE_REPO/data/{proxy,direct,reject}-list.txt ./publish/
           cd ./publish
-          zip rules.zip {proxy,direct,reject}-list *.dat
-          sha256sum geoip.dat > geoip.dat.sha256sum
-          sha256sum geosite.dat > geosite.dat.sha256sum
-          sha256sum rules.zip > rules.zip.sha256sum
+          zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
+          sha256sum geoip.dat geosite.dat rules.zip > sha256sum
 
       - name: Release and upload assets
         uses: softprops/action-gh-release@v1
