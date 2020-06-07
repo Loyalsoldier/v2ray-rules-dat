@@ -149,7 +149,9 @@ jobs:
           install -p $GOPATH/src/$GEOSITE_REPO/data/{proxy,direct,reject}-list.txt ./publish/
           cd ./publish
           zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
-          sha256sum geoip.dat geosite.dat rules.zip > sha256sum
+          sha256sum geoip.dat > geoip.dat.sha256sum
+          sha256sum geosite.dat > geosite.dat.sha256sum
+          sha256sum rules.zip > rules.zip.sha256sum
 
       - name: Release and upload assets
         uses: softprops/action-gh-release@v1
