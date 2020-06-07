@@ -38,6 +38,7 @@ jobs:
           echo "::set-env name=LHIE1_RULES_PROXY_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Proxy.list"
           echo "::set-env name=LHIE1_RULES_REJECT_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Reject.list"
           echo "::set-env name=ADAWAY_REJECT_URL::https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt"
+          echo "::set-env name=ICN_RULES_REJECT_URL::https://raw.githubusercontent.com/IceCodeNew/4Share/master/DNSCrypt/mybase.txt"
           echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
           echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
         shell: bash
@@ -88,6 +89,7 @@ jobs:
           curl -sSL $GEQ1AN_RULES_REJECT_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+AdBlock/ {print $2}' >> temp-reject.txt
           curl -sSL $LHIE1_RULES_REJECT_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+/ {print $2}' >> temp-reject.txt
           curl -sSL $ADAWAY_REJECT_URL | grep "127.0.0.1" | sed '1d' | awk '{print $2}' >> temp-reject.txt
+          curl -sSL $ICN_RULES_REJECT_URL | sed -E '/^#|^$/d' >> temp-reject.txt
 
       - name: Add proxy, direct and reject domains from "hidden" branch to appropriate temp files
         run: |
