@@ -65,8 +65,24 @@ scoop install v2ray-rules-dat
       "type": "field",
       "outboundTag": "Direct",
       "ip": [
+        "223.5.5.5/32",
+        "119.29.29.29/32",
+        "180.76.76.76/32",
+        "114.114.114.114/32",
         "geoip:cn",
         "geoip:private"
+      ]
+    },
+    {
+      "type": "field",
+      "outboundTag": "Proxy",
+      "ip": [
+        "1.1.1.1/32",
+        "1.0.0.1/32",
+        "8.8.8.8/32",
+        "8.8.4.4/32",
+        "geoip:us",
+        "geoip:ca"
       ]
     }
   ]
