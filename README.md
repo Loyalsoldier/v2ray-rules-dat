@@ -75,7 +75,7 @@ scoop install v2ray-rules-dat
 
 ### geosite.dat
 
-跟 V2Ray 官方 `geosite.dat` 配置方式相同。
+跟 V2Ray 官方 `geosite.dat` 配置方式相同。`geosite:apple-cn` 和 `geosite:google-cn` 为本项目特有的两个类别，分别包含 [@felixonmars/dnsmasq-china-list/apple.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/apple.china.conf) 和 [@felixonmars/dnsmasq-china-list/google.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/google.china.conf) 文件里的域名，供希望 Apple 和 Google 域名直连（不走代理）的用户使用，配置参考下面 👇👇👇
 
 **Routing 配置方式**：
 
@@ -87,6 +87,17 @@ scoop install v2ray-rules-dat
       "outboundTag": "Reject",
       "domain": [
         "geosite:category-ads-all"
+      ]
+    },
+    {
+      "type": "field",
+      "outboundTag": "Direct",
+      "domain": [
+        "geosite:apple-cn",
+        "geosite:google-cn",
+        "geosite:jsdelivr",
+        "domain:icloud.com",
+        "domain:icloud-content.com"
       ]
     },
     {

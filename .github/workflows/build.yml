@@ -133,6 +133,11 @@ jobs:
           echo "include:direct-list.txt" >> cn
           echo "include:reject-list.txt" >> category-ads-all
 
+      - name: Add `google-cn` and `apple-cn` sub-lists for custom routing settings for third-party users due to accessibility in China mainland
+        run: |
+          curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/google-cn
+          curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/apple-cn
+
       - name: Build geosite.dat file
         run: |
           domain-list-community --datapath=${{ env.GOPATH }}/src/${{ env.GEOSITE_REPO }}/data
