@@ -18,8 +18,8 @@
 - 通过仓库 [@v2ray/domain-list-community](https://github.com/v2ray/domain-list-community) 生成
 - **加入大量中国大陆域名、Apple 域名和 Google 域名**：
   - [@felixonmars/dnsmasq-china-list/accelerated-domains.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/accelerated-domains.china.conf) 加入到 `geosite:cn` 类别中
-  - [@felixonmars/dnsmasq-china-list/apple.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/apple.china.conf) 加入到 `geosite:geolocation-!cn` 类别中
-  - [@felixonmars/dnsmasq-china-list/google.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/google.china.conf) 加入到 `geosite:geolocation-!cn` 类别中
+  - [@felixonmars/dnsmasq-china-list/apple.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/apple.china.conf) 加入到 `geosite:geolocation-!cn` 类别中（如希望本文件中的 Apple 域名直连，请参考下面 [geosite 的 Routing 配置方式](https://github.com/Loyalsoldier/v2ray-rules-dat#geositedat-1)）
+  - [@felixonmars/dnsmasq-china-list/google.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/google.china.conf) 加入到 `geosite:geolocation-!cn` 类别中（如希望本文件中的 Google 域名直连，请参考下面 [geosite 的 Routing 配置方式](https://github.com/Loyalsoldier/v2ray-rules-dat#geositedat-1)）
 - **加入最新 GFWList 域名**：通过仓库 [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq) 生成并加入到 `geosite:geolocation-!cn` 类别中
 - **加入附加 GFWList 域名**：通过仓库 [@pexcn/gfwlist-extras](https://github.com/pexcn/gfwlist-extras) 获取并加入到 `geosite:geolocation-!cn` 类别中
 - **加入 Greatfire Analyzer 检测到的屏蔽域名**：通过仓库 [@wongsyrone/domain-block-list](https://github.com/wongsyrone/domain-block-list) 和 [@Loyalsoldier/cn-blocked-domain](https://github.com/Loyalsoldier/cn-blocked-domain) 获取 [Greatfire Analyzer](https://zh.greatfire.org/analyzer) 检测到的屏蔽域名，并加入到 `geosite:geolocation-!cn` 类别中
@@ -75,7 +75,7 @@ scoop install v2ray-rules-dat
 
 ### geosite.dat
 
-跟 V2Ray 官方 `geosite.dat` 配置方式相同。
+跟 V2Ray 官方 `geosite.dat` 配置方式相同。`geosite:apple-cn` 和 `geosite:google-cn` 为本项目特有的两个类别，分别包含 [@felixonmars/dnsmasq-china-list/apple.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/apple.china.conf) 和 [@felixonmars/dnsmasq-china-list/google.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/google.china.conf) 文件里的域名，供希望 Apple 和 Google 域名直连（不走代理）的用户使用，配置参考下面 👇👇👇
 
 **Routing 配置方式**：
 
@@ -87,6 +87,17 @@ scoop install v2ray-rules-dat
       "outboundTag": "Reject",
       "domain": [
         "geosite:category-ads-all"
+      ]
+    },
+    {
+      "type": "field",
+      "outboundTag": "Direct",
+      "domain": [
+        "geosite:apple-cn",
+        "geosite:google-cn",
+        "geosite:jsdelivr",
+        "domain:icloud.com",
+        "domain:icloud-content.com"
       ]
     },
     {
