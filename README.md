@@ -336,6 +336,9 @@ scoop install v2ray-rules-dat
 
 ## 致谢
 
+> This product includes GeoLite2 data created by MaxMind, available from [https://www.maxmind.com](https://www.maxmind.com).
+
+- [MaxMind GeoLite2 Free IP Database](https://dev.maxmind.com/geoip/geoip2/geolite2/)
 - [@kidonng/scoop-v2ray](https://github.com/kidonng/scoop-v2ray)
 - [@v2ray/geoip](https://github.com/v2ray/geoip)
 - [@v2ray/domain-list-community](https://github.com/v2ray/domain-list-community)
@@ -348,9 +351,8 @@ scoop install v2ray-rules-dat
 - [@ConnersHua/Profiles](https://github.com/ConnersHua/Profiles/tree/master)
 - [@GeQ1an/Rules](https://github.com/GeQ1an/Rules/tree/master/QuantumultX)
 - [@lhie1/Rules](https://github.com/lhie1/Rules/tree/master)
-- [@pexcn/chnroute.txt](https://github.com/pexcn/daily/blob/gh-pages/chnroute/chnroute.txt)
+- [@pexcn/daily/chnroute.txt](https://github.com/pexcn/daily/blob/gh-pages/chnroute/chnroute.txt)
 - [@AdAway/adaway.github.io/hosts.txt](https://github.com/AdAway/adaway.github.io/blob/master/hosts.txt)
-- [MaxMind GeoLite2 Free IP Database](https://dev.maxmind.com/geoip/geoip2/geolite2/)
 
 ## 项目 Star 数增长趋势
 
