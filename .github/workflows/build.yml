@@ -60,7 +60,7 @@ jobs:
       - name: Generate geoip.dat file
         run: |
           go get -u -v -insecure $GEOIP_REPO
-          geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv --cnipv4url=https://raw.githubusercontent.com/IceCodeNew/4Share/master/geoip_china/china_ip_list.txt
+          geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv --ipv4CN=https://raw.githubusercontent.com/IceCodeNew/4Share/master/geoip_china/china_ip_list.txt
 
       - name: Download geosite project
         run: |
@@ -137,6 +137,11 @@ jobs:
           echo "include:direct-list.txt" >> cn
           echo "include:reject-list.txt" >> category-ads-all
 
+      - name: Add `google-cn` and `apple-cn` sub-lists for custom routing settings for third-party users due to accessibility in China mainland
+        run: |
+          curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/google-cn
+          curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/apple-cn
+
       - name: Build geosite.dat file
         run: |
           domain-list-community --datapath=${{ env.GOPATH }}/src/${{ env.GEOSITE_REPO }}/data
@@ -149,7 +154,9 @@ jobs:
           install -p $GOPATH/src/$GEOSITE_REPO/data/{proxy,direct,reject}-list.txt ./publish/
           cd ./publish
           zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
-          sha256sum geoip.dat geosite.dat rules.zip > sha256sum
+          sha256sum geoip.dat > geoip.dat.sha256sum
+          sha256sum geosite.dat > geosite.dat.sha256sum
+          sha256sum rules.zip > rules.zip.sha256sum
 
       - name: Release and upload assets
         uses: softprops/action-gh-release@v1
