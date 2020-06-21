@@ -40,6 +40,7 @@ jobs:
           echo "::set-env name=LHIE1_RULES_PROXY_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Proxy.list"
           echo "::set-env name=LHIE1_RULES_REJECT_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Reject.list"
           echo "::set-env name=ADAWAY_REJECT_URL::https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt"
+          echo "::set-env name=ICN_RULES_DIRECT_URL::https://raw.githubusercontent.com/IceCodeNew/4Share/master/Proxifier/GetWhiteDomainLists/whitelist.txt"
           echo "::set-env name=ICN_RULES_REJECT_URL::https://raw.githubusercontent.com/IceCodeNew/4Share/master/DNSCrypt/mybase.txt"
           echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
           echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
@@ -69,6 +70,7 @@ jobs:
       - name: Get and add direct domains into temp-direct.txt file
         run: |
           curl -sSL $CHINA_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > temp-direct.txt
+          curl -sSL $ICN_RULES_DIRECT_URL | sed -E -e '/^#|^$/d' -e 's/\*\.//g' >> temp-reject.txt
 
       - name: Get and add proxy domains into temp-proxy.txt file
         run: |
