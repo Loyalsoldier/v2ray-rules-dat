@@ -4,5 +4,6 @@ bdtj.tagtic.cn
 d.ifengimg.com
 icons.mydrivers.com
 mtalk.google.com
+pingjs.qq.com
 tagtic.cn
 ue.yeyoucdn.com
