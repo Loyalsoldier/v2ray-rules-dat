@@ -1,0 +1,176 @@
+name: Build V2Ray rules dat files
+on:
+  schedule:
+    - cron: "0 22 * * *"
+  push:
+    branches:
+      - master
+      - hidden
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Go 1.x
+        uses: actions/setup-go@v2
+        with:
+          go-version: "^1.14"
+
+      - name: Set $GOPATH and more variables
+        run: |
+          echo "::set-env name=RELEASE_NAME::Released on $(date +%Y%m%d%H%M)"
+          echo "::set-env name=TAG_NAME::$(date +%Y%m%d%H%M)"
+          echo "::set-env name=GEOIP_REPO::github.com/Loyalsoldier/geoip"
+          echo "::set-env name=GEOSITE_REPO::github.com/v2ray/domain-list-community"
+          echo "::set-env name=CHINA_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf"
+          echo "::set-env name=GOOGLE_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/google.china.conf"
+          echo "::set-env name=APPLE_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf"
+          echo "::set-env name=GFWLIST_DOMAINS_URL::https://cokebar.github.io/gfwlist2dnsmasq/gfwlist_domain.txt"
+          echo "::set-env name=GFWLIST_EXTRAS_DOMAINS_URL::https://raw.githubusercontent.com/pexcn/gfwlist-extras/master/gfwlist-extras.txt"
+          echo "::set-env name=GREATFIRE_DOMAINS_URL::https://raw.githubusercontent.com/wongsyrone/domain-block-list/master/domains.txt"
+          echo "::set-env name=GREATFIRE_DOMAINS_MINE_URL::https://raw.githubusercontent.com/Loyalsoldier/cn-blocked-domain/release/domains.txt"
+          echo "::set-env name=GEQ1AN_RULES_APPLE_URL::https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/Apple.list"
+          echo "::set-env name=GEQ1AN_RULES_MICROSOFT_URL::https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/Optional/Microsoft.list"
+          echo "::set-env name=GEQ1AN_RULES_GLOBAL_MEDIA_URL::https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/GMedia.list"
+          echo "::set-env name=GEQ1AN_RULES_OUTSIDE_URL::https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/Outside.list"
+          echo "::set-env name=GEQ1AN_RULES_REJECT_URL::https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/AdBlock.list"
+          echo "::set-env name=LHIE1_RULES_PROXY_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Proxy.list"
+          echo "::set-env name=LHIE1_RULES_REJECT_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Reject.list"
+          echo "::set-env name=ADAWAY_REJECT_URL::https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt"
+          echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
+          echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
+        shell: bash
+
+      - name: Checkout the "hidden" branch
+        uses: actions/checkout@v2.3.1
+        with:
+          ref: hidden
+
+      - name: Get GeoLite2 zip file
+        run: |
+          curl -L -o GeoLite2-Country-CSV.zip "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country-CSV&license_key=JvbzLLx7qBZT&suffix=zip"
+          unzip GeoLite2-Country-CSV.zip
+          rm -f GeoLite2-Country-CSV.zip
+          mv GeoLite2* geoip
+
+      - name: Generate geoip.dat file
+        run: |
+          go get -u -v -insecure $GEOIP_REPO
+          geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv --ipv4CN=https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt
+
+      - name: Download geosite project
+        run: |
+          go get -u -v -insecure $GEOSITE_REPO
+
+      - name: Get and add direct domains into temp-direct.txt file
+        run: |
+          curl -sSL $CHINA_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > temp-direct.txt
+
+      - name: Get and add proxy domains into temp-proxy.txt file
+        run: |
+          curl -sSL $GFWLIST_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > temp-proxy.txt
+          curl -sSL $GFWLIST_EXTRAS_DOMAINS_URL | perl -ne 'print if not /^(#|\s)/' >> temp-proxy.txt
+          curl -sSL $GREATFIRE_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> temp-proxy.txt
+          curl -sSL $GREATFIRE_DOMAINS_MINE_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> temp-proxy.txt
+          curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> temp-proxy.txt
+          curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> temp-proxy.txt
+          curl -sSL $GEQ1AN_RULES_APPLE_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+Apple/ {print $2}' >> temp-proxy.txt
+          curl -sSL $GEQ1AN_RULES_MICROSOFT_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+Microsoft/ {print $2}' >> temp-proxy.txt
+          curl -sSL $GEQ1AN_RULES_GLOBAL_MEDIA_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+GMedia/ {print $2}' >> temp-proxy.txt
+          curl -sSL $GEQ1AN_RULES_OUTSIDE_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+Outside/ {print $2}' >> temp-proxy.txt
+          curl -sSL $LHIE1_RULES_PROXY_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+/ {print $2}' >> temp-proxy.txt
+
+      - name: Get and add reject domains into temp-reject.txt file
+        run: |
+          curl -sSL $GEQ1AN_RULES_REJECT_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+AdBlock/ {print $2}' > temp-reject.txt
+          curl -sSL $LHIE1_RULES_REJECT_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+/ {print $2}' >> temp-reject.txt
+          curl -sSL $ADAWAY_REJECT_URL | grep "127.0.0.1" | sed '1d' | awk '{print $2}' >> temp-reject.txt
+
+      - name: Add proxy, direct and reject domains from "hidden" branch to appropriate temp files
+        run: |
+          cat proxy.txt >> temp-proxy.txt
+          cat direct.txt >> temp-direct.txt
+          cat reject.txt >> temp-reject.txt
+
+      - name: Sort and generate redundant lists
+        run: |
+          cat temp-proxy.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > proxy-list-with-redundant
+          cat temp-proxy.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > proxy-excluse-list.txt
+          cat temp-direct.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > direct-list-with-redundant
+          cat temp-direct.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > direct-excluse-list.txt
+          cat temp-reject.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > reject-list-with-redundant
+          cat temp-reject.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > reject-excluse-list.txt
+
+      - name: Remove redundant domains
+        run: |
+          chmod +x findRedundantDomain.py
+          ./findRedundantDomain.py ./direct-list-with-redundant ./direct-list-deleted-unsort
+          ./findRedundantDomain.py ./proxy-list-with-redundant ./proxy-list-deleted-unsort
+          ./findRedundantDomain.py ./reject-list-with-redundant ./reject-list-deleted-unsort
+          [ ! -f "direct-list-deleted-unsort" ] && touch direct-list-deleted-unsort
+          [ ! -f "proxy-list-deleted-unsort" ] && touch proxy-list-deleted-unsort
+          [ ! -f "reject-list-deleted-unsort" ] && touch reject-list-deleted-unsort
+          sort ./direct-list-deleted-unsort > ./direct-list-deleted-sort
+          sort ./proxy-list-deleted-unsort > ./proxy-list-deleted-sort
+          sort ./reject-list-deleted-unsort > ./reject-list-deleted-sort
+          diff ./direct-list-deleted-sort ./direct-list-with-redundant | awk '/^>/{print $2}' > ./direct-list-without-redundant
+          diff ./proxy-list-deleted-sort ./proxy-list-with-redundant | awk '/^>/{print $2}' > ./proxy-list-without-redundant
+          diff ./reject-list-deleted-sort ./reject-list-with-redundant | awk '/^>/{print $2}' > ./reject-list-without-redundant
+
+      - name: Remove domains from "need-to-remove" lists in "hidden" branch and remove domains end with ".cn" in proxy-list
+        run: |
+          diff ./direct-need-to-remove.txt ./direct-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/direct-list.txt
+          diff ./proxy-need-to-remove.txt ./proxy-list-without-redundant | awk '/^>/{print $2}' | perl -ne 'print if not /\.cn$/' > $GOPATH/src/$GEOSITE_REPO/data/proxy-list.txt
+          diff ./reject-need-to-remove.txt ./reject-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/reject-list.txt
+
+      - name: Add list into appropriate category file
+        run: |
+          cd $GOPATH/src/$GEOSITE_REPO/data
+          echo "include:proxy-list.txt" >> geolocation-\!cn
+          echo "include:direct-list.txt" >> cn
+          echo "include:reject-list.txt" >> category-ads-all
+
+      - name: Add `google-cn` and `apple-cn` sub-lists for custom routing settings for third-party users due to accessibility in China mainland
+        run: |
+          curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/google-cn
+          curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/apple-cn
+
+      - name: Build geosite.dat file
+        run: |
+          domain-list-community --datapath=${{ env.GOPATH }}/src/${{ env.GEOSITE_REPO }}/data
+
+      - name: Move and zip files and generate sha256 hash
+        run: |
+          install -Dp geoip.dat ./publish/geoip.dat
+          install -Dp dlc.dat ./publish/geosite.dat
+          install -p {proxy,direct,reject}-excluse-list.txt ./publish/
+          install -p $GOPATH/src/$GEOSITE_REPO/data/{proxy,direct,reject}-list.txt ./publish/
+          cd ./publish
+          zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
+          sha256sum geoip.dat > geoip.dat.sha256sum
+          sha256sum geosite.dat > geosite.dat.sha256sum
+          sha256sum rules.zip > rules.zip.sha256sum
+
+      - name: Release and upload assets
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ env.RELEASE_NAME }}
+          tag_name: ${{ env.TAG_NAME }}
+          draft: false
+          prerelease: false
+          files: |
+            ./publish/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Git push assets to "release" branch
+        run: |
+          cd publish
+          git init
+          git config --local user.name "actions"
+          git config --local user.email "action@github.com"
+          git checkout -b release
+          git add .
+          git commit -m "${{ env.RELEASE_NAME }}"
+          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          git push -f -u origin release
