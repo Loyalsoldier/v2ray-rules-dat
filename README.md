@@ -1,4 +1,4 @@
-# 简介 ![GitHub All Releases](https://img.shields.io/github/downloads/Loyalsoldier/v2ray-rules-dat/total)
+# 简介
 
 **V2Ray** 规则文件加强版，可代替 V2Ray 官方 `geoip.dat` 和 `geosite.dat` 规则文件。利用 GitHub Actions 北京时间每天早上 6 点自动构建，保证规则最新。
 
