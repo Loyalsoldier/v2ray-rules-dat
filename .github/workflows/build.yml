@@ -6,6 +6,9 @@ on:
     branches:
       - master
       - hidden
+    paths-ignore:
+      - ".github/**"
+      - "**/README.md"
 jobs:
   build:
     name: Build
