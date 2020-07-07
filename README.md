@@ -258,7 +258,7 @@ scoop install v2ray-rules-dat
     }
   ],
   "routing": {
-    "domainStrategy": "IPIfNonMatch",
+    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
