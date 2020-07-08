@@ -1,6 +1,6 @@
 # 简介
 
-**V2Ray** 规则文件加强版，可代替 V2Ray 官方 `geoip.dat` 和 `geosite.dat` 规则文件。利用 GitHub Actions 北京时间每天早上 6 点自动构建，保证规则最新。
+**V2Ray** 路由规则文件加强版，可代替 V2Ray 官方 `geoip.dat` 和 `geosite.dat` 规则文件。利用 GitHub Actions 北京时间每天早上 6 点自动构建，保证规则最新。
 
 ## 说明
 
@@ -94,7 +94,7 @@ scoop install v2ray-rules-dat
 
 ### geosite.dat
 
-跟 V2Ray 官方 `geosite.dat` 配置方式相同。`geosite:apple-cn` 和 `geosite:google-cn` 为本项目特有的两个类别，分别包含 [@felixonmars/dnsmasq-china-list/apple.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/apple.china.conf) 和 [@felixonmars/dnsmasq-china-list/google.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/google.china.conf) 文件里的域名，供希望 Apple 和 Google 域名直连（不走代理）的用户使用，配置参考下面 👇👇👇
+跟 V2Ray 官方 `geosite.dat` 配置方式相同。`geosite:apple-cn` 和 `geosite:google-cn` 为本项目特有的两个类别，分别包含 [@felixonmars/dnsmasq-china-list/apple.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/apple.china.conf) 和 [@felixonmars/dnsmasq-china-list/google.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/google.china.conf) 文件里的域名，供希望 Apple 和 Google 域名直连（不走代理）的用户使用。在 Routing 配置中，类别越靠前（上），优先级越高，所以 `geosite:apple-cn` 和 `geosite:google-cn` 要放置在 `geosite:geolocation-!cn` 前（上）面。配置参考下面 👇👇👇
 
 **Routing 配置方式**：
 
@@ -114,7 +114,6 @@ scoop install v2ray-rules-dat
       "domain": [
         "geosite:apple-cn",
         "geosite:google-cn",
-        "geosite:jsdelivr",
         "domain:icloud.com",
         "domain:icloud-content.com"
       ]
@@ -231,10 +230,10 @@ scoop install v2ray-rules-dat
   ],
   "outbounds": [
     {
-      //下面这行，协议名称为socks、shadowsocks或vmess等（记得删除这行文字说明）
-      "protocol": "协议名称",
+      //下面这行，协议类别要改为socks、shadowsocks或vmess等（记得删除本行文字说明）
+      "protocol": "协议类别",
       "settings": {},
-      //下面这行，必须为Proxy，对应Routing里的outboundTag（记得删除这行文字说明）
+      //下面这行，tag的值对应Routing里的outboundTag，这里为Proxy（记得删除本行文字说明）
       "tag": "Proxy",
       "streamSettings": {},
       "mux": {}
@@ -342,8 +341,8 @@ scoop install v2ray-rules-dat
 > This product includes GeoLite2 data created by MaxMind, available from [https://www.maxmind.com](https://www.maxmind.com).
 
 - [MaxMind GeoLite2 Free IP Database](https://dev.maxmind.com/geoip/geoip2/geolite2/)
-- [@kidonng/scoop-v2ray](https://github.com/kidonng/scoop-v2ray)
 - [@v2ray/geoip](https://github.com/v2ray/geoip)
+- [@Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip)
 - [@v2ray/domain-list-community](https://github.com/v2ray/domain-list-community)
 - [@felixonmars/dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list)
 - [@gfwlist/gfwlist](https://github.com/gfwlist/gfwlist)
@@ -354,6 +353,7 @@ scoop install v2ray-rules-dat
 - [@lhie1/Rules](https://github.com/lhie1/Rules/tree/master)
 - [@pexcn/daily/chnroute.txt](https://github.com/pexcn/daily/blob/gh-pages/chnroute/chnroute.txt)
 - [@AdAway/adaway.github.io/hosts.txt](https://github.com/AdAway/adaway.github.io/blob/master/hosts.txt)
+- [@kidonng/scoop-v2ray](https://github.com/kidonng/scoop-v2ray)
 
 ## 项目 Star 数增长趋势
 
