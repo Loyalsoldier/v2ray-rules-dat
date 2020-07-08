@@ -30,7 +30,7 @@ jobs:
           echo "::set-env name=APPLE_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf"
           echo "::set-env name=GFWLIST_DOMAINS_URL::https://cokebar.github.io/gfwlist2dnsmasq/gfwlist_domain.txt"
           echo "::set-env name=GFWLIST_EXTRAS_DOMAINS_URL::https://raw.githubusercontent.com/pexcn/gfwlist-extras/master/gfwlist-extras.txt"
-          echo "::set-env name=GREATFIRE_DOMAINS_MINE_URL::https://raw.githubusercontent.com/Loyalsoldier/cn-blocked-domain/release/domains.txt"
+          echo "::set-env name=GREATFIRE_DOMAINS_URL::https://raw.githubusercontent.com/Loyalsoldier/cn-blocked-domain/release/domains.txt"
           echo "::set-env name=GEQ1AN_RULES_APPLE_URL::https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/Apple.list"
           echo "::set-env name=GEQ1AN_RULES_MICROSOFT_URL::https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/Optional/Microsoft.list"
           echo "::set-env name=GEQ1AN_RULES_GLOBAL_MEDIA_URL::https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/GMedia.list"
@@ -72,7 +72,7 @@ jobs:
         run: |
           curl -sSL $GFWLIST_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > temp-proxy.txt
           curl -sSL $GFWLIST_EXTRAS_DOMAINS_URL | perl -ne 'print if not /^(#|\s)/' >> temp-proxy.txt
-          curl -sSL $GREATFIRE_DOMAINS_MINE_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> temp-proxy.txt
+          curl -sSL $GREATFIRE_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> temp-proxy.txt
           curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> temp-proxy.txt
           curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> temp-proxy.txt
           curl -sSL $GEQ1AN_RULES_APPLE_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+Apple/ {print $2}' >> temp-proxy.txt
