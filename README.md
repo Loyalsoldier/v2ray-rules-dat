@@ -34,6 +34,9 @@
 
 - **geoip.dat**：[https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat)
 - **geosite.dat**：[https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat)
+- **直连域名列表 direct-list.txt**：[https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/direct-list.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/direct-list.txt)
+- **代理域名列表 proxy-list.txt**：[https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/proxy-list.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/proxy-list.txt)
+- **广告域名列表 reject-list.txt**：[https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/reject-list.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/reject-list.txt)
 
 **使用方式**：
 
