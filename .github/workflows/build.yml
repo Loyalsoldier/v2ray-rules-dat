@@ -24,7 +24,7 @@ jobs:
           echo "::set-env name=RELEASE_NAME::Released on $(date +%Y%m%d%H%M)"
           echo "::set-env name=TAG_NAME::$(date +%Y%m%d%H%M)"
           echo "::set-env name=GEOIP_REPO::github.com/Loyalsoldier/geoip"
-          echo "::set-env name=GEOSITE_REPO::github.com/v2ray/domain-list-community"
+          echo "::set-env name=GEOSITE_REPO::github.com/v2fly/domain-list-community"
           echo "::set-env name=CHINA_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf"
           echo "::set-env name=GOOGLE_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/google.china.conf"
           echo "::set-env name=APPLE_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf"
