@@ -167,10 +167,10 @@ scoop install v2ray-rules-dat
 下面为自用 V2Ray 客户端完整配置，注意事项：
 
 - 由于下面客户端配置使用了 DoH DNS 功能，所以必须使用 v4.22.0 或更新版本的 [V2Ray](https://github.com/v2fly/v2ray-core/releases)
-- 下面客户端配置使 V2Ray 在本机开启 SOCKS 代理（监听 1080 端口）和 HTTP 代理（监听 2080 端口）
+- 下面客户端配置使 V2Ray 在本机开启 SOCKS 代理（监听 1080 端口）和 HTTP 代理（监听 2080 端口），允许局域网内其他设备连接并使用代理
 - BT 流量统统直连（实测依然会有部分 BT 流量走代理，尚不清楚是不是 V2Ray 的 bug。如果服务商禁止 BT 下载的话，请不要为下载软件设置代理）
 - 最后，不命中任何路由规则的请求和流量，统统走代理
-- `outbounds` 里的第一个大括号内的配置，即为 V2Ray 代理服务的配置。请根据自身需求进行修改，并参照 V2Ray 官网配置说明中的 [配置文件 > 文件格式 > OutboundObject](https://www.v2fly.org/chapter_02/01_overview.html#outboundobject) 部分进行补全
+- `outbounds` 里的第一个大括号内的配置，即为 V2Ray 代理服务的配置。请根据自身需求进行修改，并参照 V2Ray 官网配置说明中的 [配置 > Outbounds > OutboundObject](https://www.v2fly.org/chapter_02/outbounds.html#outboundobject) 部分进行补全
 
 ```json
 {
@@ -179,25 +179,29 @@ scoop install v2ray-rules-dat
   },
   "dns": {
     "hosts": {
-      "dns.google": "8.8.8.8"
+      "dns.google": "8.8.8.8",
+      "doh.pub": "119.29.29.29"
     },
     "servers": [
+      {
+        "address": "https+local://doh.pub/dns-query",
+        "domains": [
+          "geosite:cn"
+        ],
+        "expectIPs": [
+          "geoip:cn"
+        ]
+      },
       {
         "address": "https://1.1.1.1/dns-query",
         "domains": [
           "geosite:geolocation-!cn"
         ]
       },
-      "https://1.1.1.1/dns-query",
-      "https://dns.google/dns-query",
       {
-        "address": "114.114.114.114",
-        "port": 53,
+        "address": "https+local://223.5.5.5/dns-query",
         "domains": [
-          "geosite:cn"
-        ],
-        "expectIPs": [
-          "geoip:cn"
+          "geosite:tld-cn"
         ]
       }
     ]
@@ -205,7 +209,7 @@ scoop install v2ray-rules-dat
   "inbounds": [
     {
       "protocol": "socks",
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "port": 1080,
       "tag": "Socks-In",
       "settings": {
@@ -220,7 +224,7 @@ scoop install v2ray-rules-dat
     },
     {
       "protocol": "http",
-      "listen": "127.0.0.1",
+      "listen": "0.0.0.0",
       "port": 2080,
       "tag": "Http-In",
       "sniffing": {
@@ -261,7 +265,7 @@ scoop install v2ray-rules-dat
     }
   ],
   "routing": {
-    "domainStrategy": "AsIs",
+    "domainStrategy": "IPIfNonMatch",
     "rules": [
       {
         "type": "field",
@@ -287,9 +291,18 @@ scoop install v2ray-rules-dat
       },
       {
         "type": "field",
+        "outboundTag": "Proxy",
+        "domain": [
+          "full:www.icloud.com",
+          "domain:icloud-content.com"
+        ]
+      },
+      {
+        "type": "field",
         "outboundTag": "Direct",
         "domain": [
-          "geosite:tld-cn"
+          "geosite:tld-cn",
+          "geosite:icloud"
         ]
       },
       {
@@ -304,26 +317,6 @@ scoop install v2ray-rules-dat
         "outboundTag": "Direct",
         "domain": [
           "geosite:cn"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "Direct",
-        "ip": [
-          "223.5.5.5/32",
-          "119.29.29.29/32",
-          "180.76.76.76/32",
-          "114.114.114.114/32"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "Proxy",
-        "ip": [
-          "1.1.1.1/32",
-          "1.0.0.1/32",
-          "8.8.8.8/32",
-          "8.8.4.4/32"
         ]
       },
       {
