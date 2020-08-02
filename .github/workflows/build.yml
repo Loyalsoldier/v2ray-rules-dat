@@ -7,7 +7,6 @@ on:
       - master
       - hidden
     paths-ignore:
-      - ".github/**"
       - "**/README.md"
 jobs:
   build:
