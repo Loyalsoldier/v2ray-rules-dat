@@ -39,6 +39,9 @@ jobs:
           echo "::set-env name=LHIE1_RULES_REJECT_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Reject.list"
           echo "::set-env name=ADAWAY_REJECT_URL::https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt"
           echo "::set-env name=EASYLISTCHINA_EASYLIST_REJECT_URL::https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt"
+          echo "::set-env name=v2fly_direct::https://raw.githubusercontent.com/v2fly/domain-list-community/release/cn.txt"
+          echo "::set-env name=v2fly_proxy::https://raw.githubusercontent.com/v2fly/domain-list-community/release/geolocation-!cn.txt"
+          echo "::set-env name=v2fly_reject::https://raw.githubusercontent.com/v2fly/domain-list-community/release/category-ads-all.txt"
           echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
           echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
         shell: bash
@@ -67,6 +70,7 @@ jobs:
       - name: Get and add direct domains into temp-direct.txt file
         run: |
           curl -sSL $CHINA_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > temp-direct.txt
+          curl -sSL ${v2fly_direct} | perl -ne '/^(domain|full):([^:]+)(\n$|:@.+)/ && print "$2\n"' >> temp-direct.txt
 
       - name: Get and add proxy domains into temp-proxy.txt file
         run: |
@@ -80,6 +84,7 @@ jobs:
           curl -sSL $GEQ1AN_RULES_GLOBAL_MEDIA_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+GMedia/ {print $2}' >> temp-proxy.txt
           curl -sSL $GEQ1AN_RULES_OUTSIDE_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+Outside/ {print $2}' >> temp-proxy.txt
           curl -sSL $LHIE1_RULES_PROXY_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+/ {print $2}' >> temp-proxy.txt
+          curl -sSL ${v2fly_proxy} | perl -ne '/^(domain|full):([^:]+)(\n$|:@.+)/ && print "$2\n"' >> temp-proxy.txt
 
       - name: Get and add reject domains into temp-reject.txt file
         run: |
@@ -87,6 +92,13 @@ jobs:
           curl -sSL $LHIE1_RULES_REJECT_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+/ {print $2}' >> temp-reject.txt
           curl -sSL $ADAWAY_REJECT_URL | grep "127.0.0.1" | sed '1d' | awk '{print $2}' >> temp-reject.txt
           curl -sSL $EASYLISTCHINA_EASYLIST_REJECT_URL | perl -ne '/^\|\|([-_0-9a-zA-Z]+(\.[-_0-9a-zA-Z]+){1,64})\^($|\$third-party$)/ && print "$1\n"' | perl -ne 'print if not /^[0-9]{1,3}(\.[0-9]{1,3}){3}$/' >> temp-reject.txt
+          curl -sSL ${v2fly_reject} | perl -ne '/^(domain|full):([^:]+)(\n$|:@.+)/ && print "$2\n"' >> temp-reject.txt
+
+      - name: Reserve `regex` and `keyword` type of rules from v2fly lists to "reserve" files
+        run: |
+          curl -sSL ${v2fly_direct} | perl -ne '/^((regex|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > direct-reserve.txt
+          curl -sSL ${v2fly_proxy} | perl -ne '/^((regex|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > proxy-reserve.txt
+          curl -sSL ${v2fly_reject} | perl -ne '/^((regex|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > reject-reserve.txt
 
       - name: Add proxy, direct and reject domains from "hidden" branch to appropriate temp files
         run: |
@@ -96,12 +108,9 @@ jobs:
 
       - name: Sort and generate redundant lists
         run: |
-          cat temp-proxy.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > proxy-list-with-redundant
-          cat temp-proxy.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > proxy-excluse-list.txt
-          cat temp-direct.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > direct-list-with-redundant
-          cat temp-direct.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > direct-excluse-list.txt
-          cat temp-reject.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > reject-list-with-redundant
-          cat temp-reject.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > reject-excluse-list.txt
+          cat temp-proxy.txt | sort --ignore-case -u > proxy-list-with-redundant
+          cat temp-direct.txt | sort --ignore-case -u > direct-list-with-redundant
+          cat temp-reject.txt | sort --ignore-case -u > reject-list-with-redundant
 
       - name: Remove redundant domains
         run: |
@@ -119,18 +128,29 @@ jobs:
           diff ./proxy-list-deleted-sort ./proxy-list-with-redundant | awk '/^>/{print $2}' > ./proxy-list-without-redundant
           diff ./reject-list-deleted-sort ./reject-list-with-redundant | awk '/^>/{print $2}' > ./reject-list-without-redundant
 
-      - name: Remove domains from "need-to-remove" lists in "hidden" branch and remove domains end with ".cn" in proxy-list
+      - name: Remove domains from "need-to-remove" lists in "hidden" branch
         run: |
-          diff ./direct-need-to-remove.txt ./direct-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/direct-list.txt
-          diff ./proxy-need-to-remove.txt ./proxy-list-without-redundant | awk '/^>/{print $2}' | perl -ne 'print if not /\.cn$/' > $GOPATH/src/$GEOSITE_REPO/data/proxy-list.txt
-          diff ./reject-need-to-remove.txt ./reject-list-without-redundant | awk '/^>/{print $2}' > $GOPATH/src/$GEOSITE_REPO/data/reject-list.txt
+          diff ./direct-need-to-remove.txt ./direct-list-without-redundant | awk '/^>/{print $2}' > temp-cn.txt
+          diff ./proxy-need-to-remove.txt ./proxy-list-without-redundant | awk '/^>/{print $2}' > temp-geolocation-\!cn.txt
+          diff ./reject-need-to-remove.txt ./reject-list-without-redundant | awk '/^>/{print $2}' > temp-category-ads-all.txt
 
-      - name: Add list into appropriate category file
+      - name: Remove domains end with ".cn" in "temp-geolocation-!cn.txt" and write lists to data directory
         run: |
-          cd $GOPATH/src/$GEOSITE_REPO/data
-          echo "include:proxy-list.txt" >> geolocation-\!cn
-          echo "include:direct-list.txt" >> cn
-          echo "include:reject-list.txt" >> category-ads-all
+          cat temp-cn.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/cn
+          cat temp-cn.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > direct-tld-list.txt
+          cat temp-geolocation-\!cn.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' | perl -ne 'print if not /\.cn$/' > $GOPATH/src/$GEOSITE_REPO/data/geolocation-\!cn
+          cat temp-geolocation-\!cn.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > proxy-tld-list.txt
+          cat temp-category-ads-all.txt | sort --ignore-case -u | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/category-ads-all
+          cat temp-category-ads-all.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > reject-tld-list.txt
+
+      - name: Add `regex` and `keyword` type of rules back into "cn", "geolocation-!cn" and "category-ads-all" list
+        run: |
+          [ -f "direct-reserve.txt" ] && cat direct-reserve.txt >> $GOPATH/src/$GEOSITE_REPO/data/cn
+          [ -f "proxy-reserve.txt" ] && cat proxy-reserve.txt >> $GOPATH/src/$GEOSITE_REPO/data/geolocation-\!cn
+          [ -f "reject-reserve.txt" ] && cat reject-reserve.txt >> $GOPATH/src/$GEOSITE_REPO/data/category-ads-all
+          cp $GOPATH/src/$GEOSITE_REPO/data/cn direct-list.txt
+          cp $GOPATH/src/$GEOSITE_REPO/data/geolocation-\!cn proxy-list.txt
+          cp $GOPATH/src/$GEOSITE_REPO/data/category-ads-all reject-list.txt
 
       - name: Add `google-cn` and `apple-cn` sub-lists for custom routing settings for third-party users due to accessibility in China mainland
         run: |
@@ -145,8 +165,8 @@ jobs:
         run: |
           install -Dp geoip.dat ./publish/geoip.dat
           install -Dp dlc.dat ./publish/geosite.dat
-          install -p {proxy,direct,reject}-excluse-list.txt ./publish/
-          install -p $GOPATH/src/$GEOSITE_REPO/data/{proxy,direct,reject}-list.txt ./publish/
+          install -p {proxy,direct,reject}-tld-list.txt ./publish/
+          install -p {proxy,direct,reject}-list.txt ./publish/
           cd ./publish
           zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
           sha256sum geoip.dat > geoip.dat.sha256sum
