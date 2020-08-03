@@ -57,12 +57,12 @@ jobs:
 
       - name: Generate geoip.dat file
         run: |
-          go get -u -v -insecure $GEOIP_REPO
+          go get -v -insecure $GEOIP_REPO
           geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv --ipv4CN=https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt
 
       - name: Download geosite project
         run: |
-          go get -u -v -insecure $GEOSITE_REPO
+          go get -v -insecure $GEOSITE_REPO
 
       - name: Get and add direct domains into temp-direct.txt file
         run: |
