@@ -24,6 +24,7 @@
 - **加入附加 GFWList 域名**：通过仓库 [@pexcn/gfwlist-extras](https://github.com/pexcn/gfwlist-extras) 获取并加入到 `geosite:geolocation-!cn` 类别中
 - **加入 Greatfire Analyzer 检测到的屏蔽域名**：通过仓库 [@Loyalsoldier/cn-blocked-domain](https://github.com/Loyalsoldier/cn-blocked-domain) 获取 [Greatfire Analyzer](https://zh.greatfire.org/analyzer) 检测到的屏蔽域名，并加入到 `geosite:geolocation-!cn` 类别中
 - **加入 AdAway 广告域名**：通过仓库 [@AdAway/adaway.github.io/hosts.txt](https://github.com/AdAway/adaway.github.io/blob/master/hosts.txt) 获取并加入到 `geosite:category-ads-all` 类别中
+- **加入 EasyList 和 EasyListChina 广告域名**：通过 [@AdblockPlus/EasylistChina+Easylist.txt](https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt) 获取并加入到 `geosite:category-ads-all` 类别中
 - **加入更多代理域名和广告域名**：通过仓库 [@GeQ1an/Rules](https://github.com/GeQ1an/Rules/tree/master/QuantumultX) 和 [@lhie1/Rules](https://github.com/lhie1/Rules/tree/master) 获取更多代理域名、广告域名，并分别加入到 `geosite:geolocation-!cn` 和 `geosite:category-ads-all` 类别中
 - **可添加自定义直连、代理和广告域名**：由于上游域名列表更新缓慢或缺失某些域名，所以引入**需要添加的域名**列表。[`hidden 分支`](https://github.com/Loyalsoldier/v2ray-rules-dat/tree/hidden)里的三个文件 `direct.txt`、`proxy.txt` 和 `reject.txt`，分别存放自定义的需要添加的直连、代理、广告域名，最终分别加入到 `geosite:cn`、`geosite:geolocation-!cn` 和 `geosite:category-ads-all` 类别中
 - **可移除自定义直连、代理和广告域名**：由于上游域名列表存在需要被移除的域名，所以引入**需要移除的域名**列表。[`hidden 分支`](https://github.com/Loyalsoldier/v2ray-rules-dat/tree/hidden)里的三个文件 `direct-need-to-remove.txt`、`proxy-need-to-remove.txt` 和 `reject-need-to-remove.txt`，分别存放自定义的需要从 `direct-list`（直连域名列表）、`proxy-list`（代理域名列表）和 `reject-list`（广告域名列表） 移除的域名
@@ -166,7 +167,7 @@ scoop install v2ray-rules-dat
 
 下面为自用 V2Ray 客户端完整配置，注意事项：
 
-- 由于下面客户端配置使用了 DoH DNS 功能，所以必须使用 v4.22.0 或更新版本的 [V2Ray](https://github.com/v2fly/v2ray-core/releases)
+- 由于下面客户端配置使用了 DoH (DNS over HTTPS) 功能，所以必须使用 v4.22.0 或更新版本的 [V2Ray](https://github.com/v2fly/v2ray-core/releases)
 - 下面客户端配置使 V2Ray 在本机开启 SOCKS 代理（监听 1080 端口）和 HTTP 代理（监听 2080 端口），允许局域网内其他设备连接并使用代理
 - BT 流量统统直连（实测依然会有部分 BT 流量走代理，尚不清楚是不是 V2Ray 的 bug。如果服务商禁止 BT 下载的话，请不要为下载软件设置代理）
 - 最后，不命中任何路由规则的请求和流量，统统走代理
@@ -339,7 +340,7 @@ scoop install v2ray-rules-dat
 
 ## 致谢
 
-> This product includes GeoLite2 data created by MaxMind, available from [https://www.maxmind.com](https://www.maxmind.com).
+> This product includes GeoLite2 data created by MaxMind, available from [Maxmind](https://www.maxmind.com).
 
 - [MaxMind GeoLite2 Free IP Database](https://dev.maxmind.com/geoip/geoip2/geolite2/)
 - [@v2ray/geoip](https://github.com/v2ray/geoip)
@@ -354,6 +355,7 @@ scoop install v2ray-rules-dat
 - [@lhie1/Rules](https://github.com/lhie1/Rules/tree/master)
 - [@pexcn/daily/chnroute.txt](https://github.com/pexcn/daily/blob/gh-pages/chnroute/chnroute.txt)
 - [@AdAway/adaway.github.io/hosts.txt](https://github.com/AdAway/adaway.github.io/blob/master/hosts.txt)
+- [@AdblockPlus/EasylistChina+Easylist.txt](https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt)
 - [@kidonng/scoop-v2ray](https://github.com/kidonng/scoop-v2ray)
 
 ## 项目 Star 数增长趋势
