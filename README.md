@@ -358,6 +358,10 @@ scoop install v2ray-rules-dat
 - [@AdblockPlus/EasylistChina+Easylist.txt](https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt)
 - [@kidonng/scoop-v2ray](https://github.com/kidonng/scoop-v2ray)
 
+## 使用本项目的项目
+
+- [@Loyalsoldier/clash-rules](https://github.com/Loyalsoldier/clash-rules)
+
 ## 项目 Star 数增长趋势
 
 [![Stargazers over time](https://starchart.cc/Loyalsoldier/v2ray-rules-dat.svg)](https://starchart.cc/Loyalsoldier/v2ray-rules-dat)
