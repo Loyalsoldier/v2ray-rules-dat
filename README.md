@@ -361,6 +361,7 @@ scoop install v2ray-rules-dat
 ## 使用本项目的项目
 
 - [@Loyalsoldier/clash-rules](https://github.com/Loyalsoldier/clash-rules)
+- [@Loyalsoldier/surge-rules](https://github.com/Loyalsoldier/surge-rules)
 
 ## 项目 Star 数增长趋势
 
