@@ -164,9 +164,9 @@ scoop install v2ray-rules-dat
 }
 ```
 
-### 自用 V2Ray 客户端完整配置（仅供参考，根据自身需求酌情修改）
+### 自用 V2Ray 客户端配置（仅供参考，请根据自身需求酌情修改）
 
-下面为自用 V2Ray 客户端完整配置，注意事项：
+注意事项：
 
 - 由于下面客户端配置使用了 DoH (DNS over HTTPS) 功能，所以必须使用 v4.22.0 或更新版本的 [V2Ray](https://github.com/v2fly/v2ray-core/releases)
 - 下面客户端配置使 V2Ray 在本机开启 SOCKS 代理（监听 1080 端口）和 HTTP 代理（监听 2080 端口），允许局域网内其他设备连接并使用代理
@@ -339,6 +339,11 @@ scoop install v2ray-rules-dat
 }
 ```
 
+## 使用本项目的项目
+
+- [@Loyalsoldier/clash-rules](https://github.com/Loyalsoldier/clash-rules)
+- [@Loyalsoldier/surge-rules](https://github.com/Loyalsoldier/surge-rules)
+
 ## 致谢
 
 > This product includes GeoLite2 data created by MaxMind, available from [Maxmind](https://www.maxmind.com).
@@ -359,11 +364,6 @@ scoop install v2ray-rules-dat
 - [@AdblockPlus/EasylistChina+Easylist.txt](https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt)
 - [@PeterLowe/adservers](https://pgl.yoyo.org/adservers)
 - [@kidonng/scoop-v2ray](https://github.com/kidonng/scoop-v2ray)
-
-## 使用本项目的项目
-
-- [@Loyalsoldier/clash-rules](https://github.com/Loyalsoldier/clash-rules)
-- [@Loyalsoldier/surge-rules](https://github.com/Loyalsoldier/surge-rules)
 
 ## 项目 Star 数增长趋势
 
