@@ -25,6 +25,7 @@
 - **加入 Greatfire Analyzer 检测到的屏蔽域名**：通过仓库 [@Loyalsoldier/cn-blocked-domain](https://github.com/Loyalsoldier/cn-blocked-domain) 获取 [Greatfire Analyzer](https://zh.greatfire.org/analyzer) 检测到的屏蔽域名，并加入到 `geosite:geolocation-!cn` 类别中
 - **加入 AdAway 广告域名**：通过仓库 [@AdAway/adaway.github.io/hosts.txt](https://github.com/AdAway/adaway.github.io/blob/master/hosts.txt) 获取并加入到 `geosite:category-ads-all` 类别中
 - **加入 EasyList 和 EasyListChina 广告域名**：通过 [@AdblockPlus/EasylistChina+Easylist.txt](https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt) 获取并加入到 `geosite:category-ads-all` 类别中
+- **加入 Peter Lowe 广告和隐私跟踪域名**：通过 [@PeterLowe/adservers](https://pgl.yoyo.org/adservers) 获取并加入到 `geosite:category-ads-all` 类别中
 - **加入更多代理域名**：通过仓库 [@GeQ1an/Rules](https://github.com/GeQ1an/Rules/tree/master/QuantumultX) 和 [@lhie1/Rules](https://github.com/lhie1/Rules/tree/master) 获取更多代理域名，并加入到 `geosite:geolocation-!cn` 类别中
 - **可添加自定义直连、代理和广告域名**：由于上游域名列表更新缓慢或缺失某些域名，所以引入**需要添加的域名**列表。[`hidden 分支`](https://github.com/Loyalsoldier/v2ray-rules-dat/tree/hidden)里的三个文件 `direct.txt`、`proxy.txt` 和 `reject.txt`，分别存放自定义的需要添加的直连、代理、广告域名，最终分别加入到 `geosite:cn`、`geosite:geolocation-!cn` 和 `geosite:category-ads-all` 类别中
 - **可移除自定义直连、代理和广告域名**：由于上游域名列表存在需要被移除的域名，所以引入**需要移除的域名**列表。[`hidden 分支`](https://github.com/Loyalsoldier/v2ray-rules-dat/tree/hidden)里的三个文件 `direct-need-to-remove.txt`、`proxy-need-to-remove.txt` 和 `reject-need-to-remove.txt`，分别存放自定义的需要从 `direct-list`（直连域名列表）、`proxy-list`（代理域名列表）和 `reject-list`（广告域名列表） 移除的域名
@@ -356,6 +357,7 @@ scoop install v2ray-rules-dat
 - [@pexcn/daily/chnroute.txt](https://github.com/pexcn/daily/blob/gh-pages/chnroute/chnroute.txt)
 - [@AdAway/adaway.github.io/hosts.txt](https://github.com/AdAway/adaway.github.io/blob/master/hosts.txt)
 - [@AdblockPlus/EasylistChina+Easylist.txt](https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt)
+- [@PeterLowe/adservers](https://pgl.yoyo.org/adservers)
 - [@kidonng/scoop-v2ray](https://github.com/kidonng/scoop-v2ray)
 
 ## 使用本项目的项目
