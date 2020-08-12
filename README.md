@@ -46,7 +46,7 @@
 Windows 用户可通过 [Scoop](https://scoop.sh) 来安装：
 
 ```shell
-scoop bucket add v2ray https://github.com/kidonng/scoop-v2ray
+scoop bucket add sushi https://github.com/kidonng/sushi
 scoop install v2ray-rules-dat
 ```
 
@@ -365,7 +365,7 @@ scoop install v2ray-rules-dat
 - [@AdGuard/DNS-filter](https://kb.adguard.com/en/general/adguard-ad-filters#dns-filter)
 - [@PeterLowe/adservers](https://pgl.yoyo.org/adservers)
 - [@DanPollock/hosts](https://someonewhocares.org/hosts)
-- [@kidonng/scoop-v2ray](https://github.com/kidonng/scoop-v2ray)
+- [@kidonng/sushi](https://github.com/kidonng/sushi)
 
 ## 项目 Star 数增长趋势
 
