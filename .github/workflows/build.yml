@@ -149,10 +149,12 @@ jobs:
           cp $GOPATH/src/$GEOSITE_REPO/data/geolocation-\!cn proxy-list.txt
           cp $GOPATH/src/$GEOSITE_REPO/data/category-ads-all reject-list.txt
 
-      - name: Add `google-cn` and `apple-cn` sub-lists for custom routing settings for third-party users due to accessibility in China mainland
+      - name: Add `google-cn` and `apple-cn` lists for custom routing settings due to accessibility in China Mainland
         run: |
           curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/google-cn
+          curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > google-cn.txt
           curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/apple-cn
+          curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > apple-cn.txt
 
       - name: Build geosite.dat file
         run: |
@@ -164,6 +166,7 @@ jobs:
           install -Dp dlc.dat ./publish/geosite.dat
           install -p {proxy,direct,reject}-tld-list.txt ./publish/
           install -p {proxy,direct,reject}-list.txt ./publish/
+          install -p {apple,google}-cn.txt ./publish/
           cd ./publish
           zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
           sha256sum geoip.dat > geoip.dat.sha256sum
