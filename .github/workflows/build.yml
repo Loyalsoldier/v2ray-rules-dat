@@ -92,10 +92,10 @@ jobs:
           curl -sSL $PETERLOWE_REJECT_URL | perl -ne '/^127\.0\.0\.1\s([-_0-9a-zA-Z]+(\.[-_0-9a-zA-Z]+){1,64})$/ && print "$1\n"' >> temp-reject.txt
           curl -sSL $DANPOLLOCK_REJECT_URL | perl -ne '/^127\.0\.0\.1\s([-_0-9a-zA-Z]+(\.[-_0-9a-zA-Z]+){1,64})/ && print "$1\n"' | sed '1d' >> temp-reject.txt
 
-      - name: Reserve `regex` and `keyword` type of rules from v2fly lists to "reserve" files
+      - name: Reserve `regexp` and `keyword` type of rules from v2fly lists to "reserve" files
         run: |
-          curl -sSL ${V2FLY_DIRECT} | perl -ne '/^((regex|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > direct-reserve.txt
-          curl -sSL ${V2FLY_PROXY} | perl -ne '/^((regex|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > proxy-reserve.txt
+          curl -sSL ${V2FLY_DIRECT} | perl -ne '/^((regexp|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > direct-reserve.txt
+          curl -sSL ${V2FLY_PROXY} | perl -ne '/^((regexp|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > proxy-reserve.txt
 
       - name: Add proxy, direct and reject domains from "hidden" branch to appropriate temp files
         run: |
@@ -140,7 +140,7 @@ jobs:
           cat temp-category-ads-all.txt | sort --ignore-case -u | perl -ne '/^((?=^.{1,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/category-ads-all
           cat temp-category-ads-all.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > reject-tld-list.txt
 
-      - name: Add `regex` and `keyword` type of rules back into "cn", "geolocation-!cn" and "category-ads-all" list
+      - name: Add `regexp` and `keyword` type of rules back into "cn", "geolocation-!cn" and "category-ads-all" list
         run: |
           [ -f "direct-reserve.txt" ] && cat direct-reserve.txt >> $GOPATH/src/$GEOSITE_REPO/data/cn
           [ -f "proxy-reserve.txt" ] && cat proxy-reserve.txt >> $GOPATH/src/$GEOSITE_REPO/data/geolocation-\!cn
