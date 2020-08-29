@@ -35,11 +35,23 @@
 
 **下载地址**：
 
-- **geoip.dat**：[https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat)
-- **geosite.dat**：[https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat)
-- **直连域名列表 direct-list.txt**：[https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/direct-list.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/direct-list.txt)
-- **代理域名列表 proxy-list.txt**：[https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/proxy-list.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/proxy-list.txt)
-- **广告域名列表 reject-list.txt**：[https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/reject-list.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/reject-list.txt)
+> 如果无法访问域名 `raw.githubusercontent.com`，可以使用第二个地址（`cdn.jsdelivr.net`），但是内容更新会有 12 小时的延迟。
+
+- **geoip.dat**：
+  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat)
+  - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat)
+- **geosite.dat**：
+  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat)
+  - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat)
+- **直连域名列表 direct-list.txt**：
+  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/direct-list.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/direct-list.txt)
+  - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/direct-list.txt](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/direct-list.txt)
+- **代理域名列表 proxy-list.txt**：
+  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/proxy-list.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/proxy-list.txt)
+  - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/proxy-list.txt](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/proxy-list.txt)
+- **广告域名列表 reject-list.txt**：
+  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/reject-list.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/reject-list.txt)
+  - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/reject-list.txt](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/reject-list.txt)
 
 **使用方式**：
 
