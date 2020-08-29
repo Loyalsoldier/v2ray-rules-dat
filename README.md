@@ -198,10 +198,12 @@ scoop install v2ray-rules-dat
       "doh.pub": "119.29.29.29"
     },
     "servers": [
+      "https://dns.google/dns-query",
       {
-        "address": "https+local://doh.pub/dns-query",
+        "address": "https+local://223.5.5.5/dns-query",
         "domains": [
-          "geosite:cn"
+          "geosite:cn",
+          "geosite:icloud"
         ],
         "expectIPs": [
           "geoip:cn"
@@ -211,12 +213,6 @@ scoop install v2ray-rules-dat
         "address": "https://1.1.1.1/dns-query",
         "domains": [
           "geosite:geolocation-!cn"
-        ]
-      },
-      {
-        "address": "https+local://223.5.5.5/dns-query",
-        "domains": [
-          "geosite:tld-cn"
         ]
       }
     ]
