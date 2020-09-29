@@ -77,7 +77,7 @@ jobs:
           curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> temp-proxy.txt
           curl -sSL $GEQ1AN_RULES_GLOBAL_MEDIA_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+GMedia/ {print $2}' >> temp-proxy.txt
           curl -sSL $LHIE1_RULES_PROXY_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+/ {print $2}' >> temp-proxy.txt
-          curl -sSL ${V2FLY_PROXY} | perl -ne '/^(domain|full):([^:]+)(\n$|:@.+)/ && print "$2\n"' >> temp-proxy.txt
+          curl -sSL ${V2FLY_PROXY} | grep -Ev ":@cn" | perl -ne '/^(domain|full):([^:]+)(\n$|:@.+)/ && print "$2\n"' >> temp-proxy.txt
 
       - name: Get and add reject domains into temp-reject.txt file
         run: |
@@ -89,7 +89,7 @@ jobs:
       - name: Reserve `regexp` and `keyword` type of rules from v2fly lists to "reserve" files
         run: |
           curl -sSL ${V2FLY_DIRECT} | perl -ne '/^((regexp|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > direct-reserve.txt
-          curl -sSL ${V2FLY_PROXY} | perl -ne '/^((regexp|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > proxy-reserve.txt
+          curl -sSL ${V2FLY_PROXY} | grep -Ev ":@cn" | perl -ne '/^((regexp|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > proxy-reserve.txt
 
       - name: Add proxy, direct and reject domains from "hidden" branch to appropriate temp files
         run: |
