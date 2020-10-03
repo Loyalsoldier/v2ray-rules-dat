@@ -4,7 +4,8 @@
 
 ## 说明
 
-本项目适用于命令行版本 V2Ray 客户端。第三方桌面图形界面版（GUI）V2Ray 客户端一般都有路由规则图形化配置界面，但一般也都支持使用自定义 V2Ray JSON 配置和 dat 规则文件，请自行研究并修改配置。第三方移动设备版 V2Ray 客户端情况比较复杂，大概率不支持使用自定义 V2Ray JSON 配置和 dat 规则文件，请知悉。
+- 本项目适用于命令行版本 V2Ray 客户端。第三方桌面图形界面版（GUI）V2Ray 客户端一般都有路由规则图形化配置界面，但一般也都支持使用自定义 V2Ray JSON 配置和 dat 规则文件，请自行研究并修改配置。第三方移动设备版 V2Ray 客户端情况比较复杂，大概率不支持使用自定义 V2Ray JSON 配置和 dat 规则文件，请知悉。
+- [Fork](https://github.com/Loyalsoldier/v2ray-rules-dat/fork) 本项目后，需要在自己仓库的 **[Settings]** 选项卡的 **[Secrets]** 页面中添加一个名为 **MAXMIND_GEOLITE2_LICENSE** 的 secret，否则 GitHub Actions 会运行失败。这个 secret 的值为 MAXMIND 账号的 LICENSE KEY，需要[**注册 MAXMIND 账号**](https://www.maxmind.com/en/geolite2/signup)后，在[**个人账号管理页面**](https://www.maxmind.com/en/account)左侧边栏的 **[Services]** 项下的 **[My License Key]** 里生成。
 
 ## 规则文件生成方式
 
