@@ -12,7 +12,7 @@
 ### geoip.dat
 
 - 通过仓库 [@Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip) 生成
-- 其中全球 IP 地址（IPv4 和 IPv6）来源于 [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/)，`CN`（中国大陆）类别下的 IPv4 地址来源于 [@pexcn/chnroute.txt](https://github.com/pexcn/daily/blob/gh-pages/chnroute/chnroute.txt)
+- 其中全球 IP 地址（IPv4 和 IPv6）来源于 [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/)，`CN`（中国大陆）类别下的 IPv4 地址来源于 [@pexcn/chnroute.txt](https://github.com/pexcn/daily/blob/gh-pages/chnroute/chnroute.txt)（融合了 [ipip.net](https://github.com/17mon/china_ip_list) 和 [APNIC](https://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest) 的中国大陆 IPv4 地址）
 
 ### geosite.dat
 
