@@ -20,26 +20,26 @@ jobs:
 
       - name: Set $GOPATH and more variables
         run: |
-          echo "::set-env name=RELEASE_NAME::Released on $(date +%Y%m%d%H%M)"
-          echo "::set-env name=TAG_NAME::$(date +%Y%m%d%H%M)"
-          echo "::set-env name=GEOIP_REPO::github.com/Loyalsoldier/geoip"
-          echo "::set-env name=GEOSITE_REPO::github.com/v2fly/domain-list-community"
-          echo "::set-env name=CHINA_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf"
-          echo "::set-env name=GOOGLE_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/google.china.conf"
-          echo "::set-env name=APPLE_DOMAINS_URL::https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf"
-          echo "::set-env name=GFWLIST_DOMAINS_URL::https://cokebar.github.io/gfwlist2dnsmasq/gfwlist_domain.txt"
-          echo "::set-env name=GFWLIST_EXTRAS_DOMAINS_URL::https://raw.githubusercontent.com/pexcn/gfwlist-extras/master/gfwlist-extras.txt"
-          echo "::set-env name=GREATFIRE_DOMAINS_URL::https://raw.githubusercontent.com/Loyalsoldier/cn-blocked-domain/release/domains.txt"
-          echo "::set-env name=GEQ1AN_RULES_GLOBAL_MEDIA_URL::https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/GMedia.list"
-          echo "::set-env name=LHIE1_RULES_PROXY_URL::https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Proxy.list"
-          echo "::set-env name=EASYLISTCHINA_EASYLIST_REJECT_URL::https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt"
-          echo "::set-env name=PETERLOWE_REJECT_URL::https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext"
-          echo "::set-env name=ADGUARD_DNS_REJECT_URL::https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt"
-          echo "::set-env name=DANPOLLOCK_REJECT_URL::https://someonewhocares.org/hosts/hosts"
-          echo "::set-env name=V2FLY_DIRECT::https://raw.githubusercontent.com/v2fly/domain-list-community/release/cn.txt"
-          echo "::set-env name=V2FLY_PROXY::https://raw.githubusercontent.com/v2fly/domain-list-community/release/geolocation-!cn.txt"
-          echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
-          echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
+          echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+          echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+          echo "GEOIP_REPO=github.com/Loyalsoldier/geoip" >> $GITHUB_ENV
+          echo "GEOSITE_REPO=github.com/v2fly/domain-list-community" >> $GITHUB_ENV
+          echo "CHINA_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf" >> $GITHUB_ENV
+          echo "GOOGLE_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/google.china.conf" >> $GITHUB_ENV
+          echo "APPLE_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf" >> $GITHUB_ENV
+          echo "GFWLIST_DOMAINS_URL=https://cokebar.github.io/gfwlist2dnsmasq/gfwlist_domain.txt" >> $GITHUB_ENV
+          echo "GFWLIST_EXTRAS_DOMAINS_URL=https://raw.githubusercontent.com/pexcn/gfwlist-extras/master/gfwlist-extras.txt" >> $GITHUB_ENV
+          echo "GREATFIRE_DOMAINS_URL=https://raw.githubusercontent.com/Loyalsoldier/cn-blocked-domain/release/domains.txt" >> $GITHUB_ENV
+          echo "GEQ1AN_RULES_GLOBAL_MEDIA_URL=https://raw.githubusercontent.com/GeQ1an/Rules/master/QuantumultX/Filter/GMedia.list" >> $GITHUB_ENV
+          echo "LHIE1_RULES_PROXY_URL=https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Proxy.list" >> $GITHUB_ENV
+          echo "EASYLISTCHINA_EASYLIST_REJECT_URL=https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt" >> $GITHUB_ENV
+          echo "PETERLOWE_REJECT_URL=https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext" >> $GITHUB_ENV
+          echo "ADGUARD_DNS_REJECT_URL=https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt" >> $GITHUB_ENV
+          echo "DANPOLLOCK_REJECT_URL=https://someonewhocares.org/hosts/hosts" >> $GITHUB_ENV
+          echo "V2FLY_DIRECT=https://raw.githubusercontent.com/v2fly/domain-list-community/release/cn.txt" >> $GITHUB_ENV
+          echo "V2FLY_PROXY=https://raw.githubusercontent.com/v2fly/domain-list-community/release/geolocation-!cn.txt" >> $GITHUB_ENV
+          echo "GOPATH=$(dirname $GITHUB_WORKSPACE)" >> $GITHUB_ENV
+          echo "$(dirname $GITHUB_WORKSPACE)/bin" >> $GITHUB_PATH
         shell: bash
 
       - name: Checkout the "hidden" branch
