@@ -63,7 +63,13 @@ scoop bucket add sushi https://github.com/kidonng/sushi
 scoop install v2ray-rules-dat
 ```
 
-非 Windows 用户：
+Linux 用户可以通过脚本安装：
+
+```
+# bash <(curl -L https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/master/install-dat-release.sh)
+```
+
+手动安装方式：
 
 1. 点击上面下载地址，下载 `geoip.dat` 和 `geosite.dat`
 2. 把下载下来的 `geoip.dat` 和 `geosite.dat` 文件放入到 V2Ray 的规则文件目录，替换掉原来的 `geoip.dat` 和 `geosite.dat`
