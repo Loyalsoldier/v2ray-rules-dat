@@ -10,4 +10,5 @@ knet.cn
 mtalk.google.com
 pingjs.qq.com
 tagtic.cn
+tv.sohu.com
 ue.yeyoucdn.com
