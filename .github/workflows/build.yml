@@ -5,25 +5,21 @@ on:
   push:
     branches:
       - master
-      - hidden
     paths-ignore:
       - "**/README.md"
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Go 1.x
+      - name: Setup Go 1.x.y
         uses: actions/setup-go@v2
         with:
-          go-version: "^1.14"
+          go-version: "^1.15"
 
-      - name: Set $GOPATH and more variables
+      - name: Set variables
         run: |
           echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
           echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
-          echo "GEOIP_REPO=github.com/Loyalsoldier/geoip" >> $GITHUB_ENV
-          echo "GEOSITE_REPO=github.com/v2fly/domain-list-community" >> $GITHUB_ENV
           echo "CHINA_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf" >> $GITHUB_ENV
           echo "GOOGLE_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/google.china.conf" >> $GITHUB_ENV
           echo "APPLE_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf" >> $GITHUB_ENV
@@ -36,16 +32,32 @@ jobs:
           echo "PETERLOWE_REJECT_URL=https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext" >> $GITHUB_ENV
           echo "ADGUARD_DNS_REJECT_URL=https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt" >> $GITHUB_ENV
           echo "DANPOLLOCK_REJECT_URL=https://someonewhocares.org/hosts/hosts" >> $GITHUB_ENV
-          echo "V2FLY_DIRECT=https://raw.githubusercontent.com/v2fly/domain-list-community/release/cn.txt" >> $GITHUB_ENV
-          echo "V2FLY_PROXY=https://raw.githubusercontent.com/v2fly/domain-list-community/release/geolocation-!cn.txt" >> $GITHUB_ENV
-          echo "GOPATH=$(dirname $GITHUB_WORKSPACE)" >> $GITHUB_ENV
-          echo "$(dirname $GITHUB_WORKSPACE)/bin" >> $GITHUB_PATH
+          echo "CUSTOM_DIRECT=https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/cn.txt" >> $GITHUB_ENV
+          echo "CUSTOM_PROXY=https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/geolocation-!cn.txt" >> $GITHUB_ENV
         shell: bash
 
-      - name: Checkout the "hidden" branch
+      - name: Checkout the "hidden" branch of this repo
         uses: actions/checkout@v2.3.3
         with:
           ref: hidden
+
+      - name: Checkout Loyalsoldier/geoip
+        uses: actions/checkout@v2.3.3
+        with:
+          repository: Loyalsoldier/geoip
+          path: geoip
+
+      - name: Checkout Loyalsoldier/domain-list-custom
+        uses: actions/checkout@v2.3.3
+        with:
+          repository: Loyalsoldier/domain-list-custom
+          path: custom
+
+      - name: Checkout v2fly/domain-list-community
+        uses: actions/checkout@v2.3.3
+        with:
+          repository: v2fly/domain-list-community
+          path: community
 
       - name: Get GeoLite2 zip file
         env:
@@ -54,32 +66,26 @@ jobs:
           curl -L -o GeoLite2-Country-CSV.zip "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country-CSV&license_key=${LICENSE_KEY}&suffix=zip"
           unzip GeoLite2-Country-CSV.zip
           rm -f GeoLite2-Country-CSV.zip
-          mv GeoLite2* geoip
+          mv GeoLite2* geolite2
 
       - name: Generate geoip.dat file
         run: |
-          go get -v -insecure $GEOIP_REPO
-          geoip --country=./geoip/GeoLite2-Country-Locations-en.csv --ipv4=./geoip/GeoLite2-Country-Blocks-IPv4.csv --ipv6=./geoip/GeoLite2-Country-Blocks-IPv6.csv --ipv4CN=https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt
-
-      - name: Download geosite project
-        run: |
-          go get -v -insecure $GEOSITE_REPO
+          cd geoip || exit 1
+          go run ./ --country=../geolite2/GeoLite2-Country-Locations-en.csv --ipv4=../geolite2/GeoLite2-Country-Blocks-IPv4.csv --ipv6=../geolite2/GeoLite2-Country-Blocks-IPv6.csv --ipv4CN=https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt
 
       - name: Get and add direct domains into temp-direct.txt file
         run: |
           curl -sSL $CHINA_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > temp-direct.txt
-          curl -sSL ${V2FLY_DIRECT} | perl -ne '/^(domain|full):([^:]+)(\n$|:@.+)/ && print "$2\n"' >> temp-direct.txt
+          curl -sSL ${CUSTOM_DIRECT} | perl -ne '/^(domain|full):([^:]+)(\n$|:@.+)/ && print "$2\n"' >> temp-direct.txt
 
       - name: Get and add proxy domains into temp-proxy.txt file
         run: |
           curl -sSL $GFWLIST_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > temp-proxy.txt
           curl -sSL $GFWLIST_EXTRAS_DOMAINS_URL | perl -ne 'print if not /^(#|\s)/' >> temp-proxy.txt
           curl -sSL $GREATFIRE_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> temp-proxy.txt
-          curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> temp-proxy.txt
-          curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> temp-proxy.txt
           curl -sSL $GEQ1AN_RULES_GLOBAL_MEDIA_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+GMedia/ {print $2}' >> temp-proxy.txt
           curl -sSL $LHIE1_RULES_PROXY_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+/ {print $2}' >> temp-proxy.txt
-          curl -sSL ${V2FLY_PROXY} | grep -Ev ":@cn" | perl -ne '/^(domain|full):([^:]+)(\n$|:@.+)/ && print "$2\n"' >> temp-proxy.txt
+          curl -sSL ${CUSTOM_PROXY} | grep -Ev ":@cn" | perl -ne '/^(domain|full):([^:]+)(\n$|:@.+)/ && print "$2\n"' >> temp-proxy.txt
 
       - name: Get and add reject domains into temp-reject.txt file
         run: |
@@ -88,10 +94,10 @@ jobs:
           curl -sSL $PETERLOWE_REJECT_URL | perl -ne '/^127\.0\.0\.1\s([-_0-9a-zA-Z]+(\.[-_0-9a-zA-Z]+){1,64})$/ && print "$1\n"' >> temp-reject.txt
           curl -sSL $DANPOLLOCK_REJECT_URL | perl -ne '/^127\.0\.0\.1\s([-_0-9a-zA-Z]+(\.[-_0-9a-zA-Z]+){1,64})/ && print "$1\n"' | sed '1d' >> temp-reject.txt
 
-      - name: Reserve `regexp` and `keyword` type of rules from v2fly lists to "reserve" files
+      - name: Reserve `regexp` and `keyword` type of rules from custom lists to "reserve" files
         run: |
-          curl -sSL ${V2FLY_DIRECT} | perl -ne '/^((regexp|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > direct-reserve.txt
-          curl -sSL ${V2FLY_PROXY} | grep -Ev ":@cn" | perl -ne '/^((regexp|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > proxy-reserve.txt
+          curl -sSL ${CUSTOM_DIRECT} | perl -ne '/^((regexp|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > direct-reserve.txt
+          curl -sSL ${CUSTOM_PROXY} | grep -Ev ":@cn" | perl -ne '/^((regexp|keyword):[^:]+)(\n$|:@.+)/ && print "$1\n"' > proxy-reserve.txt
 
       - name: Add proxy, direct and reject domains from "hidden" branch to appropriate temp files
         run: |
@@ -129,41 +135,42 @@ jobs:
 
       - name: Remove domains end with ".cn" in "temp-geolocation-!cn.txt" and write lists to data directory
         run: |
-          cat temp-cn.txt | sort --ignore-case -u | perl -ne '/^((?=^.{1,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/cn
+          cat temp-cn.txt | sort --ignore-case -u | perl -ne '/^((?=^.{1,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' > ./community/data/cn
           cat temp-cn.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > direct-tld-list.txt
-          cat temp-geolocation-\!cn.txt | sort --ignore-case -u | perl -ne '/^((?=^.{1,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' | perl -ne 'print if not /\.cn$/' > $GOPATH/src/$GEOSITE_REPO/data/geolocation-\!cn
+          cat temp-geolocation-\!cn.txt | sort --ignore-case -u | perl -ne '/^((?=^.{1,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' | perl -ne 'print if not /\.cn$/' > ./community/data/geolocation-\!cn
           cat temp-geolocation-\!cn.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > proxy-tld-list.txt
-          cat temp-category-ads-all.txt | sort --ignore-case -u | perl -ne '/^((?=^.{1,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/category-ads-all
+          cat temp-category-ads-all.txt | sort --ignore-case -u | perl -ne '/^((?=^.{1,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' > ./community/data/category-ads-all
           cat temp-category-ads-all.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > reject-tld-list.txt
 
       - name: Add `regexp` and `keyword` type of rules back into "cn", "geolocation-!cn" and "category-ads-all" list
         run: |
-          [ -f "direct-reserve.txt" ] && cat direct-reserve.txt >> $GOPATH/src/$GEOSITE_REPO/data/cn
-          [ -f "proxy-reserve.txt" ] && cat proxy-reserve.txt >> $GOPATH/src/$GEOSITE_REPO/data/geolocation-\!cn
-          [ -f "reject-reserve.txt" ] && cat reject-reserve.txt >> $GOPATH/src/$GEOSITE_REPO/data/category-ads-all
-          cp $GOPATH/src/$GEOSITE_REPO/data/cn direct-list.txt
-          cp $GOPATH/src/$GEOSITE_REPO/data/geolocation-\!cn proxy-list.txt
-          cp $GOPATH/src/$GEOSITE_REPO/data/category-ads-all reject-list.txt
+          [ -f "direct-reserve.txt" ] && cat direct-reserve.txt >> ./community/data/cn
+          [ -f "proxy-reserve.txt" ] && cat proxy-reserve.txt >> ./community/data/geolocation-\!cn
+          [ -f "reject-reserve.txt" ] && cat reject-reserve.txt >> ./community/data/category-ads-all
+          cp ./community/data/cn direct-list.txt
+          cp ./community/data/geolocation-\!cn proxy-list.txt
+          cp ./community/data/category-ads-all reject-list.txt
 
       - name: Add `google-cn` and `apple-cn` lists for custom routing settings due to accessibility in China Mainland
         run: |
-          curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/google-cn
+          curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > ./community/data/google-cn
           curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > google-cn.txt
-          curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > $GOPATH/src/$GEOSITE_REPO/data/apple-cn
+          curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > ./community/data/apple-cn
           curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > apple-cn.txt
 
       - name: Build geosite.dat file
         run: |
-          domain-list-community --datapath=${{ env.GOPATH }}/src/${{ env.GEOSITE_REPO }}/data
+          cd custom || exit 1
+          go run ./ --datapath=../community/data
 
       - name: Move and zip files and generate sha256 hash
         run: |
-          install -Dp geoip.dat ./publish/geoip.dat
-          install -Dp dlc.dat ./publish/geosite.dat
+          install -Dp ./geoip/geoip.dat ./publish/geoip.dat
+          install -Dp ./custom/publish/dlc.dat ./publish/geosite.dat
           install -p {proxy,direct,reject}-tld-list.txt ./publish/
           install -p {proxy,direct,reject}-list.txt ./publish/
           install -p {apple,google}-cn.txt ./publish/
-          cd ./publish
+          cd ./publish || exit 1
           zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
           sha256sum geoip.dat > geoip.dat.sha256sum
           sha256sum geosite.dat > geosite.dat.sha256sum
