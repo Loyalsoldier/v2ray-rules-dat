@@ -21,9 +21,14 @@
   - [@felixonmars/dnsmasq-china-list/accelerated-domains.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/accelerated-domains.china.conf) 加入到 `geosite:cn` 类别中
   - [@felixonmars/dnsmasq-china-list/apple.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/apple.china.conf) 加入到 `geosite:geolocation-!cn` 类别中（如希望本文件中的 Apple 域名直连，请参考下面 [geosite 的 Routing 配置方式](https://github.com/Loyalsoldier/v2ray-rules-dat#geositedat-1)）
   - [@felixonmars/dnsmasq-china-list/google.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/google.china.conf) 加入到 `geosite:geolocation-!cn` 类别中（如希望本文件中的 Google 域名直连，请参考下面 [geosite 的 Routing 配置方式](https://github.com/Loyalsoldier/v2ray-rules-dat#geositedat-1)）
-- **加入最新 GFWList 域名**：通过仓库 [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq) 生成并加入到 `geosite:geolocation-!cn` 类别中
-- **加入附加 GFWList 域名**：通过仓库 [@pexcn/gfwlist-extras](https://github.com/pexcn/gfwlist-extras) 获取并加入到 `geosite:geolocation-!cn` 类别中
-- **加入 Greatfire Analyzer 检测到的屏蔽域名**：通过仓库 [@Loyalsoldier/cn-blocked-domain](https://github.com/Loyalsoldier/cn-blocked-domain) 获取 [Greatfire Analyzer](https://zh.greatfire.org/analyzer) 检测到的屏蔽域名，并加入到 `geosite:geolocation-!cn` 类别中
+- **加入 GFWList 域名**：
+  - 通过仓库 [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq) 和 [@pexcn/gfwlist-extras](https://github.com/pexcn/gfwlist-extras) 生成
+  - 加入到 `geosite:gfw` 类别中，供希望使用 GFWList 的用户使用
+  - 同时加入到 `geosite:geolocation-!cn` 类别中
+- **加入 Greatfire Analyzer 检测到的屏蔽域名**：
+  - 通过仓库 [@Loyalsoldier/cn-blocked-domain](https://github.com/Loyalsoldier/cn-blocked-domain) 获取 [Greatfire Analyzer](https://zh.greatfire.org/analyzer) 检测到的在中国大陆被屏蔽的域名
+  - 加入到 `geosite:greatfire` 类别中，可与上面的 `geosite:gfw` 类别同时使用，以达到域名黑名单的效果
+  - 同时加入到 `geosite:geolocation-!cn` 类别中
 - **加入 EasyList 和 EasyListChina 广告域名**：通过 [@AdblockPlus/EasylistChina+Easylist.txt](https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt) 获取并加入到 `geosite:category-ads-all` 类别中
 - **加入 AdGuard DNS Filter 广告域名**：通过 [@AdGuard/DNS-filter](https://kb.adguard.com/en/general/adguard-ad-filters#dns-filter) 获取并加入到 `geosite:category-ads-all` 类别中
 - **加入 Peter Lowe 广告和隐私跟踪域名**：通过 [@PeterLowe/adservers](https://pgl.yoyo.org/adservers) 获取并加入到 `geosite:category-ads-all` 类别中
@@ -112,7 +117,7 @@ scoop install v2ray-rules-dat
 
 跟 V2Ray 官方 `geosite.dat` 配置方式相同。`geosite:apple-cn` 和 `geosite:google-cn` 为本项目特有的两个类别，分别包含 [@felixonmars/dnsmasq-china-list/apple.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/apple.china.conf) 和 [@felixonmars/dnsmasq-china-list/google.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/google.china.conf) 文件里的域名，供希望 Apple 和 Google 域名直连（不走代理）的用户使用。在 Routing 配置中，类别越靠前（上），优先级越高，所以 `geosite:apple-cn` 和 `geosite:google-cn` 要放置在 `geosite:geolocation-!cn` 前（上）面。配置参考下面 👇👇👇
 
-**Routing 配置方式**：
+**白名单模式 Routing 配置方式**：
 
 ```json
 "routing": {
@@ -130,9 +135,7 @@ scoop install v2ray-rules-dat
       "domain": [
         "geosite:apple-cn",
         "geosite:google-cn",
-        "geosite:tld-cn",
-        "domain:icloud.com",
-        "domain:icloud-content.com"
+        "geosite:tld-cn"
       ]
     },
     {
@@ -148,6 +151,40 @@ scoop install v2ray-rules-dat
       "domain": [
         "geosite:cn"
       ]
+    },
+    {
+     "type": "field",
+     "outboundTag": "Proxy",
+     "network": "tcp,udp"
+    }
+  ]
+}
+```
+
+**黑名单模式 Routing 配置方式：**
+
+```json
+"routing": {
+  "rules": [
+    {
+      "type": "field",
+      "outboundTag": "Reject",
+      "domain": [
+        "geosite:category-ads-all"
+      ]
+    },
+    {
+      "type": "field",
+      "outboundTag": "Proxy",
+      "domain": [
+        "geosite:gfw",
+        "geosite:greatfire"
+      ]
+    },
+    {
+     "type": "field",
+     "outboundTag": "Direct",
+     "network": "tcp,udp"
     }
   ]
 }
