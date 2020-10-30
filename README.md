@@ -133,6 +133,7 @@ scoop install v2ray-rules-dat
       "type": "field",
       "outboundTag": "Direct",
       "domain": [
+        "geosite:private",
         "geosite:apple-cn",
         "geosite:google-cn",
         "geosite:tld-cn"
@@ -177,8 +178,49 @@ scoop install v2ray-rules-dat
       "type": "field",
       "outboundTag": "Proxy",
       "domain": [
+        "geosite:tld-!cn",
         "geosite:gfw",
         "geosite:greatfire"
+      ]
+    },
+    {
+      "type": "field",
+      "outboundTag": "Proxy",
+      "ip": [
+        "geoip:ae",
+        "geoip:au",
+        "geoip:br",
+        "geoip:ca",
+        "geoip:de",
+        "geoip:dk",
+        "geoip:es",
+        "geoip:fi",
+        "geoip:fr",
+        "geoip:gb",
+        "geoip:gr",
+        "geoip:hk",
+        "geoip:id",
+        "geoip:il",
+        "geoip:in",
+        "geoip:iq",
+        "geoip:ir",
+        "geoip:it",
+        "geoip:jp",
+        "geoip:kr",
+        "geoip:mo",
+        "geoip:my",
+        "geoip:nl",
+        "geoip:no",
+        "geoip:nz",
+        "geoip:ph",
+        "geoip:ru",
+        "geoip:sa",
+        "geoip:sg",
+        "geoip:th",
+        "geoip:tr",
+        "geoip:tw",
+        "geoip:us",
+        "geoip:vn"
       ]
     },
     {
