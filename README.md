@@ -44,31 +44,31 @@
 > 如果无法访问域名 `raw.githubusercontent.com`，可以使用第二个地址（`cdn.jsdelivr.net`），但是内容更新会有 12 小时的延迟。
 
 - **geoip.dat**：
-  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat)
+  - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat)
   - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat)
 - **geosite.dat**：
-  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat)
+  - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat)
   - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat)
 - **直连域名列表 direct-list.txt**：
-  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/direct-list.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/direct-list.txt)
+  - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt)
   - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/direct-list.txt](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/direct-list.txt)
 - **代理域名列表 proxy-list.txt**：
-  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/proxy-list.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/proxy-list.txt)
+  - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt)
   - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/proxy-list.txt](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/proxy-list.txt)
 - **广告域名列表 reject-list.txt**：
-  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/reject-list.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/reject-list.txt)
+  - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt)
   - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/reject-list.txt](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/reject-list.txt)
 - **Apple 在中国大陆可直连的域名列表 apple-cn.txt**：
-  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/apple-cn.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/apple-cn.txt)
+  - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/apple-cn.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/apple-cn.txt)
   - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/apple-cn.txt](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/apple-cn.txt)
 - **Google 在中国大陆可直连的域名列表 google-cn.txt**：
-  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/google-cn.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/google-cn.txt)
+  - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/google-cn.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/google-cn.txt)
   - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/google-cn.txt](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/google-cn.txt)
 - **GFWList 域名列表 gfw.txt**：
-  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/gfw.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/gfw.txt)
+  - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt)
   - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/gfw.txt](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/gfw.txt)
 - **Greatfire 域名列表 greatfire.txt**：
-  - [https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/greatfire.txt](https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/greatfire.txt)
+  - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/greatfire.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/greatfire.txt)
   - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/greatfire.txt](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/greatfire.txt)
 
 **使用方式**：
