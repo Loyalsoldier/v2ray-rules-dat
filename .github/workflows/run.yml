@@ -38,24 +38,24 @@ jobs:
         shell: bash
 
       - name: Checkout the "hidden" branch of this repo
-        uses: actions/checkout@v2.3.3
+        uses: actions/checkout@v2.3.4
         with:
           ref: hidden
 
       - name: Checkout Loyalsoldier/geoip
-        uses: actions/checkout@v2.3.3
+        uses: actions/checkout@v2.3.4
         with:
           repository: Loyalsoldier/geoip
           path: geoip
 
       - name: Checkout Loyalsoldier/domain-list-custom
-        uses: actions/checkout@v2.3.3
+        uses: actions/checkout@v2.3.4
         with:
           repository: Loyalsoldier/domain-list-custom
           path: custom
 
       - name: Checkout v2fly/domain-list-community
-        uses: actions/checkout@v2.3.3
+        uses: actions/checkout@v2.3.4
         with:
           repository: v2fly/domain-list-community
           path: community
