@@ -42,12 +42,6 @@ jobs:
         with:
           ref: hidden
 
-      - name: Checkout Loyalsoldier/geoip
-        uses: actions/checkout@v2.3.4
-        with:
-          repository: Loyalsoldier/geoip
-          path: geoip
-
       - name: Checkout Loyalsoldier/domain-list-custom
         uses: actions/checkout@v2.3.4
         with:
@@ -60,19 +54,10 @@ jobs:
           repository: v2fly/domain-list-community
           path: community
 
-      - name: Get GeoLite2 zip file
-        env:
-          LICENSE_KEY: ${{ secrets.MAXMIND_GEOLITE2_LICENSE }}
+      - name: Get geoip.dat relative files
         run: |
-          curl -L -o GeoLite2-Country-CSV.zip "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country-CSV&license_key=${LICENSE_KEY}&suffix=zip"
-          unzip GeoLite2-Country-CSV.zip
-          rm -f GeoLite2-Country-CSV.zip
-          mv GeoLite2* geolite2
-
-      - name: Generate geoip.dat file
-        run: |
-          cd geoip || exit 1
-          go run ./ --country=../geolite2/GeoLite2-Country-Locations-en.csv --ipv4=../geolite2/GeoLite2-Country-Blocks-IPv4.csv --ipv6=../geolite2/GeoLite2-Country-Blocks-IPv6.csv --ipv4CN=https://raw.githubusercontent.com/pexcn/daily/gh-pages/chnroute/chnroute.txt
+          wget https://github.com/Loyalsoldier/geoip/raw/release/geoip.dat
+          wget https://github.com/Loyalsoldier/geoip/raw/release/geoip.dat.sha256sum
 
       - name: Get and add direct domains into temp-direct.txt file
         run: |
@@ -173,14 +158,14 @@ jobs:
 
       - name: Move and zip files and generate sha256 hash
         run: |
-          install -Dp ./geoip/geoip.dat ./publish/geoip.dat
+          install -Dp ./geoip.dat ./publish/geoip.dat
+          install -Dp ./geoip.dat.sha256sum ./publish/geoip.dat.sha256sum
           install -Dp ./custom/publish/dlc.dat ./publish/geosite.dat
           install -p {proxy,direct,reject}-tld-list.txt ./publish/
           install -p {proxy,direct,reject}-list.txt ./publish/
           install -p {apple-cn,google-cn,gfw,greatfire}.txt ./publish/
           cd ./publish || exit 1
           zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
-          sha256sum geoip.dat > geoip.dat.sha256sum
           sha256sum geosite.dat > geosite.dat.sha256sum
           sha256sum rules.zip > rules.zip.sha256sum
 

@@ -12,7 +12,7 @@
 ### geoip.dat
 
 - 通过仓库 [@Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip) 生成
-- 其中全球 IP 地址（IPv4 和 IPv6）来源于 [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/)，`CN`（中国大陆）类别下的 IPv4 地址来源于 [@pexcn/chnroute.txt](https://github.com/pexcn/daily/blob/gh-pages/chnroute/chnroute.txt)（融合了 [ipip.net](https://github.com/17mon/china_ip_list) 和 [APNIC](https://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest) 的中国大陆 IPv4 地址）
+- 其中全球 IP 地址（IPv4 和 IPv6）来源于 [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/)，`CN`（中国大陆）类别下的 IPv4 地址来源于 [ipip.net](https://github.com/17mon/china_ip_list)
 
 ### geosite.dat
 
@@ -448,9 +448,6 @@ scoop install v2ray-rules-dat
 
 ## 致谢
 
-> This product includes GeoLite2 data created by MaxMind, available from [Maxmind](https://www.maxmind.com).
-
-- [MaxMind GeoLite2 Free IP Database](https://dev.maxmind.com/geoip/geoip2/geolite2/)
 - [@v2fly/geoip](https://github.com/v2fly/geoip)
 - [@Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip)
 - [@v2fly/domain-list-community](https://github.com/v2fly/domain-list-community)
@@ -462,7 +459,6 @@ scoop install v2ray-rules-dat
 - [@Loyalsoldier/cn-blocked-domain](https://github.com/Loyalsoldier/cn-blocked-domain)
 - [@GeQ1an/Rules](https://github.com/GeQ1an/Rules/tree/master/QuantumultX)
 - [@lhie1/Rules](https://github.com/lhie1/Rules/tree/master)
-- [@pexcn/daily/chnroute.txt](https://github.com/pexcn/daily/blob/gh-pages/chnroute/chnroute.txt)
 - [@AdblockPlus/EasylistChina+Easylist.txt](https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt)
 - [@AdGuard/DNS-filter](https://kb.adguard.com/en/general/adguard-ad-filters#dns-filter)
 - [@PeterLowe/adservers](https://pgl.yoyo.org/adservers)
