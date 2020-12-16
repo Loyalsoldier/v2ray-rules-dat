@@ -10,6 +10,7 @@ knet.cn
 mtalk.google.com
 mx.technolutions.net
 pingjs.qq.com
+s.youtube.com
 tagtic.cn
 tv.sohu.com
 ue.yeyoucdn.com
