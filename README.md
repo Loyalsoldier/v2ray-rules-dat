@@ -8,6 +8,7 @@
 
 - 通过仓库 [@Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip) 生成
 - 其中全球 IP 地址（IPv4 和 IPv6）来源于 [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/)，`CN`（中国大陆）类别下的 IPv4 地址来源于 [ipip.net](https://github.com/17mon/china_ip_list)
+- 新增 `geoip:telegram` 类别，方便黑名单模式用户使用
 
 ### geosite.dat
 
@@ -128,7 +129,8 @@ scoop install v2ray-rules-dat
         "8.8.8.8/32",
         "8.8.4.4/32",
         "geoip:us",
-        "geoip:ca"
+        "geoip:ca",
+        "geoip:telegram"
       ]
     }
   ]
@@ -221,33 +223,7 @@ scoop install v2ray-rules-dat
       "type": "field",
       "outboundTag": "Proxy",
       "ip": [
-        "109.239.140.0/24",
-        "149.154.160.0/22",
-        "149.154.164.0/22",
-        "149.154.168.0/22",
-        "149.154.172.0/22",
-        "67.198.55.0/24",
-        "91.108.12.0/22",
-        "91.108.16.0/22",
-        "91.108.20.0/22",
-        "91.108.20.0/23",
-        "91.108.4.0/22",
-        "91.108.56.0/22",
-        "91.108.56.0/23",
-        "91.108.8.0/22",
-        "95.161.64.0/20",
-        "95.161.84.0/23",
-        "2001:67c:4e8::/48",
-        "2001:b28:f23c::/48",
-        "2001:b28:f23d::/48",
-        "2001:b28:f23f::/48",
-        "2001:b28:f242::/48"
-      ]
-    },
-    {
-      "type": "field",
-      "outboundTag": "Proxy",
-      "ip": [
+        "geoip:telegram",
         "geoip:ae",
         "geoip:au",
         "geoip:br",
