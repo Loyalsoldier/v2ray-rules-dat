@@ -84,18 +84,10 @@
 
 **使用方式**：
 
-Windows 用户可通过 [Scoop](https://scoop.sh) 来安装：
-
-```shell
-scoop bucket add sushi https://github.com/kidonng/sushi
-scoop install v2ray-rules-dat
-```
-
-非 Windows 用户：
-
-1. 点击上面下载地址，下载 `geoip.dat` 和 `geosite.dat`
-2. 把下载下来的 `geoip.dat` 和 `geosite.dat` 文件放入到 V2Ray 的规则文件目录，替换掉原来的 `geoip.dat` 和 `geosite.dat`
-3. 修改 V2Ray 配置文件，配置参考下面 👇👇👇
+1. 安装适用于自己操作系统的客户端（推荐 [V2Ray 客户端](https://www.v2fly.org/awesome/tools.html#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%9B%BE%E5%BD%A2%E5%AE%A2%E6%88%B7%E7%AB%AF)）
+2. 下载本项目的 `geoip.dat` 和 `geosite.dat`
+3. 把下载下来的 `geoip.dat` 和 `geosite.dat` 放入到客户端的规则文件目录，替换掉原来的 `geoip.dat` 和 `geosite.dat`
+4. 如果使用的是 V2Ray 客户端，配置可参考下面 👇👇👇
 
 ## 参考配置
 
@@ -456,7 +448,6 @@ scoop install v2ray-rules-dat
 - [@PeterLowe/adservers](https://pgl.yoyo.org/adservers)
 - [@DanPollock/hosts](https://someonewhocares.org/hosts)
 - [@crazy-max/WindowsSpyBlocker](https://github.com/crazy-max/WindowsSpyBlocker)
-- [@kidonng/sushi](https://github.com/kidonng/sushi)
 
 ## 项目 Star 数增长趋势
 
