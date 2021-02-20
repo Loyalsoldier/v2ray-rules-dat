@@ -46,10 +46,10 @@
 > 如果无法访问域名 `raw.githubusercontent.com`，可以使用第二个地址（`cdn.jsdelivr.net`），但是内容更新会有 12 小时的延迟。
 
 - **geoip.dat**：
-  - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat)
+  - [https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat)
   - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat)
 - **geosite.dat**：
-  - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat)
+  - [https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat)
   - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat)
 - **直连域名列表 direct-list.txt**：
   - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt)
