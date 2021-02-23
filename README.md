@@ -152,8 +152,7 @@
       "type": "field",
       "outboundTag": "Reject",
       "domain": [
-        "geosite:category-ads-all",
-        "geosite:win-spy"
+        "geosite:category-ads-all"
       ]
     },
     {
@@ -198,8 +197,7 @@
       "type": "field",
       "outboundTag": "Reject",
       "domain": [
-        "geosite:category-ads-all",
-        "geosite:win-spy"
+        "geosite:category-ads-all"
       ]
     },
     {
@@ -372,8 +370,7 @@
         "type": "field",
         "outboundTag": "Reject",
         "domain": [
-          "geosite:category-ads-all",
-          "geosite:win-spy"
+          "geosite:category-ads-all"
         ]
       },
       {
