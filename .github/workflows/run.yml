@@ -15,7 +15,7 @@ jobs:
       - name: Setup Go 1.x.y
         uses: actions/setup-go@v2
         with:
-          go-version: "^1.15"
+          go-version: ^1.16
 
       - name: Set variables
         run: |
@@ -169,7 +169,7 @@ jobs:
         run: |
           install -Dp ./geoip.dat ./publish/geoip.dat
           install -Dp ./geoip.dat.sha256sum ./publish/geoip.dat.sha256sum
-          install -Dp ./custom/publish/dlc.dat ./publish/geosite.dat
+          install -Dp ./custom/publish/geosite.dat ./publish/geosite.dat
           install -p {proxy,direct,reject}-tld-list.txt ./publish/
           install -p {proxy,direct,reject}-list.txt ./publish/
           install -p {apple-cn,google-cn,gfw,greatfire,win-spy,win-update,win-extra}.txt ./publish/
