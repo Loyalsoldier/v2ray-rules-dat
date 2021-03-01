@@ -11,6 +11,7 @@ mtalk.google.com
 mx.technolutions.net
 pingjs.qq.com
 s.youtube.com
+sf3-ttcdn-tos.pstatp.com
 tagtic.cn
 tv.sohu.com
 ue.yeyoucdn.com
