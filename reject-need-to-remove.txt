@@ -14,3 +14,4 @@ s.youtube.com
 tagtic.cn
 tv.sohu.com
 ue.yeyoucdn.com
+sf3-ttcdn-tos.pstatp.com
