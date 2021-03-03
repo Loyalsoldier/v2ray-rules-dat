@@ -15,3 +15,4 @@ sf3-ttcdn-tos.pstatp.com
 tagtic.cn
 tv.sohu.com
 ue.yeyoucdn.com
+pub.alimama.com
