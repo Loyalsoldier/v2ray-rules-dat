@@ -24,7 +24,6 @@ jobs:
           echo "CHINA_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf" >> $GITHUB_ENV
           echo "GOOGLE_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/google.china.conf" >> $GITHUB_ENV
           echo "APPLE_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf" >> $GITHUB_ENV
-          echo "GFWLIST_DOMAINS_URL=https://cokebar.github.io/gfwlist2dnsmasq/gfwlist_domain.txt" >> $GITHUB_ENV
           echo "GFWLIST_EXTRAS_DOMAINS_URL=https://raw.githubusercontent.com/pexcn/gfwlist-extras/master/gfwlist-extras.txt" >> $GITHUB_ENV
           echo "GREATFIRE_DOMAINS_URL=https://raw.githubusercontent.com/Loyalsoldier/cn-blocked-domain/release/domains.txt" >> $GITHUB_ENV
           echo "LHIE1_RULES_PROXY_URL=https://raw.githubusercontent.com/lhie1/Rules/master/Surge/Surge%203/Provider/Proxy.list" >> $GITHUB_ENV
@@ -40,26 +39,38 @@ jobs:
         shell: bash
 
       - name: Checkout the "hidden" branch of this repo
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2
         with:
           ref: hidden
 
       - name: Checkout Loyalsoldier/domain-list-custom
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2
         with:
           repository: Loyalsoldier/domain-list-custom
           path: custom
 
       - name: Checkout v2fly/domain-list-community
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2
         with:
           repository: v2fly/domain-list-community
           path: community
+
+      - name: Checkout cokebar/gfwlist2dnsmasq
+        uses: actions/checkout@v2
+        with:
+          repository: cokebar/gfwlist2dnsmasq
+          path: gfwlist2dnsmasq
 
       - name: Get geoip.dat relative files
         run: |
           wget https://github.com/Loyalsoldier/geoip/raw/release/geoip.dat
           wget https://github.com/Loyalsoldier/geoip/raw/release/geoip.dat.sha256sum
+
+      - name: Generate GFWList domains
+        run: |
+          cd gfwlist2dnsmasq || exit 1
+          chmod +x ./gfwlist2dnsmasq.sh
+          ./gfwlist2dnsmasq.sh -l -o ./temp-gfwlist.txt
 
       - name: Get and add direct domains into temp-direct.txt file
         run: |
@@ -68,7 +79,7 @@ jobs:
 
       - name: Get and add proxy domains into temp-proxy.txt file
         run: |
-          curl -sSL $GFWLIST_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > temp-proxy.txt
+          cat ./gfwlist2dnsmasq/temp-gfwlist.txt | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' > temp-proxy.txt
           curl -sSL $GFWLIST_EXTRAS_DOMAINS_URL | perl -ne 'print if not /^(#|\s)/' >> temp-proxy.txt
           curl -sSL $GREATFIRE_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> temp-proxy.txt
           curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' >> temp-proxy.txt
@@ -146,7 +157,7 @@ jobs:
           curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "full:$1\n"' > google-cn.txt
           curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "full:$1\n"' > ./community/data/apple-cn
           curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "full:$1\n"' > apple-cn.txt
-          curl -sSL $GFWLIST_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> ./community/data/gfw
+          cat ./gfwlist2dnsmasq/temp-gfwlist.txt | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> ./community/data/gfw
           curl -sSL $GFWLIST_EXTRAS_DOMAINS_URL | perl -ne 'print if not /^(#|\s)/' >> ./community/data/gfw
           cat ./community/data/gfw | sort --ignore-case -u > gfw.txt
           curl -sSL $GREATFIRE_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> ./community/data/greatfire
