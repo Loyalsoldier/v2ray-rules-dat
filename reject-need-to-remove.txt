@@ -15,6 +15,7 @@ mx.technolutions.net
 offer.alibaba.com
 pingjs.qq.com
 s.youtube.com
+s96.cnzz.com
 sf3-ttcdn-tos.pstatp.com
 tagtic.cn
 tv.sohu.com
