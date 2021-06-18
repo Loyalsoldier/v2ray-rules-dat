@@ -1,1 +1,2 @@
 GreasyFork.org
+*.ustc.edu.cn
