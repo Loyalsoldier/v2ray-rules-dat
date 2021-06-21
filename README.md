@@ -10,6 +10,8 @@
 - 其中全球 IP 地址（IPv4 和 IPv6）来源于 [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/)，`CN`（中国大陆）类别下的 IPv4 地址来源于 [ipip.net](https://github.com/17mon/china_ip_list)
 - 新增类别（方便有特殊需求的用户使用）：
   - `geoip:cloudflare`
+  - `geoip:cloudfront`
+  - `geoip:fastly`
   - `geoip:telegram`
 
 > 希望定制 `geoip.dat` 文件？查看仓库 [@Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip)。
