@@ -12,6 +12,7 @@
   - `geoip:cloudflare`
   - `geoip:cloudfront`
   - `geoip:fastly`
+  - `geoip:netflix`
   - `geoip:telegram`
 
 > 希望定制 `geoip.dat` 文件？查看仓库 [@Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip)。
