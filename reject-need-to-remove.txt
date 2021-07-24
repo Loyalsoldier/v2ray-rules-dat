@@ -17,5 +17,6 @@ pingjs.qq.com
 s.youtube.com
 sf3-ttcdn-tos.pstatp.com
 tagtic.cn
+tongji.baidu.com
 tv.sohu.com
 ue.yeyoucdn.com
