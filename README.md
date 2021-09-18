@@ -219,7 +219,7 @@ steamstatic.com.8686c.com @cn
     {
       "type": "field",
       "outboundTag": "Proxy",
-      "domain": ["geosite:tld-!cn", "geosite:gfw", "geosite:greatfire"]
+      "domain": ["geosite:gfw", "geosite:greatfire"]
     },
     {
       "type": "field",
