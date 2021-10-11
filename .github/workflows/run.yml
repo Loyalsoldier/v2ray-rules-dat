@@ -97,10 +97,10 @@ jobs:
           curl -sSL $PENZAI_REJECT_URL |
             grep -Pv '(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])' |
             sort -fu > penzai.list
-          grep -Po '\*:\/\/(((?!-)(xn--|_)?[a-z0-9-]{0,61}[a-z0-9]\.)*(xn--)?[a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})\/\*' penzai.list |
-            sed -E -e 's!\*://!full:!' -e 's!/\*!!' > temp-reject.txt
-          grep -Po '\*:\/\/\*\.(((?!-)(xn--|_)?[a-z0-9-]{0,61}[a-z0-9]\.)*(xn--)?[a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})\/\*' penzai.list |
-            sed -E -e 's!(\*://|/\*)!!' -e 's!!!' >> temp-reject.txt
+          grep -Po '\*:\/\/(((?!-)(xn--|_)?[a-z0-9-]{0,61}[a-z0-9]\.)*(xn--)?[a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})(:[0-9]+)?\/\*' penzai.list |
+            sed -E -e 's!:[0-9]+!!' -e 's!\*://!full:!' -e 's!/\*!!' > temp-reject.txt
+          grep -Po '\*:\/\/\*\.(((?!-)(xn--|_)?[a-z0-9-]{0,61}[a-z0-9]\.)*(xn--)?[a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})(:[0-9]+)?\/\*' penzai.list |
+            sed -E -e 's!:[0-9]+!!' -e 's!(\*://|/\*)!!' -e 's!!!' >> temp-reject.txt
           rm -f penzai.list
 
       - name: Reserve `full`, `regexp` and `keyword` type of rules from custom lists to "reserve" files
