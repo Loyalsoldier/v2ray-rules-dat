@@ -437,6 +437,11 @@ steamstatic.com.8686c.com @cn
 }
 ```
 
+## 激赏 | Donation
+
+- **比特币（BTC）bech32 地址**：bc1qfe4nxcanet4w4ph8pf6qqyf263y68vw26nv9j9
+- **比特币（BTC）地址**：3PRyneb1D7jFFBakAaJiCRSsxsXAtMr7LN
+
 ## 使用本项目的项目
 
 - [@Loyalsoldier/clash-rules](https://github.com/Loyalsoldier/clash-rules)
