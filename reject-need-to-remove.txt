@@ -5,6 +5,7 @@ alimama.alicdn.com
 alimama.com
 analytics.google.com
 bdtj.tagtic.cn
+domain:cdn.mouseflow.com
 d.ifengimg.com
 icons.mydrivers.com
 img.alibaba.com
