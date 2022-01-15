@@ -19,6 +19,7 @@ resolver.msg.xiaomi.net
 s.youtube.com
 sf3-ttcdn-tos.pstatp.com
 tagtic.cn
+tracking.miui.com
 tongji.baidu.com
 tv.sohu.com
 ue.yeyoucdn.com
