@@ -457,7 +457,6 @@ steamstatic.com.8686c.com @cn
 - [@pexcn/gfwlist-extras](https://github.com/pexcn/gfwlist-extras)
 - [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq)
 - [@Loyalsoldier/cn-blocked-domain](https://github.com/Loyalsoldier/cn-blocked-domain)
-- [@lhie1/Rules](https://github.com/lhie1/Rules/tree/master)
 - [@AdblockPlus/EasylistChina+Easylist.txt](https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt)
 - [@AdGuard/DNS-filter](https://kb.adguard.com/en/general/adguard-ad-filters#dns-filter)
 - [@PeterLowe/adservers](https://pgl.yoyo.org/adservers)
