@@ -248,7 +248,7 @@ steamstatic.com.8686c.com @cn
   },
   "servers": [
     {
-      "address": "https://1.1.1.1/dns-query",
+      "address": "https://cloudflare-dns.com/dns-query",
       "domains": ["geosite:geolocation-!cn"],
       "expectIPs": ["geoip:!cn"]
     },
