@@ -18,6 +18,7 @@ pingjs.qq.com
 resolver.msg.xiaomi.net
 s.youtube.com
 sf3-ttcdn-tos.pstatp.com
+t.co
 tagtic.cn
 tongji.baidu.com
 tv.sohu.com
