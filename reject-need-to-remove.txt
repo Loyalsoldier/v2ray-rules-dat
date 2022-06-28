@@ -6,6 +6,7 @@ alimama.com
 analytics.google.com
 app.chat.xiaomi.net
 bdtj.tagtic.cn
+ctrip.com
 d.ifengimg.com
 icons.mydrivers.com
 img.alibaba.com
