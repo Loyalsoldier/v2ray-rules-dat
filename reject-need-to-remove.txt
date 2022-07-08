@@ -21,6 +21,7 @@ s.youtube.com
 sf3-ttcdn-tos.pstatp.com
 t.co
 tagtic.cn
+telegra.ph
 tongji.baidu.com
 tv.sohu.com
 ue.yeyoucdn.com
