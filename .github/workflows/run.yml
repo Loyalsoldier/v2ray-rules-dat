@@ -138,6 +138,12 @@ jobs:
           cat temp-category-ads-all.txt | sort --ignore-case -u | perl -ne '/^((?=^.{1,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' > ./community/data/category-ads-all
           cat temp-category-ads-all.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > reject-tld-list.txt
 
+      - name: Prepend `domain` type for non-reserved rules in "cn", "geolocation-!cn" and "category-ads-all" lists
+        run: |
+          sed -i -E 's/^(.*)$/domain:\1/' ./community/data/cn
+          sed -i -E 's/^(.*)$/domain:\1/' ./community/data/geolocation-\!cn
+          sed -i -E 's/^(.*)$/domain:\1/' ./community/data/category-ads-all
+
       - name: Add `full`, `regexp` and `keyword` type of rules back into "cn", "geolocation-!cn" and "category-ads-all" list
         run: |
           [ -f "direct-reserve.txt" ] && cat direct-reserve.txt >> ./community/data/cn
