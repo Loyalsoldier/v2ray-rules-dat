@@ -36,6 +36,7 @@ jobs:
           echo "WIN_EXTRA=https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/extra.txt" >> $GITHUB_ENV
           echo "OISD_FULL=https://hosts.oisd.nl/" >> $GITHUB_ENV
           echo "OISD_NSFW=https://hosts.oisd.nl/nsfw/" >> $GITHUB_ENV
+          echo "RULE_INDO=https://gist.github.com/malikshi/95afb1720c99dd38b693c1e88b4891b9/raw/e61bdd8a59a0c07b8b636b8959bb2f9896e17a99/rule-indo.sh" >> $GITHUB_ENV
         shell: bash
 
       - name: Checkout the "hidden" branch of this repo
@@ -169,6 +170,8 @@ jobs:
           curl -sSL $OISD_FULL | grep "0.0.0.0" | awk '{print $2}' > oisd-full.txt
           curl -sSL $OISD_NSFW | grep "0.0.0.0" | awk '{print $2}' > ./community/data/oisd-nsfw
           curl -sSL $OISD_NSFW | grep "0.0.0.0" | awk '{print $2}' > oisd-nsfw.txt
+          wget -O ./community/data/rule-indo $RULE_INDO
+          wget -O rule-indo.txt $RULE_INDO
 
       - name: Build geosite.dat file
         run: |
@@ -182,7 +185,7 @@ jobs:
           install -Dp ./custom/publish/geosite.dat ./publish/geosite.dat
           install -p {proxy,direct,reject}-tld-list.txt ./publish/
           install -p {proxy,direct,reject}-list.txt ./publish/
-          install -p {apple-cn,google-cn,gfw,greatfire,win-spy,win-update,win-extra,oisd-full,oisd-nsfw}.txt ./publish/
+          install -p {apple-cn,google-cn,gfw,greatfire,win-spy,win-update,win-extra,oisd-full,oisd-nsfw,rule-indo}.txt ./publish/
           cd ./publish || exit 1
           zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
           sha256sum geosite.dat > geosite.dat.sha256sum
