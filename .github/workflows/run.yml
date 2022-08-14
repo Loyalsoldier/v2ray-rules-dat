@@ -37,6 +37,7 @@ jobs:
           echo "OISD_FULL=https://hosts.oisd.nl/" >> $GITHUB_ENV
           echo "OISD_NSFW=https://hosts.oisd.nl/nsfw/" >> $GITHUB_ENV
           echo "RULE_INDO=https://gist.github.com/malikshi/95afb1720c99dd38b693c1e88b4891b9/raw/e61bdd8a59a0c07b8b636b8959bb2f9896e17a99/rule-indo.sh" >> $GITHUB_ENV
+          echo "MALICIOUS_HOST=https://raw.githubusercontent.com/elliotwutingfeng/Inversion-DNSBL-Blocklists/main/Google_hostnames.txt" >> $GITHUB_ENV
         shell: bash
 
       - name: Checkout the "hidden" branch of this repo
