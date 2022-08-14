@@ -36,7 +36,12 @@ jobs:
           echo "WIN_EXTRA=https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/extra.txt" >> $GITHUB_ENV
           echo "OISD_FULL=https://hosts.oisd.nl/" >> $GITHUB_ENV
           echo "OISD_NSFW=https://hosts.oisd.nl/nsfw/" >> $GITHUB_ENV
-          echo "RULE_INDO=https://gist.github.com/malikshi/95afb1720c99dd38b693c1e88b4891b9/raw/e61bdd8a59a0c07b8b636b8959bb2f9896e17a99/rule-indo.sh" >> $GITHUB_ENV
+          echo "RULE_ADS=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule-ads.txt" >> $GITHUB_ENV
+          echo "RULE_GAME=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule_gaming.txt" >> $GITHUB_ENV
+          echo "RULE_INDO=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule_indo.txt" >> $GITHUB_ENV
+          echo "RULE_PS=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule_playstore.txt" >> $GITHUB_ENV
+          echo "RULE_SOSMED=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule_sosmed.txt" >> $GITHUB_ENV
+          echo "RULE_STREAMING=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule_streaming.txt" >> $GITHUB_ENV
           echo "MALICIOUS_HOST=https://raw.githubusercontent.com/elliotwutingfeng/Inversion-DNSBL-Blocklists/main/Google_hostnames.txt" >> $GITHUB_ENV
         shell: bash
 
@@ -171,8 +176,20 @@ jobs:
           curl -sSL $OISD_FULL | grep "0.0.0.0" | awk '{print $2}' > oisd-full.txt
           curl -sSL $OISD_NSFW | grep "0.0.0.0" | awk '{print $2}' > ./community/data/oisd-nsfw
           curl -sSL $OISD_NSFW | grep "0.0.0.0" | awk '{print $2}' > oisd-nsfw.txt
+          wget -O ./community/data/rule-ads $RULE_ADS
+          wget -O rule-ads.txt $RULE_ADS
+          wget -O ./community/data/rule-gaming $RULE_GAME
+          wget -O rule-gaming.txt $RULE_GAME
           wget -O ./community/data/rule-indo $RULE_INDO
           wget -O rule-indo.txt $RULE_INDO
+          wget -O ./community/data/rule-playstore $RULE_PS
+          wget -O rule-playstore.txt $RULE_PS
+          wget -O ./community/data/rule-sosmed $RULE_SOSMED
+          wget -O rule-sosmed.txt $RULE_SOSMED
+          wget -O ./community/data/rule-streaming $RULE_STREAMING
+          wget -O rule-streaming.txt $RULE_STREAMING
+          wget -O ./community/data/rule-malicious $MALICIOUS_HOST
+          wget -O rule-malicious.txt $MALICIOUS_HOST
 
       - name: Build geosite.dat file
         run: |
@@ -186,7 +203,7 @@ jobs:
           install -Dp ./custom/publish/geosite.dat ./publish/geosite.dat
           install -p {proxy,direct,reject}-tld-list.txt ./publish/
           install -p {proxy,direct,reject}-list.txt ./publish/
-          install -p {apple-cn,google-cn,gfw,greatfire,win-spy,win-update,win-extra,oisd-full,oisd-nsfw,rule-indo}.txt ./publish/
+          install -p {apple-cn,google-cn,gfw,greatfire,win-spy,win-update,win-extra,oisd-full,oisd-nsfw,rule-ads,rule-gaming,rule-indo,rule-playstore,rule-sosmed,rule-streaming,rule-malicious}.txt ./publish/
           cd ./publish || exit 1
           zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
           sha256sum geosite.dat > geosite.dat.sha256sum
