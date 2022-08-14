@@ -42,7 +42,7 @@ jobs:
           echo "RULE_PS=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule_playstore.txt" >> $GITHUB_ENV
           echo "RULE_SOSMED=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule_sosmed.txt" >> $GITHUB_ENV
           echo "RULE_STREAMING=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule_streaming.txt" >> $GITHUB_ENV
-          echo "MALICIOUS_HOST=https://raw.githubusercontent.com/elliotwutingfeng/Inversion-DNSBL-Blocklists/main/Google_hostnames.txt" >> $GITHUB_ENV
+          echo "MALICIOUS_HOST=https://raw.githubusercontent.com/elliotwutingfeng/Inversion-DNSBL-Blocklists/main/Google_hostnames_light.txt" >> $GITHUB_ENV
         shell: bash
 
       - name: Checkout the "hidden" branch of this repo
