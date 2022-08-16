@@ -1,6 +1,10 @@
 # 简介
 
-[**V2Ray**](https://github.com/v2fly/v2ray-core) 路由规则文件加强版，可代替 V2Ray 官方 `geoip.dat` 和 `geosite.dat`，兼容 [Shadowsocks-windows](https://github.com/shadowsocks/shadowsocks-windows)、[Xray-core](https://github.com/XTLS/Xray-core)、[Trojan-Go](https://github.com/p4gefau1t/trojan-go) 和 [leaf](https://github.com/eycorsican/leaf)。利用 GitHub Actions 北京时间每天早上 6 点自动构建，保证规则最新。
+[**V2Ray**](https://github.com/v2fly/v2ray-core) 路由规则文件加强版，可代替 V2Ray 官方 `geoip.dat` 和 `geosite.dat`，兼容 [Shadowsocks-windows](https://github.com/shadowsocks/shadowsocks-windows)、[Xray-core](https://github.com/XTLS/Xray-core)、[Trojan-Go](https://github.com/p4gefau1t/trojan-go) 和 [leaf](https://github.com/eycorsican/leaf)。
+
+[**sing-box**](https://github.com/SagerNet/sing-box) 路由规则文件加强版，可代替 sing-box 官方 `geosite.dat`。
+
+利用 GitHub Actions 北京时间每天早上 6 点自动构建，保证规则最新。
 
 ## 规则文件生成方式
 
@@ -20,7 +24,7 @@
 
 > 希望定制 `geoip.dat` 文件？查看仓库 [@Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip)。
 
-### geosite.dat
+### geosite.dat 或 geosite.db
 
 - 基于 [@v2fly/domain-list-community/data](https://github.com/v2fly/domain-list-community/tree/master/data) 数据，通过仓库 [@Loyalsoldier/domain-list-custom](https://github.com/Loyalsoldier/domain-list-custom) 生成
 - **加入大量中国大陆域名、Apple 域名和 Google 域名**：
@@ -54,6 +58,7 @@
 
 - **geoip.dat**：[https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat)
 - **geosite.dat**：[https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat](https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat)
+- **geosite.db**：[https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.db](https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.db)
 - **直连域名列表 direct-list.txt**：[https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt)
 - **代理域名列表 proxy-list.txt**：[https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt)
 - **广告域名列表 reject-list.txt**：[https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt)
