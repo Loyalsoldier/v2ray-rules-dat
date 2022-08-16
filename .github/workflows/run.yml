@@ -59,6 +59,13 @@ jobs:
           repository: cokebar/gfwlist2dnsmasq
           path: gfwlist2dnsmasq
 
+      - name: Checkout Johnshall/sing-geosite
+        uses: actions/checkout@v3
+        with:
+          repository: Johnshall/sing-geosite
+          ref: trans-dat-into-db
+          path: sing-geosite
+
       - name: Get geoip.dat relative files
         run: |
           wget https://github.com/Loyalsoldier/geoip/raw/release/geoip.dat
@@ -169,17 +176,25 @@ jobs:
           cd custom || exit 1
           go run ./ --datapath=../community/data
 
+      - name: Build geosite.db from geosite.dat
+        run: |
+          cd sing-geosite || exit 1
+          cp ../custom/publish/geosite.dat geosite.dat
+          go run ./
+
       - name: Move and zip files and generate sha256 hash
         run: |
           install -Dp ./geoip.dat ./publish/geoip.dat
           install -Dp ./geoip.dat.sha256sum ./publish/geoip.dat.sha256sum
           install -Dp ./custom/publish/geosite.dat ./publish/geosite.dat
+          install -Dp ./custom/publish/geosite.db ./publish/geosite.db
           install -p {proxy,direct,reject}-tld-list.txt ./publish/
           install -p {proxy,direct,reject}-list.txt ./publish/
           install -p {apple-cn,google-cn,gfw,greatfire,win-spy,win-update,win-extra}.txt ./publish/
           cd ./publish || exit 1
           zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
           sha256sum geosite.dat > geosite.dat.sha256sum
+          sha256sum geosite.db > geosite.db.sha256sum
           sha256sum rules.zip > rules.zip.sha256sum
 
       - name: Release and upload assets
