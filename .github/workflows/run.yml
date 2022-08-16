@@ -187,12 +187,12 @@ jobs:
           install -Dp ./geoip.dat ./publish/geoip.dat
           install -Dp ./geoip.dat.sha256sum ./publish/geoip.dat.sha256sum
           install -Dp ./custom/publish/geosite.dat ./publish/geosite.dat
-          install -Dp ./custom/publish/geosite.db ./publish/geosite.db
+          install -Dp ./sing-geosite/geosite.db ./publish/geosite.db
           install -p {proxy,direct,reject}-tld-list.txt ./publish/
           install -p {proxy,direct,reject}-list.txt ./publish/
           install -p {apple-cn,google-cn,gfw,greatfire,win-spy,win-update,win-extra}.txt ./publish/
           cd ./publish || exit 1
-          zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
+          zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat geosite.db
           sha256sum geosite.dat > geosite.dat.sha256sum
           sha256sum geosite.db > geosite.db.sha256sum
           sha256sum rules.zip > rules.zip.sha256sum
