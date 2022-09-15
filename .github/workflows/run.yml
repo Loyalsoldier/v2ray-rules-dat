@@ -2,7 +2,8 @@ name: Build V2Ray rules dat files
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 22 * * *"
+    # At 00:00 on Monday every week
+    - cron: "0 0 * * 1"
   push:
     branches:
       - master
