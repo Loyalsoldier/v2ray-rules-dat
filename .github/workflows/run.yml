@@ -216,7 +216,7 @@ jobs:
           cd ./publish || exit 1
           zip iptunnels-geosite.zip geoip.dat geosite.dat
           sha256sum geosite.dat > geosite.dat.sha256sum
-          sha256sum iptunnels-geosite.zip > rules.zip.sha256sum
+          sha256sum iptunnels-geosite.zip > iptunnels-geosite.zip.sha256sum
 
       - name: Release and upload assets
         uses: softprops/action-gh-release@v0.1.6
