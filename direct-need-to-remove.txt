@@ -6,6 +6,8 @@ baid.us
 baidu.jp
 bussou.com
 busytrade.com
+cnbeta.com
+cnbetacdn.com
 cnpolitics.org
 dm530.net
 duanzhihu.com
