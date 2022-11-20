@@ -18,6 +18,7 @@ mtalk.google.com
 mx.technolutions.net
 offer.alibaba.com
 pingjs.qq.com
+qlogo.cn
 resolver.msg.xiaomi.net
 s.youtube.com
 sf3-ttcdn-tos.pstatp.com
