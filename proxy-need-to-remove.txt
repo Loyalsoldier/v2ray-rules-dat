@@ -11,6 +11,9 @@ adcdownload.apple.com
 app-site-association.cdn-apple.com
 appldnld.apple.com
 appldnld.g.aaplimg.com
+
+apple.com
+
 appleid.cdn-apple.com
 apps.apple.com
 apps.mzstatic.com
