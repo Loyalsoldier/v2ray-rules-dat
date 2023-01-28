@@ -218,6 +218,7 @@ jobs:
         shell: bash
         run: |
           pwd
+          ls
           ls ./pre_flight_artifacts | wc -l
 
       - name: Extract geosite.dat as *.txt artifacts
