@@ -268,7 +268,7 @@ jobs:
           mv geosite.zip geosite/ publish/
 
       - name: Release and upload assets
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v0.1.15
         with:
           name: ${{ env.RELEASE_DATE }}
           tag_name: ${{ env.RELEASE_DATE }}
