@@ -272,13 +272,12 @@ jobs:
           echo "number of files in geosite/: $(ls geosite/ | wc -l)"
 
       - name: Release and upload assets
-        uses: softprops/action-gh-release@v0.1.15
+        uses: softprops/action-gh-release@v0.1.6
         with:
           name: ${{ env.RELEASE_NAME }}
           tag_name: ${{ env.TAG_NAME }}
           draft: false
           prerelease: false
-          generate_release_notes: true
           files: |
             publish/*
         env:
