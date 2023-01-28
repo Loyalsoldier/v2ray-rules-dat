@@ -267,27 +267,18 @@ jobs:
           mv geoip.zip geoip/ publish/
           mv geosite.zip geosite/ publish/
 
-      # - name: Release and upload assets
-      #   uses: softprops/action-gh-release@v0.1.15
-      #   with:
-      #     name: ${{ env.RELEASE_DATE }}
-      #     tag_name: ${{ env.RELEASE_DATE }}
-      #     draft: false
-      #     prerelease: false
-      #     body: "Release on ${{ env.RELEASE_DATE }}"
-      #     files: |
-      #       publish/*
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: ncipollo/release-action@v1
+      - name: Release and upload assets
+        uses: softprops/action-gh-release@v0.1.15
         with:
-          tag: ${{ env.RELEASE_DATE }}
+          name: ${{ env.RELEASE_DATE }}
+          tag_name: ${{ env.RELEASE_DATE }}
           draft: false
           prerelease: false
           body: "Release on ${{ env.RELEASE_DATE }}"
-          artifacts: "publish/*.txt,publish/*.dat,publish/*.zip"
-          token: "${{ secrets.GITHUB_TOKEN }}"
+          files: |
+            publish/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Git push assets to "release" branch
         shell: bash
