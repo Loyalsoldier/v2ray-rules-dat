@@ -225,13 +225,13 @@ jobs:
         run: |
           mkdir out
           ./v2dat unpack geosite -o out publish/geosite.dat
-          zip out.zip out/*.txt
+          zip -r artifacts.zip out/
 
       - name: Export artifacts
         uses: actions/upload-artifact@v3
         with:
           name: geosite_artifacts
-          path: out.zip
+          path: artifacts.zip
 
   publish:
     needs: [build, extract-artifact]
@@ -251,7 +251,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: geosite_artifacts
-          path: artifacts.zip
 
       - name: Extract artifacts
         shell: bash
