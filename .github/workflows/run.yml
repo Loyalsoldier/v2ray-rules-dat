@@ -12,12 +12,12 @@ on:
       - "**/README.md"
 
 # Workflow related global environment variables
-env:
-  ENV: staging
-  REPOSITORY: hikariai-web
-  REGISTRY: docker.io
-  REGISTRY_USERNAME: hikariai
-  IMAGE_TAG: staging
+# env:
+#   ENV: staging
+#   REPOSITORY: hikariai-web
+#   REGISTRY: docker.io
+#   REGISTRY_USERNAME: hikariai
+#   IMAGE_TAG: staging
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -256,6 +256,7 @@ jobs:
       - name: Extract artifacts
         shell: bash
         run: |
+          ls
           unzip artifacts.zip -d artifacts/
 
       - name: Verify contents
