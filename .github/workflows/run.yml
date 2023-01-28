@@ -2,13 +2,23 @@ name: Build V2Ray rules dat files
 on:
   workflow_dispatch:
   schedule:
-    # At 00:00 on Monday every week
-    - cron: "0 0 * * 1"
+    # At 00:00 on Sunday every week
+    - cron: "0 0 * * 7"
   push:
     branches:
       - master
     paths-ignore:
       - "**/README.md"
+
+# Workflow related global environment variables
+env:
+  ENV: staging
+  REPOSITORY: hikariai-web
+  REGISTRY: docker.io
+  REGISTRY_USERNAME: hikariai
+  IMAGE_TAG: staging
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,9 +26,10 @@ jobs:
       - name: Setup Go 1.x.y
         uses: actions/setup-go@v3
         with:
-          go-version: ^1.18
+          go-version: ^1.19
 
       - name: Set variables
+        shell: bash
         run: |
           echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
           echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
@@ -36,7 +47,6 @@ jobs:
           echo "WIN_SPY=https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt" >> $GITHUB_ENV
           echo "WIN_UPDATE=https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/update.txt" >> $GITHUB_ENV
           echo "WIN_EXTRA=https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/extra.txt" >> $GITHUB_ENV
-        shell: bash
 
       - name: Checkout the "hidden" branch of this repo
         uses: actions/checkout@v3
@@ -135,11 +145,8 @@ jobs:
       - name: Remove domains end with ".cn" in "temp-geolocation-!cn.txt" and write lists to data directory
         run: |
           cat temp-cn.txt | sort --ignore-case -u | perl -ne '/^((?=^.{1,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' > ./community/data/cn
-          cat temp-cn.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > direct-tld-list.txt
           cat temp-geolocation-\!cn.txt | sort --ignore-case -u | perl -ne '/^((?=^.{1,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' | perl -ne 'print if not /\.cn$/' > ./community/data/geolocation-\!cn
-          cat temp-geolocation-\!cn.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > proxy-tld-list.txt
           cat temp-category-ads-all.txt | sort --ignore-case -u | perl -ne '/^((?=^.{1,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})*)/ && print "$1\n"' > ./community/data/category-ads-all
-          cat temp-category-ads-all.txt | sort --ignore-case -u | perl -ne 'print if not /^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/' > reject-tld-list.txt
 
       - name: Add `full`, `regexp` and `keyword` type of rules back into "cn", "geolocation-!cn" and "category-ads-all" list
         run: |
@@ -150,22 +157,15 @@ jobs:
           cp ./community/data/geolocation-\!cn proxy-list.txt
           cp ./community/data/category-ads-all reject-list.txt
 
-      - name: Create `google-cn`、`apple-cn`、`gfw`、`greatfire` lists
+      - name: Create google-cn, apple-cn, gfw, greatfire lists
         run: |
           curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "full:$1\n"' > ./community/data/google-cn
-          curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "full:$1\n"' > google-cn.txt
           curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "full:$1\n"' > ./community/data/apple-cn
-          curl -sSL $APPLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "full:$1\n"' > apple-cn.txt
           cat ./gfwlist2dnsmasq/temp-gfwlist.txt | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> ./community/data/gfw
-          cat ./community/data/gfw | sort --ignore-case -u > gfw.txt
           curl -sSL $GREATFIRE_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> ./community/data/greatfire
-          cat ./community/data/greatfire | sort --ignore-case -u > greatfire.txt
           curl -sSL $WIN_SPY | grep "0.0.0.0" | awk '{print $2}' > ./community/data/win-spy
-          curl -sSL $WIN_SPY | grep "0.0.0.0" | awk '{print $2}' > win-spy.txt
           curl -sSL $WIN_UPDATE | grep "0.0.0.0" | awk '{print $2}' > ./community/data/win-update
-          curl -sSL $WIN_UPDATE | grep "0.0.0.0" | awk '{print $2}' > win-update.txt
           curl -sSL $WIN_EXTRA | grep "0.0.0.0" | awk '{print $2}' > ./community/data/win-extra
-          curl -sSL $WIN_EXTRA | grep "0.0.0.0" | awk '{print $2}' > win-extra.txt
 
       - name: Build geosite.dat file
         run: |
@@ -177,34 +177,107 @@ jobs:
           install -Dp ./geoip.dat ./publish/geoip.dat
           install -Dp ./geoip.dat.sha256sum ./publish/geoip.dat.sha256sum
           install -Dp ./custom/publish/geosite.dat ./publish/geosite.dat
-          install -p {proxy,direct,reject}-tld-list.txt ./publish/
           install -p {proxy,direct,reject}-list.txt ./publish/
-          install -p {apple-cn,google-cn,gfw,greatfire,win-spy,win-update,win-extra}.txt ./publish/
           cd ./publish || exit 1
           zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
           sha256sum geosite.dat > geosite.dat.sha256sum
           sha256sum rules.zip > rules.zip.sha256sum
 
-      - name: Release and upload assets
-        uses: softprops/action-gh-release@v0.1.6
+      - name: Export artifacts
+        uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.RELEASE_NAME }}
-          tag_name: ${{ env.TAG_NAME }}
-          draft: false
-          prerelease: false
-          files: |
-            ./publish/*
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: pre_flight_artifacts
+          path: publish
 
-      - name: Git push assets to "release" branch
+  extract-artifact:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Go 1.x.y
+        uses: actions/setup-go@v3
+        with:
+          go-version: ^1.19
+
+      - name: Checkout techprober/v2dat
+        uses: actions/checkout@v3
+        with:
+          repository: techprober/v2dat
+          ref: master
+
+      - name: Build binary
         run: |
-          cd publish || exit 1
-          git init
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b release
-          git add .
-          git commit -m "${{ env.RELEASE_NAME }}"
-          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-          git push -f -u origin release
+          go build -o v2dat
+          chmod u+x v2dat
+
+      - name: Copy pre-flight artifacts from previous job to local path
+        uses: actions/download-artifact@v3
+        with:
+          name: pre_flight_artifacts
+
+      - name: Verify contents
+        shell: bash
+        run: |
+          ls ./publish | wc -l
+
+      - name: Extract geosite.dat as *.txt artifacts
+        run: |
+          mkdir out
+          ./v2dat unpack geosite -o out geosite.dat
+
+      - name: Export artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: geosite_artifacts
+          path: out
+
+
+  publish:
+    needs: [build, extract-artifact]
+    runs-on: ubuntu-latest
+    steps:
+      # - name: Set variables
+      #   shell: bash
+      #   run: |
+      #     echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+      #     echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+      #     echo "CHINA_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf" >> $GITHUB_ENV
+
+      - name: Checkout the master branch of this repo
+        uses: actions/checkout@v3
+        with:
+          ref: master
+
+      - name: Copy artifacts from previous job to local path
+        uses: actions/download-artifact@v3
+        with:
+          name: geosite_artifacts
+
+      - name: Verify contents
+        shell: bash
+        run: |
+          ls ./out | wc -l
+
+      # - name: Release and upload assets
+      #   uses: softprops/action-gh-release@v0.1.6
+      #   with:
+      #     name: ${{ env.RELEASE_NAME }}
+      #     tag_name: ${{ env.TAG_NAME }}
+      #     draft: false
+      #     prerelease: false
+      #     files: |
+      #       ./publish/*
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Git push assets to "release" branch
+      #   shell: bash
+      #   run: |
+      #     cd publish || exit 1
+      #     git init
+      #     git config --local user.name "github-actions[bot]"
+      #     git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      #     git checkout -b release
+      #     git add .
+      #     git commit -m "${{ env.RELEASE_NAME }}"
+      #     git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+      #     git push -f -u origin release
