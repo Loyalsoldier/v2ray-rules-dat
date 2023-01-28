@@ -93,12 +93,12 @@
 
 **使用方式**：
 
-1. 安装适用于自己操作系统的客户端（推荐 [V2Ray 客户端](https://www.v2fly.org/awesome/tools.html#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%9B%BE%E5%BD%A2%E5%AE%A2%E6%88%B7%E7%AB%AF)）
+1. 安装适用于自己操作系统的客户端
 2. 下载本项目的 `geoip.dat` 和 `geosite.dat`
 3. 把下载下来的 `geoip.dat` 和 `geosite.dat` 放入到客户端的规则文件目录，替换掉原来的 `geoip.dat` 和 `geosite.dat`
-4. 如果使用的是 V2Ray 客户端，配置可参考下面 👇👇👇
+4. 如果使用的是 V2Ray v4 版本客户端，配置可参考下面 👇👇👇
 
-## 参考配置
+## 参考配置(仅适用于 V2Ray v4 版本)
 
 ### geoip.dat
 
@@ -268,7 +268,7 @@ steamstatic.com.8686c.com @cn
 }
 ```
 
-### 自用 V2Ray 客户端配置（仅供参考，请根据自身需求酌情修改）
+### 自用 V2Ray v4 版本客户端配置（不适用于 V2Ray v5 及更新的版本）
 
 注意事项：
 
