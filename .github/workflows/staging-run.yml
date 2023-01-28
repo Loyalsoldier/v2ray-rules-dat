@@ -242,7 +242,7 @@ jobs:
       - name: Set variables
         shell: bash
         run: |
-          echo "RELEASE_NAME=Released on $(date +%Y-%m-%d-%H-%M)" >> $GITHUB_ENV
+          echo "RELEASE_NAME=$(date +%Y-%m-%d-%H-%M)" >> $GITHUB_ENV
           echo "TAG_NAME=$(date +%Y-%m-%d-%H-%M)" >> $GITHUB_ENV
 
       - name: Checkout the master branch of this repo
@@ -275,6 +275,7 @@ jobs:
           tag_name: ${{ env.TAG_NAME }}
           draft: false
           prerelease: false
+          body: "Release on ${{ env.RELEASE_NAME }}"
           files: |
             publish/*
         env:
