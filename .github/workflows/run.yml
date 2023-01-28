@@ -251,7 +251,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: geosite_artifacts
-          path: artifacts
+          path: artifacts.zip
 
       - name: Extract artifacts
         shell: bash
