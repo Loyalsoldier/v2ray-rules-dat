@@ -219,19 +219,18 @@ jobs:
         shell: bash
         run: |
           pwd
-          ls ./publish | wc -l
+          echo "number of files: $(ls ./publish | wc -l)"
 
       - name: Extract geosite.dat as *.txt artifacts
         run: |
           mkdir out
-          ./v2dat unpack geosite -o out geosite.dat
+          ./v2dat unpack geosite -o out publish/geosite.dat
 
       - name: Export artifacts
         uses: actions/upload-artifact@v3
         with:
           name: geosite_artifacts
           path: out
-
 
   publish:
     needs: [build, extract-artifact]
@@ -251,11 +250,13 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: geosite_artifacts
+          path: artifacts
 
       - name: Verify contents
         shell: bash
         run: |
-          ls ./out | wc -l
+          pwd
+          echo "number of files: $(ls ./artifacts | wc -l)"
 
       # - name: Release and upload assets
       #   uses: softprops/action-gh-release@v0.1.6
