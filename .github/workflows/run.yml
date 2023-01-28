@@ -223,6 +223,13 @@ jobs:
           ./v2dat unpack geosite -o geosite publish/geosite.dat
           zip -j geosite.zip geosite/*.txt
 
+      - name: Verify contents
+        shell: bash
+        run: |
+          pwd
+          echo "number of files in geoip/: $(ls geoip/ | wc -l)"
+          echo "number of files in geosite/: $(ls geosite/ | wc -l)"
+
       - name: Export artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -263,13 +270,6 @@ jobs:
           unzip geosite.zip -d geosite/
           mv geoip.zip geoip/ publish/
           mv geosite.zip geosite/ publish/
-
-      - name: Verify contents
-        shell: bash
-        run: |
-          pwd
-          echo "number of files in geoip/: $(ls geoip/ | wc -l)"
-          echo "number of files in geosite/: $(ls geosite/ | wc -l)"
 
       - name: Release and upload assets
         uses: softprops/action-gh-release@v0.1.8
