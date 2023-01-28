@@ -238,8 +238,7 @@ jobs:
       - name: Set variables
         shell: bash
         run: |
-          echo "RELEASE_NAME=$(date +%Y-%m-%d-%H-%M)" >> $GITHUB_ENV
-          echo "TAG_NAME=$(date +%Y-%m-%d-%H-%M)" >> $GITHUB_ENV
+          echo "RELEASE_DATE=$(date +%Y-%m-%d-%H-%M)" >> $GITHUB_ENV
 
       - name: Checkout the master branch of this repo
         uses: actions/checkout@v3
@@ -267,11 +266,11 @@ jobs:
       - name: Release and upload assets
         uses: softprops/action-gh-release@v1
         with:
-          name: ${{ env.RELEASE_NAME }}
-          tag_name: ${{ env.TAG_NAME }}
+          name: ${{ env.RELEASE_DATE }}
+          tag_name: ${{ env.RELEASE_DATE }}
           draft: false
           prerelease: false
-          body: "Release on {{ env.RELEASE_NAME }}"
+          body: "Release on {{ env.RELEASE_DATE }}"
           files: |
             publish/*
         env:
@@ -286,6 +285,6 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b release
           git add .
-          git commit -m "${{ env.RELEASE_NAME }}"
+          git commit -m "${{ env.RELEASE_DATE }}"
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           git push -f -u origin release
