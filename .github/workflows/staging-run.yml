@@ -1,8 +1,12 @@
-name: Build V2Ray rules dat files (Weekly Trigger)
+name: Build V2Ray rules dat files (Manual Trigger)
 on:
-  schedule:
-    # At 00:00 on Sunday every week
-    - cron: "0 0 * * 6"
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - ci/**
+    paths-ignore:
+      - "**/README.md"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
