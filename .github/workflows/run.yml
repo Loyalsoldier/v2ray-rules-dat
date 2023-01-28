@@ -203,7 +203,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: techprober/v2dat
-          ref: master
 
       - name: Build binary
         run: |
@@ -245,8 +244,6 @@ jobs:
 
       - name: Checkout the master branch of this repo
         uses: actions/checkout@v3
-        with:
-          ref: master
 
       - name: Copy artifacts from previous job to local path
         uses: actions/download-artifact@v3
