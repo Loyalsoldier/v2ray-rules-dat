@@ -279,13 +279,14 @@ jobs:
       #       publish/*
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: ncipollo/release-action@v1
         with:
           tag: ${{ env.RELEASE_DATE }}
           draft: false
           prerelease: false
           body: "Release on ${{ env.RELEASE_DATE }}"
-          artifacts: "publish/*"
+          artifacts: "publish/*.txt,publish/*.dat,publish/*.zip"
           token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Git push assets to "release" branch
