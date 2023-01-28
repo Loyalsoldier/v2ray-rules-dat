@@ -248,6 +248,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: pre_flight_artifacts
+          path: publish/
 
       - name: Copy artifacts from extract-artifact job to local path
         uses: actions/download-artifact@v3
