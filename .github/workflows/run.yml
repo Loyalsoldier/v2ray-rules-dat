@@ -11,14 +11,6 @@ on:
     paths-ignore:
       - "**/README.md"
 
-# Workflow related global environment variables
-# env:
-#   ENV: staging
-#   REPOSITORY: hikariai-web
-#   REGISTRY: docker.io
-#   REGISTRY_USERNAME: hikariai
-#   IMAGE_TAG: staging
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
@@ -32,8 +24,6 @@ jobs:
       - name: Set variables
         shell: bash
         run: |
-          echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
-          echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
           echo "CHINA_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf" >> $GITHUB_ENV
           echo "GOOGLE_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/google.china.conf" >> $GITHUB_ENV
           echo "APPLE_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf" >> $GITHUB_ENV
@@ -225,66 +215,72 @@ jobs:
         run: |
           mkdir out
           ./v2dat unpack geosite -o out publish/geosite.dat
-          zip -j artifacts.zip out/*.txt
+          zip -j geosite.zip out/*.txt
 
       - name: Export artifacts
         uses: actions/upload-artifact@v3
         with:
           name: geosite_artifacts
-          path: artifacts.zip
+          path: geosite.zip
 
   publish:
     needs: [build, extract-artifact]
     runs-on: ubuntu-latest
     steps:
-      # - name: Set variables
-      #   shell: bash
-      #   run: |
-      #     echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
-      #     echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
-      #     echo "CHINA_DOMAINS_URL=https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/accelerated-domains.china.conf" >> $GITHUB_ENV
+      - name: Set variables
+        shell: bash
+        run: |
+          echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+          echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
 
       - name: Checkout the master branch of this repo
         uses: actions/checkout@v3
 
-      - name: Copy artifacts from previous job to local path
+      - name: Copy artifacts from build job to local path
+        uses: actions/download-artifact@v3
+        with:
+          name: pre_flight_artifacts
+          path: publish/
+
+      - name: Copy artifacts from extract-artifact job to local path
         uses: actions/download-artifact@v3
         with:
           name: geosite_artifacts
+          path: geosite.zip
 
       - name: Extract artifacts
         shell: bash
         run: |
-          ls
-          unzip artifacts.zip -d artifacts/
+          unzip geosite.zip -d geosite/
+          mv geosite.zip publish/
 
       - name: Verify contents
         shell: bash
         run: |
           pwd
-          echo "number of files: $(ls artifacts/ | wc -l)"
+          echo "number of files in geosite/: $(ls geosite/ | wc -l)"
 
-      # - name: Release and upload assets
-      #   uses: softprops/action-gh-release@v0.1.6
-      #   with:
-      #     name: ${{ env.RELEASE_NAME }}
-      #     tag_name: ${{ env.TAG_NAME }}
-      #     draft: false
-      #     prerelease: false
-      #     files: |
-      #       ./publish/*
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release and upload assets
+        uses: softprops/action-gh-release@v1
+        with:
+          name: ${{ env.RELEASE_NAME }}
+          tag_name: ${{ env.TAG_NAME }}
+          draft: false
+          prerelease: false
+          files: |
+            ./publish/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Git push assets to "release" branch
-      #   shell: bash
-      #   run: |
-      #     cd publish || exit 1
-      #     git init
-      #     git config --local user.name "github-actions[bot]"
-      #     git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      #     git checkout -b release
-      #     git add .
-      #     git commit -m "${{ env.RELEASE_NAME }}"
-      #     git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-      #     git push -f -u origin release
+      - name: Git push assets to "release" branch
+        shell: bash
+        run: |
+          cd publish || exit 1
+          git init
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b release
+          git add .
+          git commit -m "${{ env.RELEASE_NAME }}"
+          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          git push -f -u origin release
