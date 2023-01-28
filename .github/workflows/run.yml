@@ -226,7 +226,7 @@ jobs:
       - name: Export artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: artifacts
+          name: post_artifacts
           path: |
             geoip.zip
             geosite.zip
@@ -253,7 +253,7 @@ jobs:
       - name: Copy artifacts from extract-artifact job to local path
         uses: actions/download-artifact@v3
         with:
-          name: artifacts
+          name: post_artifacts
 
       - name: Extract artifacts
         shell: bash
