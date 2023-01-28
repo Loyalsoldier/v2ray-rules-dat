@@ -211,6 +211,12 @@ jobs:
           pwd
           echo "number of files: $(ls publish/ | wc -l)"
 
+      - name: Extract geoip.dat as *.txt artifacts
+        run: |
+          mkdir out
+          ./v2dat unpack geoip -o out publish/geoip.dat
+          zip -j geoip.zip out/*.txt
+
       - name: Extract geosite.dat as *.txt artifacts
         run: |
           mkdir out
@@ -220,8 +226,10 @@ jobs:
       - name: Export artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: geosite_artifacts
-          path: geosite.zip
+          name: artifacts
+          path: |
+            geoip.zip
+            geosite.zip
 
   publish:
     needs: [build, extract-artifact]
@@ -244,19 +252,22 @@ jobs:
       - name: Copy artifacts from extract-artifact job to local path
         uses: actions/download-artifact@v3
         with:
-          name: geosite_artifacts
+          name: artifacts
 
       - name: Extract artifacts
         shell: bash
         run: |
           ls
+          unzip geoip.zip -d geoip/
           unzip geosite.zip -d geosite/
+          mv geoip.zip publish/
           mv geosite.zip publish/
 
       - name: Verify contents
         shell: bash
         run: |
           pwd
+          echo "number of files in geoip/: $(ls geoip/ | wc -l)"
           echo "number of files in geosite/: $(ls geosite/ | wc -l)"
 
       - name: Release and upload assets
