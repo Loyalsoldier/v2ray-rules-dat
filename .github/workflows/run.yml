@@ -271,7 +271,7 @@ jobs:
           tag_name: ${{ env.TAG_NAME }}
           draft: false
           prerelease: false
-          body: "Release on ${{ env.RELEASE_NAME }}"
+          body: "Release on {{ env.RELEASE_NAME }}"
           files: |
             publish/*
         env:

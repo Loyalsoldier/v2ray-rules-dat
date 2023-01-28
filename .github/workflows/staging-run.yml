@@ -267,21 +267,18 @@ jobs:
           mv geoip.zip geoip/ publish/
           mv geosite.zip geosite/ publish/
 
-      - name: Pre-release setup
-        shell: bash
-        run: |
-          git config --global --add safe.directory '*'
-
       - name: Release and upload assets
-        uses: mini-bomba/create-github-release@v1.1.2
+        uses: softprops/action-gh-release@v1
         with:
-          tag: "${{ env.RELEASE_NAME }}"
-          name: "${{ env.RELEASE_NAME }}"
-          body: |
-            Release on ${{ env.RELEASE_NAME }}
+          name: ${{ env.RELEASE_NAME }}
+          tag_name: ${{ env.TAG_NAME }}
+          draft: false
+          prerelease: false
+          body: "Release on {{ env.RELEASE_NAME }}"
           files: |
-            publish/
-          token: ${{ secrets.GITHUB_TOKEN }}
+            publish/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Git push assets to "release" branch
         shell: bash
