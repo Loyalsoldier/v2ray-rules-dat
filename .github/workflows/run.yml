@@ -3,10 +3,11 @@ on:
   workflow_dispatch:
   schedule:
     # At 00:00 on Sunday every week
-    - cron: "0 0 * * 7"
+    - cron: "0 0 * * 6"
   push:
     branches:
       - master
+      - ci/**
     paths-ignore:
       - "**/README.md"
 
