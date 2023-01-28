@@ -217,7 +217,8 @@ jobs:
       - name: Verify contents
         shell: bash
         run: |
-          ls ./publish | wc -l
+          pwd
+          ls ./pre_flight_artifacts | wc -l
 
       - name: Extract geosite.dat as *.txt artifacts
         run: |
