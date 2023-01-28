@@ -213,6 +213,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: pre_flight_artifacts
+          path: publish
 
       - name: Verify contents
         shell: bash
