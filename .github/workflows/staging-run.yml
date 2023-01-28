@@ -270,7 +270,7 @@ jobs:
       - name: Pre-release setup
         shell: bash
         run: |
-          git config --global safe.directory '*'
+          git config --global --add safe.directory '*'
 
       - name: Release and upload assets
         uses: mini-bomba/create-github-release@v1.1.2
