@@ -225,7 +225,7 @@ jobs:
         run: |
           mkdir out
           ./v2dat unpack geosite -o out publish/geosite.dat
-          zip -r artifacts.zip out/
+          zip -j artifacts.zip out/*.txt
 
       - name: Export artifacts
         uses: actions/upload-artifact@v3
