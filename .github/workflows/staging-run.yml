@@ -269,16 +269,9 @@ jobs:
           mv geosite.zip geosite/ publish/
 
       - name: Release and upload assets
-        uses: softprops/action-gh-release@v1
-        with:
-          name: ${{ env.RELEASE_NAME }}
-          tag_name: ${{ env.TAG_NAME }}
-          draft: false
-          prerelease: false
-          body: "Release on ${{ env.RELEASE_NAME }}"
-          files: |
-            publish/*
+        uses: fnkr/github-action-ghr@v1
         env:
+          GHR_PATH: publish/
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Git push assets to "release" branch
