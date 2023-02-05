@@ -278,7 +278,7 @@ steamstatic.com.8686c.com @cn
 - 最后，不命中任何路由规则的请求和流量，统统走代理
 - `outbounds` 里的第一个大括号内的配置，即为 V2Ray 代理服务的配置。请根据自身需求进行修改，并参照 V2Ray 官网配置文档中的 [配置 > Outbounds > OutboundObject](https://www.v2fly.org/config/outbounds.html#outboundobject) 部分进行补全
 
-```json
+```jsonc
 {
   "log": {
     "loglevel": "warning"
