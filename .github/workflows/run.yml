@@ -204,11 +204,18 @@ jobs:
           pwd
           echo "number of files: $(ls publish/ | wc -l)"
 
-      - name: Extract geoip.dat as *.txt artifacts
+      - name: Rename {proxy,direct,reject} lists
         run: |
-          mkdir geoip
-          ./v2dat unpack geoip -o geoip publish/geoip.dat
-          zip -j geoip.zip geoip/*.txt
+          cp publish/{proxy,direct,reject}-list.txt .
+          mv proxy-list.txt proxy.txt
+          mv direct-list.txt direct.txt
+          mv reject-list.txt reject.txt
+
+      - name: Extract geosite.dat as *.txt artifacts
+        run: |
+          mkdir geosite
+          ./v2dat unpack geosite -o geosite publish/geosite.dat
+          zip -j geosite.zip geosite/*.txt {proxy,direct,reject}.txt
 
       - name: Extract geosite.dat as *.txt artifacts
         run: |
