@@ -213,11 +213,18 @@ jobs:
           ./v2dat unpack geoip -o geoip publish/geoip.dat
           zip -j geoip.zip geoip/*.txt
 
+      - name: Rename {proxy,direct,reject} lists
+        run: |
+          cp publish/{proxy,direct,reject}-list.txt .
+          mv proxy-list.txt proxy.txt
+          mv direct-list.txt direct.txt
+          mv reject-list.txt reject.txt
+
       - name: Extract geosite.dat as *.txt artifacts
         run: |
           mkdir geosite
           ./v2dat unpack geosite -o geosite publish/geosite.dat
-          zip -j geosite.zip geosite/*.txt
+          zip -j geosite.zip geosite/*.txt {proxy,direct,reject}.txt
 
       - name: Verify contents
         shell: bash
