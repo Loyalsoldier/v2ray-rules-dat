@@ -268,10 +268,11 @@ jobs:
       - name: Deploy Stage
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.ACTIONS_KEY }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
-              'malikshi',
-              'sing-box-geo',
-              'workflows/release.yaml',
-              'master',
+              owner: 'malikshi',
+              repo: 'sing-box-geo',
+              workflow_id: 'release.yaml',
+              ref: 'master
             });
