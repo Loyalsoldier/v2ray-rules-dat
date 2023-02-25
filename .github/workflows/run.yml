@@ -265,6 +265,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Trigger sing-box-geo
-        run: |
-          curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.ACTION_KEY}}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/malikshi/sing-box-geo/actions/workflows/release.yaml/dispatches --data '{"ref": "master"}'
+      - name: Deploy Stage
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              'malikshi',
+              'sing-box-geo',
+              'workflows/release.yaml',
+              'master',
+            });
