@@ -275,5 +275,5 @@ jobs:
               repo: 'sing-box-geo',
               workflow_id: 'release.yaml',
               ref: 'master'
-            });
+            })
             console.log(result)
