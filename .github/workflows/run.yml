@@ -261,11 +261,12 @@ jobs:
       - name: Delete Old Release
         uses: dev-drprasad/delete-older-releases@v0.2.0
         with:
-          keep_latest: 2
+          repo: malikshi/v2ray-rules-dat
+          keep_latest: 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Deploy Stage
+      - name: Trigger Synch sing-box-geo
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GHA_WORKFLOW_TRIGGER }}
