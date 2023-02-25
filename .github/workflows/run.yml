@@ -268,11 +268,12 @@ jobs:
       - name: Deploy Stage
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GHA_WORKFLOW_TRIGGER }}
           script: |
-            await github.rest.actions.createWorkflowDispatch({
+            const result = await github.rest.actions.createWorkflowDispatch({
               owner: 'malikshi',
               repo: 'sing-box-geo',
               workflow_id: 'release.yaml',
               ref: 'master
             });
+            console.log(result)
