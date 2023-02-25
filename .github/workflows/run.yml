@@ -268,7 +268,7 @@ jobs:
       - name: Deploy Stage
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.ACTIONS_KEY }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.actions.createWorkflowDispatch({
               owner: 'malikshi',
