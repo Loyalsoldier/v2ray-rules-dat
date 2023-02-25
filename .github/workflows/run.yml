@@ -1,6 +1,21 @@
 name: Build V2Ray rules dat files
 on:
   workflow_dispatch:
+  inputs:
+    trigger_me:
+      description: 'workflow will be triggered'
+      required: true
+      default: 'release'
+
+    workflow2_github_account:
+      description: 'GitHub Account Owner'
+      required: true
+      default: 'malikshi'
+
+    workflow2_repo_github:
+      description: 'Repo sing-box-geo'
+      required: true
+      default: 'sing-box-geo' 
   schedule:
     - cron: "20 04 * * FRI"
   push:
@@ -8,21 +23,6 @@ on:
       - master
     paths-ignore:
       - "**/README.md"
-  inputs:
-      trigger_me:
-        description: 'workflow will be triggered'
-        required: true
-        default: 'release'
-
-      workflow2_github_account:
-        description: 'GitHub Account Owner'
-        required: true
-        default: 'malikshi'
-
-      workflow2_repo_github:
-        description: 'Repo sing-box-geo'
-        required: true
-        default: 'sing-box-geo' 
 jobs:
   build:
     runs-on: ubuntu-latest
