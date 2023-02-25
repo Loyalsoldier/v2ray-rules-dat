@@ -254,3 +254,5 @@ jobs:
         uses: dev-drprasad/delete-older-releases@v0.2.0
         with:
           keep_latest: 2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
