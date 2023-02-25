@@ -9,7 +9,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      timezone: "Asia/Shanghai"
+      timezone: "Asia/Jakarta"
       time: "07:00"
     pull-request-branch-name:
       separator: "-"
