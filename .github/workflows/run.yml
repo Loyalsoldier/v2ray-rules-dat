@@ -274,6 +274,6 @@ jobs:
               owner: 'malikshi',
               repo: 'sing-box-geo',
               workflow_id: 'release.yaml',
-              ref: 'master
+              ref: 'master'
             });
             console.log(result)
