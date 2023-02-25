@@ -10,12 +10,13 @@ on:
     workflow2_github_account:
       description: 'GitHub Account Owner'
       required: true
-      default: 'malikshi'
+      default: ':malikshi'
 
     workflow2_repo_github:
       description: 'Repo sing-box-geo'
       required: true
-      default: 'sing-box-geo' 
+      default: ':sing-box-geo' 
+  
   schedule:
     - cron: "20 04 * * FRI"
   push:
@@ -23,6 +24,7 @@ on:
       - master
     paths-ignore:
       - "**/README.md"
+
 jobs:
   build:
     runs-on: ubuntu-latest
