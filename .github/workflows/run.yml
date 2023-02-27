@@ -83,8 +83,8 @@ jobs:
 
       - name: Get geoip.dat relative files
         run: |
-          wget https://github.com/Loyalsoldier/geoip/raw/release/geoip.dat
-          wget https://github.com/Loyalsoldier/geoip/raw/release/geoip.dat.sha256sum
+          wget https://github.com/malikshi/geoip/raw/release/geoip.dat
+          wget https://github.com/malikshi/geoip/raw/release/geoip.dat.sha256sum
 
       - name: Generate GFWList domains
         run: |
