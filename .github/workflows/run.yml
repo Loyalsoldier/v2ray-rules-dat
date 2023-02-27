@@ -259,7 +259,7 @@ jobs:
           done
 
       - name: Delete Old Release
-        uses: dev-drprasad/delete-older-releases@v0.2.0
+        uses: dev-drprasad/delete-older-releases@v0.2.1
         with:
           repo: malikshi/v2ray-rules-dat
           keep_latest: 1
