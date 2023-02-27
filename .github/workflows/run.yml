@@ -1,8 +1,6 @@
 name: Build V2Ray rules dat files
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "20 04 * * FRI"
   push:
     branches:
       - master
