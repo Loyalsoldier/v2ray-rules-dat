@@ -12,11 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Go 1.x.y
-        uses: actions/setup-go@v3
-        with:
-          go-version: ^1.18
-
       - name: Set variables
         run: |
           echo "RELEASE_NAME=Released on $(date +%Y%m%d%H%M)" >> $GITHUB_ENV
@@ -58,6 +53,11 @@ jobs:
         with:
           repository: cokebar/gfwlist2dnsmasq
           path: gfwlist2dnsmasq
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: ./custom/go.mod
 
       - name: Get geoip.dat relative files
         run: |
