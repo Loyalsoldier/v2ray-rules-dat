@@ -55,6 +55,7 @@ jobs:
           echo "RULE_IPCHECK=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule_ipcheck.txt" >> $GITHUB_ENV
           echo "RULE_VIDCONFERENCE=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule-videoconference.txt" >> $GITHUB_ENV
           echo "URLTEST=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/urltest.txt" >> $GITHUB_ENV
+          echo "RULE_SPEEDTEST=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule_speedtest.txt" >> $GITHUB_ENV
           echo "MALICIOUS_HOST=https://raw.githubusercontent.com/elliotwutingfeng/Inversion-DNSBL-Blocklists/main/Google_hostnames_light.txt" >> $GITHUB_ENV
         shell: bash
 
@@ -213,6 +214,8 @@ jobs:
           wget -O videoconference.txt $RULE_VIDCONFERENCE
           wget -O ./community/data/urltest $URLTEST
           wget -O urltest.txt $URLTEST
+          wget -O ./community/data/rule-speedtest $RULE_SPEEDTEST
+          wget -O rule-speedtest.txt $RULE_SPEEDTEST
           wget -O ./community/data/rule-malicious $MALICIOUS_HOST
           wget -O rule-malicious.txt $MALICIOUS_HOST
 

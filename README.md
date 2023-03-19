@@ -17,6 +17,7 @@ Generate custom geosite and geoip based on [Loyalsoldier](https://github.com/Loy
   - `geosite:rule-streaming`
   - `geosite:rule-umum`
   - `geosite:rule-ipcheck`
+  - `geosite:rule-speedtest`
   - `geosite:videoconference`
   - `geosite:rule-malicious`
   - `geosite:urltest`
