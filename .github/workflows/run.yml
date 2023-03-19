@@ -42,6 +42,7 @@ jobs:
           echo "WIN_UPDATE=https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/update.txt" >> $GITHUB_ENV
           echo "WIN_EXTRA=https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/extra.txt" >> $GITHUB_ENV
           echo "OISD_FULL=https://big.oisd.nl/dnsmasq" >> $GITHUB_ENV
+          echo "OISD_SMALL=https://small.oisd.nl/dnsmasq" >> $GITHUB_ENV
           echo "OISD_NSFW=https://nsfw.oisd.nl/dnsmasq" >> $GITHUB_ENV
           echo "DOH_DNS=https://raw.githubusercontent.com/dibdot/DoH-IP-blocklists/master/doh-domains.txt" >> $GITHUB_ENV
           echo "RULE_ADS=https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt" >> $GITHUB_ENV
@@ -186,6 +187,8 @@ jobs:
           curl -sSL $WIN_EXTRA | grep "0.0.0.0" | awk '{print $2}' > win-extra.txt
           curl -sSL $OISD_FULL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > ./community/data/oisd-full
           curl -sSL $OISD_FULL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > oisd-full.txt
+          curl -sSL $OISD_SMALL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > ./community/data/oisd-small
+          curl -sSL $OISD_SMALL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > oisd-small.txt
           curl -sSL $RULE_ADS | grep "0.0.0.0" | awk '{print $2}' > ./community/data/rule-ads
           curl -sSL $RULE_ADS | grep "0.0.0.0" | awk '{print $2}' > rule-ads.txt
           curl -sSL $OISD_NSFW | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > ./community/data/oisd-nsfw

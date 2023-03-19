@@ -6,6 +6,7 @@ Generate custom geosite and geoip based on [Loyalsoldier](https://github.com/Loy
 
 - Same as Original but with addtional list:
   - `geosite:oisd-full`
+  - `geosite:oisd-small`
   - `geosite:oisd-nsfw`
   - `geosite:rule-ads`
   - `geosite:rule-doh`
@@ -18,6 +19,7 @@ Generate custom geosite and geoip based on [Loyalsoldier](https://github.com/Loy
   - `geosite:rule-ipcheck`
   - `geosite:videoconference`
   - `geosite:rule-malicious`
+  - `geosite:urltest`
 
 > More details for addtional [list](https://github.com/malikshi/v2ray-rules-dat/blob/b3f67d1c2cc83bb2a84ea117b1e0caa340f7a130/.github/workflows/run.yml#L20)
 
@@ -35,3 +37,4 @@ Generate custom geosite and geoip based on [Loyalsoldier](https://github.com/Loy
   - `geoip:netflix`
   - `geoip:telegram`
   - `geoip:twitter`
+  - `geoip:malicious`
