@@ -217,14 +217,14 @@ jobs:
         run: |
           mkdir geosite
           ./v2dat unpack geosite -o geosite publish/geosite.dat
+          cp publish/proxy-list.txt proxy.txt
+          cp publish/direct-list.txt direct.txt
+          cp publish/reject-list.txt reject.txt
           zip -j geosite.zip geosite/*.txt {proxy,direct,reject}.txt
 
-      - name: Rename {proxy,direct,reject} lists
+      - name: Publish {proxy,direct,reject} lists
         run: |
           cp publish/{proxy,direct,reject}-list.txt .
-          mv proxy-list.txt proxy.txt
-          mv direct-list.txt direct.txt
-          mv reject-list.txt reject.txt
 
       - name: Verify contents
         shell: bash
