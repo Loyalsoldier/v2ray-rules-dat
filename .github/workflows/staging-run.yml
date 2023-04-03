@@ -222,7 +222,7 @@ jobs:
           cp publish/reject-list.txt reject.txt
           zip -j geosite.zip geosite/*.txt {proxy,direct,reject}.txt
 
-      - name: Publish {proxy,direct,reject} lists
+      - name: Copy {proxy,direct,reject} lists
         run: |
           cp publish/{proxy,direct,reject}-list.txt .
 
