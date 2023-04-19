@@ -29,7 +29,7 @@ jobs:
           echo "WIN_SPY=https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt" >> $GITHUB_ENV
           echo "WIN_UPDATE=https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/update.txt" >> $GITHUB_ENV
           echo "WIN_EXTRA=https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/extra.txt" >> $GITHUB_ENV
-          echo "BLOCKED_BY_TAIWAN=https://raw.githubusercontent.com/rootmelo92118/blocked-by-taiwan/release/blockedbytaiwan.txt" >> $GITHUB_ENV
+          echo "HALF_PRICE_IN_IRAN=https://raw.githubusercontent.com/IRConf/Iranian-Half-Price-Traffic-Websites-List/main/domains" >> $GITHUB_ENV
         shell: bash
 
       - name: Checkout the "hidden" branch of this repo
@@ -148,7 +148,7 @@ jobs:
           cp ./community/data/geolocation-\!cn proxy-list.txt
           cp ./community/data/category-ads-all reject-list.txt
 
-      - name: Create `google-cn`、`apple-cn`、`gfw`、`greatfire`、 `blocked-by-taiwan`lists
+      - name: Create `google-cn`、`apple-cn`、`gfw`、`greatfire`、 `category-ir-half-price`lists
         run: |
           curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "full:$1\n"' > ./community/data/google-cn
           curl -sSL $GOOGLE_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "full:$1\n"' > google-cn.txt
@@ -164,8 +164,7 @@ jobs:
           curl -sSL $WIN_UPDATE | grep "0.0.0.0" | awk '{print $2}' > win-update.txt
           curl -sSL $WIN_EXTRA | grep "0.0.0.0" | awk '{print $2}' > ./community/data/win-extra
           curl -sSL $WIN_EXTRA | grep "0.0.0.0" | awk '{print $2}' > win-extra.txt
-          curl -sSL $BLOCKED_BY_TAIWAN >> ./community/data/blocked-by-taiwan
-          curl -sSL $BLOCKED_BY_TAIWAN >> blocked-by-taiwan.txt
+          curl -sSL $BLOCKED_BY_TAIWAN >> ./community/data/category-ir-half-price
 
       - name: Build geosite.dat file
         run: |
