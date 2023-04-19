@@ -270,6 +270,23 @@ steamstatic.com.8686c.com @cn
 }
 ```
 
+### For Iranian users
+This project includes the half-price list from the Information Technology Organization of Iran. You can configure it on your client device or server in Iran to make it not go through overseas proxy servers.
+It looks like
+```json
+"routing": {
+  "rules": [
+    {
+      "type": "field",
+      "outboundTag": "Direct",
+      "domain": [
+        "geosite:category-ir-half-price"
+      ]
+    }
+  ]
+}
+```
+
 ### 自用 V2Ray v4 版本客户端配置（不适用于 V2Ray v5 及更新的版本）
 
 注意事项：
