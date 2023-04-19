@@ -455,6 +455,7 @@ steamstatic.com.8686c.com @cn
 - [@PeterLowe/adservers](https://pgl.yoyo.org/adservers)
 - [@DanPollock/hosts](https://someonewhocares.org/hosts)
 - [@crazy-max/WindowsSpyBlocker](https://github.com/crazy-max/WindowsSpyBlocker)
+- [@IRConf/Iranian-Half-Price-Traffic-Websites-List](https://github.com/IRConf/Iranian-Half-Price-Traffic-Websites-List/)
 
 ## 项目 Star 数增长趋势
 
