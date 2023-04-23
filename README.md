@@ -31,10 +31,6 @@
   - 基于 [@gfwlist/gfwlist](https://github.com/gfwlist/gfwlist) 数据，通过仓库 [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq) 生成
   - 加入到 `geosite:gfw` 类别中，供习惯于 PAC 模式并希望使用 [GFWList](https://github.com/gfwlist/gfwlist) 的用户使用
   - 同时加入到 `geosite:geolocation-!cn` 类别中
-- **加入 Greatfire Analyzer 检测到的屏蔽域名**：
-  - 通过仓库 [@Loyalsoldier/cn-blocked-domain](https://github.com/Loyalsoldier/cn-blocked-domain) 获取 [Greatfire Analyzer](https://zh.greatfire.org/analyzer) 检测到的在中国大陆被屏蔽的域名
-  - 加入到 `geosite:greatfire` 类别中，可与上面的 `geosite:gfw` 类别同时使用，以达到域名黑名单的效果
-  - 同时加入到 `geosite:geolocation-!cn` 类别中
 - **加入 EasyList 和 EasyListChina 广告域名**：通过 [@AdblockPlus/EasylistChina+Easylist.txt](https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt) 获取并加入到 `geosite:category-ads-all` 类别中
 - **加入 AdGuard DNS Filter 广告域名**：通过 [@AdGuard/DNS-filter](https://kb.adguard.com/en/general/adguard-ad-filters#dns-filter) 获取并加入到 `geosite:category-ads-all` 类别中
 - **加入 Peter Lowe 广告和隐私跟踪域名**：通过 [@PeterLowe/adservers](https://pgl.yoyo.org/adservers) 获取并加入到 `geosite:category-ads-all` 类别中
@@ -78,9 +74,6 @@
 - **GFWList 域名列表 gfw.txt**：
   - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/gfw.txt)
   - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/gfw.txt](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/gfw.txt)
-- **Greatfire 域名列表 greatfire.txt**：
-  - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/greatfire.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/greatfire.txt)
-  - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/greatfire.txt](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/greatfire.txt)
 - **Windows 操作系统使用的隐私跟踪域名列表 win-spy.txt**：
   - [https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/win-spy.txt](https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/win-spy.txt)
   - [https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/win-spy.txt](https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/win-spy.txt)
@@ -220,7 +213,7 @@ steamstatic.com.8686c.com @cn
     {
       "type": "field",
       "outboundTag": "Proxy",
-      "domain": ["geosite:gfw", "geosite:greatfire"]
+      "domain": ["geosite:gfw"]
     },
     {
       "type": "field",
@@ -449,7 +442,6 @@ steamstatic.com.8686c.com @cn
 - [@felixonmars/dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list)
 - [@gfwlist/gfwlist](https://github.com/gfwlist/gfwlist)
 - [@cokebar/gfwlist2dnsmasq](https://github.com/cokebar/gfwlist2dnsmasq)
-- [@Loyalsoldier/cn-blocked-domain](https://github.com/Loyalsoldier/cn-blocked-domain)
 - [@AdblockPlus/EasylistChina+Easylist.txt](https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt)
 - [@AdGuard/DNS-filter](https://kb.adguard.com/en/general/adguard-ad-filters#dns-filter)
 - [@PeterLowe/adservers](https://pgl.yoyo.org/adservers)
