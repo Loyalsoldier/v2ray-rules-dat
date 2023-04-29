@@ -233,9 +233,7 @@ jobs:
           install -Dp ./geoip.dat.sha256sum ./publish/geoip.dat.sha256sum
           install -Dp ./custom/publish/geosite.dat ./publish/geosite.dat
           cd ./publish || exit 1
-          zip iptunnels-geosite.zip geoip.dat geosite.dat
           sha256sum geosite.dat > geosite.dat.sha256sum
-          sha256sum iptunnels-geosite.zip > iptunnels-geosite.zip.sha256sum
 
       - name: Convert to Sing-Box geoassets
         run: |
@@ -245,6 +243,9 @@ jobs:
           ./v2box migrate geosite -i ./publish/geosite.dat -o geosite.db
           mv -f geoip.db ./publish/
           mv -f geosite.db ./publish/
+          cd ./publish || exit 1
+          sha256sum geosite.db > geosite.db.sha256sum
+          sha256sum geoip.db > geoip.db.sha256sum
 
       - name: Release and upload assets
         uses: softprops/action-gh-release@v0.1.15
