@@ -237,6 +237,15 @@ jobs:
           sha256sum geosite.dat > geosite.dat.sha256sum
           sha256sum iptunnels-geosite.zip > iptunnels-geosite.zip.sha256sum
 
+      - name: Convert to Sing-Box geoassets
+        run: |
+          wget https://github.com/malikshi/Notes/releases/download/v2box/v2box
+          chmod +x v2box
+          ./v2box migrate geoip -i ./publish/geoip.dat -o geoip.db
+          ./v2box migrate geosite -i ./publish/geosite.dat -o geosite.db
+          mv -f geoip.db ./publish/
+          mv -f geosite.db ./publish/
+
       - name: Release and upload assets
         uses: softprops/action-gh-release@v0.1.15
         with:
