@@ -28,7 +28,7 @@ Generate custom geosite and geoip based on [Loyalsoldier](https://github.com/Loy
 ## GEOIP.DAT
 
 - Generated via repository [@Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip)
-- The global IP addresses (IPv4 and IPv6) come from [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/), and the IPv4 addresses under the `CN` (Mainland China) category come from [ipip .net](https://github.com/17mon/china_ip_list)
+- The global IP addresses (IPv4 and IPv6) come from [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/), and the IPv4 addresses under the `CN` (Mainland China) category come from [ipip .net](https://github.com/17mon/china_ip_list) and [@gaoyifan/china-operator-ip](https://github.com/gaoyifan/china-operator-ip), `cn` [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/) and [@gaoyifan/china-operator-ip](https://github.com/gaoyifan/china-operator-ip)
 - New categories (convenient for users with special needs):
   - `geoip:cloudflare`
   - `geoip:cloudfront`
