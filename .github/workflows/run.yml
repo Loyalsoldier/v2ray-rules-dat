@@ -57,6 +57,7 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version-file: ./custom/go.mod
+          cache-dependency-path: ./custom/go.sum
 
       - name: Get geoip.dat relative files
         run: |
