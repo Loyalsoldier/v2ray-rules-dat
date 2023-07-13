@@ -224,6 +224,25 @@ jobs:
           wget -O ./community/data/rule-malicious $MALICIOUS_HOST
           wget -O rule-malicious.txt $MALICIOUS_HOST
 
+      - name: Filter and save d3ward.txt
+        run: |
+          python <<EOF
+          import requests
+
+          # Fetch the contents of the file from the URL
+          url = "https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt"
+          response = requests.get(url)
+          data = response.text
+
+          # Filter lines with "0.0.0.0" and spaces and remove "0.0.0.0" text
+          filtered_lines = [line.replace("0.0.0.0 ", "") for line in data.split("\n") if "0.0.0.0 " in line]
+
+          # Save the filtered lines to a file named "d3ward.txt"
+          with open("./community/data/d3ward", "w") as file:
+              for line in filtered_lines:
+                  file.write(line + "\n")
+          EOF
+
       - name: Build geosite.dat file
         run: |
           cd custom || exit 1
