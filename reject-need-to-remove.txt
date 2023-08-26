@@ -6,6 +6,8 @@ alimama.com
 analytics.google.com
 app.chat.xiaomi.net
 bdtj.tagtic.cn
+cdn.onesignal.com
+click.discord.com
 click.redditmail.com
 ctrip.com
 d.ifengimg.com
