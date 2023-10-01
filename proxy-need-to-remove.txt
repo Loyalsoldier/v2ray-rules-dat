@@ -133,6 +133,9 @@ swdist.apple.com.akadns.net
 swdist.apple.com
 swscan-cdn.apple.com.akadns.net
 swscan.apple.com
+
+trust-provider.cn
+
 updates-http.cdn-apple.com.akadns.net
 updates-http.cdn-apple.com
 updates.cdn-apple.com
