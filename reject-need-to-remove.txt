@@ -32,3 +32,4 @@ tongji.baidu.com
 tv.sohu.com
 ue.yeyoucdn.com
 wl.spotify.com
+b-graph.facebook.com
