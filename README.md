@@ -8,6 +8,8 @@ Generate custom geosite and geoip based on [Loyalsoldier](https://github.com/Loy
   - `geosite:oisd-full`
   - `geosite:oisd-small`
   - `geosite:oisd-nsfw`
+  - `geosite:d3ward`
+  - `geosite:antiscam`
   - `geosite:rule-ads`
   - `geosite:rule-doh`
   - `geosite:rule-gaming`

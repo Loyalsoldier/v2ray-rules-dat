@@ -43,7 +43,8 @@ jobs:
           echo "OISD_FULL=https://big.oisd.nl/dnsmasq" >> $GITHUB_ENV
           echo "OISD_SMALL=https://small.oisd.nl/dnsmasq" >> $GITHUB_ENV
           echo "OISD_NSFW=https://nsfw.oisd.nl/dnsmasq" >> $GITHUB_ENV
-          echo "DOH_DNS=https://raw.githubusercontent.com/dibdot/DoH-IP-blocklists/master/doh-domains.txt" >> $GITHUB_ENV
+          echo "ANTISCAM=https://raw.githubusercontent.com/elliotwutingfeng/GlobalAntiScamOrg-blocklist/main/global-anti-scam-org-scam-urls-pihole.txt" >> $GITHUB_ENV
+          echo "DOH_DNS=https://raw.githubusercontent.com/malikshi/dns_ip/main/domains-doh.txt" >> $GITHUB_ENV
           echo "RULE_ADS=https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt" >> $GITHUB_ENV
           echo "RULE_ADS_EXTENDED=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule_ads.txt" >> $GITHUB_ENV
           echo "RULE_GAME=https://raw.githubusercontent.com/malikshi/v2ray-rules-dat/rule/rule_gaming.txt" >> $GITHUB_ENV
@@ -203,6 +204,8 @@ jobs:
           curl -sSL $RULE_ADS_EXTENDED >> rule-ads.txt
           curl -sSL $OISD_NSFW | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > ./community/data/oisd-nsfw
           curl -sSL $OISD_NSFW | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > oisd-nsfw.txt
+          wget -O ./community/data/antiscam $ANTISCAM
+          wget -O antiscam.txt $ANTISCAM
           wget -O ./community/data/rule-doh $DOH_DNS
           wget -O rule-doh.txt $DOH_DNS
           wget -O ./community/data/rule-gaming $RULE_GAME
