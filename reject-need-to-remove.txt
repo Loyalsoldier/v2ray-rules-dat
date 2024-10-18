@@ -32,3 +32,8 @@ tongji.baidu.com
 tv.sohu.com
 ue.yeyoucdn.com
 wl.spotify.com
+2miners.com
+googleapis.com
+googleapis.cn
+google.com
+in.appcenter.ms
