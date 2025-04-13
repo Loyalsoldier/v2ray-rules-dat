@@ -1,0 +1,6 @@
+version: "1"
+rules:
+  - base: release # Required. Target branch
+    upstream: CESMA350:release # Required. Must be in the same fork network.
+    mergeMethod: hardreset # Optional, one of [none, merge, squash, rebase, hardreset], Default: none.
+    mergeUnstable: false # Optional, merge pull request even when the mergeable_state is not clean. Default: false
