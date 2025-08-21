@@ -32,4 +32,5 @@ telegra.ph
 tongji.baidu.com
 tv.sohu.com
 ue.yeyoucdn.com
+umeng.com
 wl.spotify.com
