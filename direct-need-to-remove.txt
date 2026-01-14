@@ -39,3 +39,5 @@ xjp.cc
 yanghengjun.com
 ydy.com
 yslang.com
+perplexity.ai
+pplx.ai
