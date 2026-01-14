@@ -1,2 +1,5 @@
 services.googleapis.cn
 supertop.co
+perplexity.ai
+pplx.ai
+perplexity.com
