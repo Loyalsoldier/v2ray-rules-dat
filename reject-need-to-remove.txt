@@ -15,6 +15,7 @@ d.ifengimg.com
 fabric.io
 icons.mydrivers.com
 img.alibaba.com
+intake-analytics.wikimedia.org
 jav321.com
 knet.cn
 mail.tsinghua.edu.cn
