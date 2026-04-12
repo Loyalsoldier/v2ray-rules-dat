@@ -25,6 +25,7 @@
 ### geosite.dat
 
 - 基于 [@v2fly/domain-list-community/data](https://github.com/v2fly/domain-list-community/tree/master/data) 数据，通过仓库 [@Loyalsoldier/domain-list-custom](https://github.com/Loyalsoldier/domain-list-custom) 生成
+- v2fly/domain-list-community `data` 目录中的列表会在构建时一并打包进 `geosite.dat`。因此像 `geosite:2gis`、`geosite:sber`、`geosite:ozon`、`geosite:wildberries` 这类 upstream 已提供的类别，不会以单独源码文件的形式出现在本仓库默认分支中。
 - **加入大量中国大陆域名、Apple 域名和 Google 域名**：
   - [@felixonmars/dnsmasq-china-list/accelerated-domains.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/accelerated-domains.china.conf) 加入到 `geosite:china-list` 和 `geosite:cn` 类别中
   - [@felixonmars/dnsmasq-china-list/apple.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/apple.china.conf) 加入到 `geosite:geolocation-!cn` 类别中（如希望本文件中的 Apple 域名直连，请参考下面 [geosite 的 Routing 配置方式](https://github.com/Loyalsoldier/v2ray-rules-dat#geositedat-1)）
@@ -172,7 +173,7 @@ proxy(geoip:us)
 
 ### geosite.dat
 
-跟 V2Ray 官方 `geosite.dat` 配置方式相同。相比官方 `geosite.dat` 文件，本项目特有的类别：
+跟 V2Ray 官方 `geosite.dat` 配置方式相同。v2fly/domain-list-community `data` 目录中的 upstream 类别会在构建时自动继承；下面仅列出相比官方 `geosite.dat` 文件，本项目特有的类别：
 
 - `geosite:china-list`：包含 [@felixonmars/dnsmasq-china-list/accelerated-domains.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/accelerated-domains.china.conf) 文件里的域名，供有特殊 DNS 分流需求的用户使用。
 - `geosite:apple-cn`：包含 [@felixonmars/dnsmasq-china-list/apple.china.conf](https://github.com/felixonmars/dnsmasq-china-list/blob/master/apple.china.conf) 文件里的域名，供希望 Apple 域名直连（不走代理）的用户使用。
