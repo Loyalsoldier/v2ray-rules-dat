@@ -486,4 +486,10 @@ steamstatic.com.8686c.com @cn
 
 ## 项目 Star 数增长趋势
 
-[![Stargazers over time](https://starchart.cc/Loyalsoldier/v2ray-rules-dat.svg)](https://starchart.cc/Loyalsoldier/v2ray-rules-dat)
+<a href="https://www.star-history.com/?repos=Loyalsoldier%2Fv2ray-rules-dat&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=Loyalsoldier/v2ray-rules-dat&type=date&theme=dark&legend=top-left&sealed_token=jkp_0BTLWpaVCocA4vgWs-QdXTC4nNm5Tpt9iLK9azSon4COiupyuWumxYFRPGjjxPfJ9ttMSZ0ok6N3y33p_Ud2bt3Y5YHsK-IYHKtD6RrkYlZDj2RWzA" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=Loyalsoldier/v2ray-rules-dat&type=date&legend=top-left&sealed_token=jkp_0BTLWpaVCocA4vgWs-QdXTC4nNm5Tpt9iLK9azSon4COiupyuWumxYFRPGjjxPfJ9ttMSZ0ok6N3y33p_Ud2bt3Y5YHsK-IYHKtD6RrkYlZDj2RWzA" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=Loyalsoldier/v2ray-rules-dat&type=date&legend=top-left&sealed_token=jkp_0BTLWpaVCocA4vgWs-QdXTC4nNm5Tpt9iLK9azSon4COiupyuWumxYFRPGjjxPfJ9ttMSZ0ok6N3y33p_Ud2bt3Y5YHsK-IYHKtD6RrkYlZDj2RWzA" />
+ </picture>
+</a>
