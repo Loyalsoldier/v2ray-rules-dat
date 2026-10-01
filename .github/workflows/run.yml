@@ -8,6 +8,11 @@ on:
       - master
     paths-ignore:
       - "**/README.md"
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - "**/README.md"
 permissions:
   contents: write
 jobs:
@@ -185,6 +190,7 @@ jobs:
           sha256sum rules.zip > rules.zip.sha256sum
 
       - name: Release and upload assets
+        if: github.event_name != 'pull_request'
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -194,6 +200,7 @@ jobs:
           file: ./publish/*
 
       - name: Git push assets to "release" branch
+        if: github.event_name != 'pull_request'
         run: |
           cd publish || exit 1
           git init
@@ -206,6 +213,7 @@ jobs:
           git push -f -u origin release
 
       - name: Purge jsdelivr CDN
+        if: github.event_name != 'pull_request'
         run: |
           cd publish || exit 1
           for file in $(ls); do
