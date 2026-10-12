@@ -12,6 +12,7 @@ click.discord.com
 click.redditmail.com
 ctrip.com
 d.ifengimg.com
+erebor.douban.com
 fabric.io
 icons.mydrivers.com
 img.alibaba.com
